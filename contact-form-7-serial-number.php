@@ -15,6 +15,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
+define( 'NT_WPCF7SN_VERSION', '0.0.0' );
+
 // [contact-form-7-serial-number]
 define( 'NT_WPCF7SN_TEXT_DOMAIN', 'contact-form-7-serial-number' );
 
@@ -30,5 +32,7 @@ define( 'NT_WPCF7SN_PLUGIN_NAME', trim( dirname( NT_WPCF7SN_PLUGIN_BASENAME ), '
 // [\~\wp-content\plugins\contact-form-7-serial-number]
 define( 'NT_WPCF7SN_PLUGIN_DIR', untrailingslashit( dirname( NT_WPCF7SN_PLUGIN ) ) );
 
+// [//~/wp-content/plugins/contact-form-7-serial-number]
+define( 'NT_WPCF7SN_PLUGIN_URL', untrailingslashit( plugins_url( '', NT_WPCF7SN_PLUGIN ) ) );
 
 require_once NT_WPCF7SN_PLUGIN_DIR . '/load.php';
