@@ -1,1 +1,93 @@
 @charset "UTF-8";
+
+table th.column-mail_tag {
+	width: 20%;
+}
+table th.column-setting {
+	width: auto;
+}
+table th.column-count {
+	width: 20%;
+}
+
+h4.title {
+	box-sizing: border-box;
+	margin: 0 0 5px;
+	padding: 5px 10px;
+	width: 100%;
+	height: fit-content;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+h4.title.form {
+	background: #0085ba;
+	color: #fff;
+}
+h4.title.setting {
+	background: #dddddd;
+}
+
+h4.title.form {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	padding-right: 5px;
+}
+h4.title.form .title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+div.text,
+div.checkbox,
+.nt_wpcf7sn_count input[type="text"] {
+	margin: 5px 0;
+}
+
+.nt_wpcf7sn_mail_tag .mail_tag input[type="text"]{
+	width: 100%;
+	background: transparent;
+	border: none;
+}
+
+.nt_wpcf7sn_setting form {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.nt_wpcf7sn_setting .setting_box {
+	box-sizing: border-box;
+	flex: 1 0 calc(100%/2);
+}
+
+.nt_wpcf7sn_setting .setting_submit {
+	width: 100%;
+	text-align: right;
+}
+
+.nt_wpcf7sn_setting .setting_box {
+	padding: 10px;
+	outline: 1px solid #ddd;
+	outline-offset: -5px;
+}
+
+.nt_wpcf7sn_setting label {
+	white-space: nowrap;
+}
+
+.nt_wpcf7sn_setting input[type="text"] {
+	margin-left: 10px;
+}
+
+.nt_wpcf7sn_setting ul {
+	margin: 0;
+	padding: 0;
+}
+
+.nt_wpcf7sn_count .setting_box {
+	padding: 10px;
+	outline: 3px double #aaa;
+	outline-offset: -7px;
+}
