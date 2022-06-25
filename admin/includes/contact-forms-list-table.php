@@ -19,7 +19,10 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 	public function get_columns() {
 		$columns = array(
-			'setting' => __( '設定' ),
+			'title'    => __( 'タイトル' ),
+			'mail_tag' => __( 'メールタグ' ),
+			'setting'  => __( '設定' ),
+			'count'    => __( 'カウント' ),
 		);
 		return $columns;
 	}
@@ -51,7 +54,19 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		return $data;
 	}
 
+	public function column_title( $item ) {
+
+	}
+
+	public function column_mail_tag( $item ) {
+
+	}
+
 	public function column_setting( $item ) {
+
+	}
+
+	public function column_count( $item ) {
 
 	}
 	
