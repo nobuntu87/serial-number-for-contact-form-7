@@ -11,8 +11,8 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 	public function __construct() {
 		parent::__construct( array(
-			'singular' => 'post',
-			'plural'   => 'posts',
+			'plural'   => 'nt-wpcf7sn',
+			'singular' => '',
 			'ajax'     => false,
 		) );
 	}
@@ -63,11 +63,15 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$output .= ''
 		. '<div id="nt_wpcf7sn_mail_tag_' . $form_id . '" class="nt_wpcf7sn_mail_tag clearfix">'
-		. '  <h4 class="title form">'
-		. '    <span class="title">' . esc_attr( $form_title ) . '</span>'
-		. '    <span class="id">[ID' . esc_attr( $form_id ) . ']</span>'
-		. '  </h4>'
-		. '  <div class="mail_tag"><input type="text" readonly="readonly" onfocus="this.select();" value="' . esc_attr( $mail_tag ) . '"/></div>'
+		. '    <div class="item-box title">'
+		. '      <h4 class="form-title">'
+		. '        <span class="title">' . esc_attr( $form_title ) . '</span>'
+		. '        <span class="id">[ID' . esc_attr( $form_id ) . ']</span>'
+		. '      </h4>'
+		. '    </div>'
+		. '    <div class="item-box mail_tag">'
+		. '      <div class="item text"><input type="text" readonly="readonly" onfocus="this.select();" value="' . esc_attr( $mail_tag ) . '"/></div>'
+		. '    </div>'
 		. '</div>';
 
 		return trim( $output );
@@ -90,26 +94,25 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
 		. '    <input type="hidden" name="action" value="update" />'
 		. '    <input type="hidden" name="page_options" value="nt_wpcf7sn_type_' . $form_id . ',nt_wpcf7sn_digits_' . $form_id . ',nt_wpcf7sn_prefix_' . $form_id . '" />'
-		. '    <div class="setting_box">'
-		. '      <h4 class="title setting">表示パターン</h4>'
-		. '      <ul>'
-		. '        <li><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="0" ' . ( $type == 0 ? 'checked' : '' ) . ' />通し番号</label></li>'
-		. '        <li><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="1" ' . ( $type == 1 ? 'checked' : '' ) . ' />タイムスタンプ (UNIX時間)</label></li>'
-		. '        <li><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="2" ' . ( $type == 2 ? 'checked' : '' ) . ' />タイムスタンプ (年月日)</label></li>'
-		. '        <li><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="3" ' . ( $type == 3 ? 'checked' : '' ) . ' />ユニークID (英数字)</label></li>'
-		. '      </ul>'
+		. '    <div class="item-box type">'
+		. '      <h4 class="item-title">表示パターン</h4>'
+		. '      <div class="item radio"><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="0" ' . ( $type == 0 ? 'checked' : '' ) . ' />通し番号</label></div>'
+		. '      <div class="item radio"><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="1" ' . ( $type == 1 ? 'checked' : '' ) . ' />タイムスタンプ (UNIX時間)</label></div>'
+		. '      <div class="item radio"><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="2" ' . ( $type == 2 ? 'checked' : '' ) . ' />タイムスタンプ (年月日)</label></div>'
+		. '      <div class="item radio"><label><input type="radio" name="nt_wpcf7sn_type_' . $form_id . '" value="3" ' . ( $type == 3 ? 'checked' : '' ) . ' />ユニークID (英数字)</label></div>'
 		. '    </div>'
-		. '    <div class="setting_box">'
-		. '      <h4 class="title setting">表示オプション</h4>'
-		. '      <div class="text">接頭語<input type="text" name="nt_wpcf7sn_prefix_' . $form_id . '" value="' . $prefix . '" size="10" maxlength="10" /></div>'
-		. '      <div class="text">桁数<input type="text" name="nt_wpcf7sn_digits_' . $form_id . '" value="' . $digits . '" size="1" maxlength="1" pattern="[0-9]"/></div>'
-		. '      <div class="checkbox"><label><input type="checkbox" name="nt_wpcf7sn_separator_' . $form_id . '" value="" '. ( $year2dig == 'yes' ? 'checked' : '' ) . ' />区切り文字「-」を表示する。</label></div>'
-		. '      <div class="checkbox"><label><input type="checkbox" name="nt_wpcf7sn_year2dig_' . $form_id . '" value="" '. ( $year2dig == 'yes' ? 'checked' : '' ) . ' />西暦の年数を2桁に省略する。</label></div>'
-		. '      <div class="checkbox"><label><input type="checkbox" name="nt_wpcf7sn_nocount_' . $form_id . '" value="" '. ( $uidonly == 'yes' ? 'checked' : '' ) . ' />ユニークIDで連番を表示しない。</label></div>'
+		. '    <div class="item-box option">'
+		. '      <h4 class="item-title">表示オプション</h4>'
+		. '      <div class="item text">接頭語<input type="text" name="nt_wpcf7sn_prefix_' . $form_id . '" value="' . $prefix . '" size="15" maxlength="10" />(10文字以内)</div>'
+		. '      <div class="item text">桁数<input type="text" name="nt_wpcf7sn_digits_' . $form_id . '" value="' . $digits . '" size="1" maxlength="1" pattern="[0-9]"/>(0~9桁)</div>'
+		. '      <div class="item check"><label><input type="checkbox" name="nt_wpcf7sn_separator_' . $form_id . '" value="" '. ( $year2dig == 'yes' ? 'checked' : '' ) . ' />区切り文字「-」を表示する。</label></div>'
+		. '      <div class="item check"><label><input type="checkbox" name="nt_wpcf7sn_year2dig_' . $form_id . '" value="" '. ( $year2dig == 'yes' ? 'checked' : '' ) . ' />西暦の年数を2桁に省略する。</label></div>'
+		. '      <div class="item check"><label><input type="checkbox" name="nt_wpcf7sn_nocount_' . $form_id . '" value="" '. ( $uidonly == 'yes' ? 'checked' : '' ) . ' />ユニークIDで連番を表示しない。</label></div>'
 		. '    </div>'
-		. '    <div class="setting_submit">'
-		. '      <span class="submit_button"><input type="submit" class="button-primary" value="設定" /></span>'
+		. '    <div class="item-box update">'
+		. '      <div class="item submit_button"><input type="submit" class="button-primary" value="設定" /></div>'
 		. '    </div>'
+
 		. '  </form>'
 		. '</div>';
 
@@ -128,12 +131,10 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
 		. '    <input type="hidden" name="action" value="update" />'
 		. '    <input type="hidden" name="page_options" value="nt_wpcf7sn_count_' . $form_id . '" />'
-		. '    <div class="setting_box">'
-		. '      <h4 class="title setting">現在の数値</h4>'
-		. '      <div>'
-		. '        <input type="text" name="nt_wpcf7sn_count_' . $form_id . '" id="nt_wpcf7sn_count_' . $form_id . '" value="' . $count . '" size="5" maxlength="5" pattern="[0-9]"/>'
-		. '        <span class="submit_button"><input type="submit" class="button-primary" value="変更" /></span>'
-		. '      </div>'
+		. '    <div class="item-box count">'
+		. '      <h4 class="item-title">現在のカウント</h4>'
+		. '      <div class="item text"><input type="text" name="nt_wpcf7sn_count_' . $form_id . '" id="nt_wpcf7sn_count_' . $form_id . '" value="' . $count . '" size="5" maxlength="5" pattern="[0-9]"/></div>'
+		. '      <div class="item submit_button"><input type="submit" class="button-primary" value="変更" /></div>'
 		. '    </div>'
 		. '  </form>'
 		. '</div>';
