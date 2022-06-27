@@ -86,6 +86,14 @@ table.nt-wpcf7sn td.setting input[type="text"]  {
 	margin: 0 5px;
 }
 
+table.nt-wpcf7sn td.setting .item-box.update .item {
+	display: inline-block;
+}
+table.nt-wpcf7sn td.setting .item-box.update .item.example {
+	margin-right: 10px;
+}
+
+
 /* =============================================
  テーブルカラム：カウント
 ============================================= */
