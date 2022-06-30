@@ -148,7 +148,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '" />'
 		. '    <div class="item-box count">'
 		. '      <h4 class="item-title">現在のカウント</h4>'
-		. '      <div class="item text"><input type="text" name="nt_wpcf7sn_count_' . $form_id . '" id="nt_wpcf7sn_count_' . $form_id . '" value="' . $count . '" size="5" maxlength="5" pattern="[0-9]"/></div>'
+		. '      <div class="item text"><input type="text" name="nt_wpcf7sn_count_' . $form_id . '" id="nt_wpcf7sn_count_' . $form_id . '" value="' . $count . '" size="5" maxlength="5" pattern="[0-9]+"/></div>'
 		. '      <div class="item submit_button"><input type="submit" class="button-primary" value="変更" /></div>'
 		. '    </div>'
 		. '  </form>'
