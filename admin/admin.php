@@ -11,8 +11,8 @@ add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts' );
 
 function nt_wpcf7sn_admin_menu() {
 	add_options_page(
-		__( 'Contact Form 7 Serial Number Addon' ),
-		__( 'CF7 Serial Number' ),
+		__( 'Contact Form 7 Serial Number Addon', NT_WPCF7SN_TEXT_DOMAIN ),
+		__( 'CF7 Serial Number', NT_WPCF7SN_TEXT_DOMAIN ),
 		'manage_options',
 		'nt-wpcf7sn',
 		'nt_wpcf7sn_admin_management_page'
@@ -23,7 +23,7 @@ function nt_wpcf7sn_admin_menu() {
 function nt_wpcf7sn_admin_management_page() {
 	$output = ''
 	. '<div class="wrap">'
-	. '  <h2>Contact Form 7 Serial Number Addon</h2>'
+	. '  <h2> ' . __( 'Contact Form 7 Serial Number Addon', NT_WPCF7SN_TEXT_DOMAIN ) . '</h2>'
 	. '</div>';
 	
 	echo trim( $output );
