@@ -9,7 +9,7 @@ Requires PHP: 7.0
 License: GPL2+ (GNU General Public License v2 or later)
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+An add-on for the Contact Form 7 plugin. Add a mail-tag to display the serial number.
 
 == Description ==
 

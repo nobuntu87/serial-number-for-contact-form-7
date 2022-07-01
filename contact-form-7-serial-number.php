@@ -2,7 +2,7 @@
 /*
 Plugin Name: Contact Form 7 Serial Number Addon
 Plugin URI: 
-Description: 
+Description: An add-on for the Contact Form 7 plugin. Add a mail-tag to display the serial number.
 Author: Nobuntu
 Author URI: https://profiles.wordpress.org/nobuntu87/
 Text Domain: contact-form-7-serial-number
