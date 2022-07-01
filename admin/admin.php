@@ -8,6 +8,8 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
 add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu' );
 add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts' );
 
+add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
+
 
 function nt_wpcf7sn_admin_menu() {
 	add_options_page(
@@ -45,4 +47,15 @@ function nt_wpcf7sn_admin_enqueue_scripts( $hook_suffix ) {
 		array(),
 		NT_WPCF7SN_VERSION, 'all'
 	);
+}
+
+
+function nt_wpcf7sn_plugin_action_links( $links, $file ) {
+
+	if ( $file == NT_WPCF7SN_PLUGIN_BASENAME ) {
+		$settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=nt-wpcf7sn">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
+		array_unshift( $links, $settings_link );
+	}
+
+	return $links;
 }
