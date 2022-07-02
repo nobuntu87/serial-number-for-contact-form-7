@@ -123,7 +123,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$form_id = intval( $item->ID );
 
 		$type = intval( get_option( 'nt_wpcf7sn_type_' . $form_id, 0 ) );
-		$digits = intval( get_option( 'nt_wpcf7sn_digits_' . $form_id, 0 ) );
+		$digits = intval( get_option( 'nt_wpcf7sn_digits_' . $form_id, 1 ) );
 		$prefix = get_option( 'nt_wpcf7sn_prefix_' . $form_id, '' );
 		$separator = get_option( 'nt_wpcf7sn_separator_' . $form_id, '' );
 		$year2dig = get_option( 'nt_wpcf7sn_year2dig_' . $form_id, '' );
@@ -155,7 +155,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '    <div class="item-box option">'
 		. '      <h4 class="item-title">' . __( 'Options', NT_WPCF7SN_TEXT_DOMAIN ) . '</h4>'
 		. '      <div class="item text">' . __( 'Prefix', NT_WPCF7SN_TEXT_DOMAIN ) . '<input type="text" name="nt_wpcf7sn_prefix_' . $form_id . '" value="' . $prefix . '" size="15" maxlength="10" />(' . __( 'Within 10 characters', NT_WPCF7SN_TEXT_DOMAIN ) . ')</div>'
-		. '      <div class="item text">' . __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN ) . '<input type="text" name="nt_wpcf7sn_digits_' . $form_id . '" value="' . $digits . '" size="1" maxlength="1" pattern="[0-9]"/>(' . __( '0~9 digits', NT_WPCF7SN_TEXT_DOMAIN ) . ')</div>'
+		. '      <div class="item text">' . __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN ) . '<input type="text" name="nt_wpcf7sn_digits_' . $form_id . '" value="' . $digits . '" size="1" maxlength="1" pattern="[1-9]"/>(' . __( '1~9 digits', NT_WPCF7SN_TEXT_DOMAIN ) . ')</div>'
 		. '      <div class="item check"><label><input type="checkbox" name="nt_wpcf7sn_separator_' . $form_id . '" value="yes" '. ( $separator == 'yes' ? 'checked' : '' ) . ' />' . __( 'Display the delimiter "-".', NT_WPCF7SN_TEXT_DOMAIN ) . '</label></div>'
 		. '      <div class="item check"><label><input type="checkbox" name="nt_wpcf7sn_year2dig_' . $form_id . '" value="yes" '. ( $year2dig == 'yes' ? 'checked' : '' ) . ' />' . __( 'Omit the number of years to 2 digits.', NT_WPCF7SN_TEXT_DOMAIN ) . '</label></div>'
 		. '      <div class="item check"><label><input type="checkbox" name="nt_wpcf7sn_nocount_' . $form_id . '" value="yes" '. ( $nocount == 'yes' ? 'checked' : '' ) . ' />' . __( 'Don\'t display count with unique ID.', NT_WPCF7SN_TEXT_DOMAIN ) . '</label></div>'
