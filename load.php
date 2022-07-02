@@ -17,7 +17,7 @@ if ( is_admin() ) {
 /**
  * アクションフック設定
  */
-add_action( 'init', 'nt_wpcf7sn_init' );
+add_action( 'init', 'nt_wpcf7sn_init', 10, 0 );
 
 
 class NT_WPCF7SN

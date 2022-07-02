@@ -10,8 +10,8 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
 /**
  * アクションフック設定
  */
-add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu' );
-add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts' );
+add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 10, 0 );
+add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
 
 /**
  * フィルターフック設定
@@ -77,16 +77,16 @@ function nt_wpcf7sn_admin_enqueue_scripts( $hook_suffix ) {
 /**
  * プラグインメニューにアクションリンクを設定する。
  *
- * @param string[] $links プラグインのアクションリンク
- * @param string $file プラグインの相対パス
+ * @param string[] $actions プラグインのアクションリンク
+ * @param string $plugin_file プラグインの相対パス
  * @return string[] プラグインのアクションリンクを返す。
  */
-function nt_wpcf7sn_plugin_action_links( $links, $file ) {
+function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 
-	if ( $file == NT_WPCF7SN_PLUGIN_BASENAME ) {
+	if ( $plugin_file == NT_WPCF7SN_PLUGIN_BASENAME ) {
 		$settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=' . NT_WPCF7SN_PREFIX['-'] . '">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
-		array_unshift( $links, $settings_link );
+		array_unshift( $actions, $settings_link );
 	}
 
-	return $links;
+	return $actions;
 }
