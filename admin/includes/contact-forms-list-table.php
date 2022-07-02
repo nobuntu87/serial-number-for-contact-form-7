@@ -16,7 +16,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	 */
 	public function __construct() {
 		parent::__construct( array(
-			'plural'   => 'nt-wpcf7sn',
+			'plural'   => NT_WPCF7SN_PREFIX['_'],
 			'singular' => '',
 			'ajax'     => false,
 		) );

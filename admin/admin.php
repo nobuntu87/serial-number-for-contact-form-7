@@ -29,7 +29,7 @@ function nt_wpcf7sn_admin_menu() {
 		__( 'Contact Form 7 Serial Number Addon', NT_WPCF7SN_TEXT_DOMAIN ),
 		__( 'CF7 Serial Number', NT_WPCF7SN_TEXT_DOMAIN ),
 		'manage_options',
-		'nt-wpcf7sn',
+		NT_WPCF7SN_PREFIX['-'],
 		'nt_wpcf7sn_admin_management_page'
 	);
 }
@@ -61,7 +61,7 @@ function nt_wpcf7sn_admin_management_page() {
  * @return void
  */
 function nt_wpcf7sn_admin_enqueue_scripts( $hook_suffix ) {
-	if ( false === strpos( $hook_suffix, 'nt-wpcf7sn' ) ) {
+	if ( false === strpos( $hook_suffix, NT_WPCF7SN_PREFIX['-'] ) ) {
 		return;
 	}
 
@@ -84,7 +84,7 @@ function nt_wpcf7sn_admin_enqueue_scripts( $hook_suffix ) {
 function nt_wpcf7sn_plugin_action_links( $links, $file ) {
 
 	if ( $file == NT_WPCF7SN_PLUGIN_BASENAME ) {
-		$settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=nt-wpcf7sn">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
+		$settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=' . NT_WPCF7SN_PREFIX['-'] . '">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
 		array_unshift( $links, $settings_link );
 	}
 

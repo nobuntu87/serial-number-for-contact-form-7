@@ -4,17 +4,17 @@
  テーブル共通
 ============================================= */
 
-table.nt-wpcf7sn .column-mail_tag {
+table.nt_wpcf7sn .column-mail_tag {
 	width: 20%;
 }
-table.nt-wpcf7sn .column-setting {
+table.nt_wpcf7sn .column-setting {
 	width: auto;
 }
-table.nt-wpcf7sn .column-count {
+table.nt_wpcf7sn .column-count {
 	width: 15%;
 }
 
-table.nt-wpcf7sn h4 {
+table.nt_wpcf7sn h4 {
 	box-sizing: border-box;
 	width: 100%;
 	height: fit-content;
@@ -26,12 +26,12 @@ table.nt-wpcf7sn h4 {
 	background: #dddddd;
 }
 
-table.nt-wpcf7sn .item {
+table.nt_wpcf7sn .item {
 	padding: 2px 0;
 }
 
-table.nt-wpcf7sn .item.radio,
-table.nt-wpcf7sn .item.check {
+table.nt_wpcf7sn .item.radio,
+table.nt_wpcf7sn .item.check {
 	white-space: nowrap;
 }
 
@@ -39,7 +39,7 @@ table.nt-wpcf7sn .item.check {
  テーブルカラム：メールタグ
 ============================================= */
 
-table.nt-wpcf7sn td.mail_tag h4.form-title {
+table.nt_wpcf7sn td.mail_tag h4.form-title {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-between;
@@ -47,13 +47,13 @@ table.nt-wpcf7sn td.mail_tag h4.form-title {
 	background: #0085ba;
 	color: #fff;
 }
-table.nt-wpcf7sn td.mail_tag h4.form-title .title {
+table.nt_wpcf7sn td.mail_tag h4.form-title .title {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
-table.nt-wpcf7sn td.mail_tag .item-box.mail_tag input[type="text"] {
+table.nt_wpcf7sn td.mail_tag .item-box.mail_tag input[type="text"] {
 	width: 100%;
 	background: transparent;
 	border: none;
@@ -63,33 +63,33 @@ table.nt-wpcf7sn td.mail_tag .item-box.mail_tag input[type="text"] {
  テーブルカラム：設定
 ============================================= */
 
-table.nt-wpcf7sn td.setting form {
+table.nt_wpcf7sn td.setting form {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
-table.nt-wpcf7sn td.setting .item-box.type,
-table.nt-wpcf7sn td.setting .item-box.option {
+table.nt_wpcf7sn td.setting .item-box.type,
+table.nt_wpcf7sn td.setting .item-box.option {
 	box-sizing: border-box;
 	flex: 1 0 calc(100%/2);
 	padding: 8px;
 	outline: 1px solid #ddd;
 	outline-offset: -4px;
 }
-table.nt-wpcf7sn td.setting .item-box.update {
+table.nt_wpcf7sn td.setting .item-box.update {
 	padding: 2px;
 	width: 100%;
 	text-align: right;
 }
 
-table.nt-wpcf7sn td.setting input[type="text"]  {
+table.nt_wpcf7sn td.setting input[type="text"]  {
 	margin: 0 5px;
 }
 
-table.nt-wpcf7sn td.setting .item-box.update .item {
+table.nt_wpcf7sn td.setting .item-box.update .item {
 	display: inline-block;
 }
-table.nt-wpcf7sn td.setting .item-box.update .item.example {
+table.nt_wpcf7sn td.setting .item-box.update .item.example {
 	margin-right: 10px;
 }
 
@@ -98,12 +98,12 @@ table.nt-wpcf7sn td.setting .item-box.update .item.example {
  テーブルカラム：カウント
 ============================================= */
 
-table.nt-wpcf7sn td.count .item-box.count {
+table.nt_wpcf7sn td.count .item-box.count {
 	padding: 8px;
 	outline: 3px double #aaa;
 	outline-offset: -4px;
 }
 
-table.nt-wpcf7sn td.count .item {
+table.nt_wpcf7sn td.count .item {
 	display: inline-block;
 }

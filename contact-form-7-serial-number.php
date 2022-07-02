@@ -21,6 +21,11 @@ define( 'NT_WPCF7SN_VERSION', '0.0.0' );
 
 define( 'NT_WPCF7SN_TEXT_DOMAIN', 'contact-form-7-serial-number' );
 
+define( 'NT_WPCF7SN_PREFIX', array(
+	'_' => 'nt_wpcf7sn',
+	'-' => 'nt-wpcf7sn',
+) );
+
 /**
  * プラグイン定義：パス関連
  * 
