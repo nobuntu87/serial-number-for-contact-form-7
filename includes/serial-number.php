@@ -31,18 +31,18 @@ class NT_WPCF7SN_Serial_Number {
 				$serial_num = $num;
 				break;
 			case 1: // タイムスタンプ (UNIX時間)
-				$time = self::get_unix_timestamp();
+				$time = self::get_timestamp( 'U' );
 				$serial_num = $time . $sep . $num;
 				break;
 			case 2: // タイムスタンプ (年月日)
 				$format = $option['year2dig'] == 'yes' ? 'ymd' : 'Ymd';
-				$date = self::get_date_timestamp( $format );
+				$date = self::get_timestamp( $format );
 				$serial_num = $date . $sep . $num;
 				break;
 			case 3: // タイムスタンプ (年月日+時分秒)
 				$format = $option['year2dig'] == 'yes' ? 'ymd' : 'Ymd';
-				$date = self::get_date_timestamp( $format );
-				$time = self::get_date_timestamp( 'His' );
+				$date = self::get_timestamp( $format );
+				$time = self::get_timestamp( 'His' );
 				$serial_num = $date . $sep . $time . $sep . $num;
 				break;
 			case 4: // ユニークID (英数字)
@@ -55,26 +55,12 @@ class NT_WPCF7SN_Serial_Number {
 	}
 
 	/**
-	 * タイムスタンプ(UNIX時間)を取得する
-	 *
-	 * @return string タイムスタンプを返す。
-	 */
-	private function get_unix_timestamp() {
-		$timestamp = '';
-
-		$microtime = microtime( true );
-		$timestamp = sprintf( '%d', $microtime );
-
-		return $timestamp;
-	}
-
-	/**
-	 * タイムスタンプ(日付)を取得する
+	 * タイムスタンプを取得する
 	 *
 	 * @param string $format 表示フォーマット
 	 * @return string タイムスタンプを返す。
 	 */
-	private function get_date_timestamp( $format ) {
+	private function get_timestamp( $format ) {
 		$timestamp = '';
 
 		$timestamp = date( $format );
