@@ -91,9 +91,9 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$output = '';
 
 		$form_id = intval( $item->ID );
-
 		$form_title =  $item->post_title;
-		$mail_tag = sprintf( '[_serial_number_%1$d]', $form_id );
+
+		$mail_tag = '[' . NT_WPCF7SN_MAIL_TAG . $form_id . ']';
 
 		$output .= ''
 		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_mail_tag_' . $form_id . '" class="' . NT_WPCF7SN_PREFIX['_'] . '_mail_tag clearfix">'

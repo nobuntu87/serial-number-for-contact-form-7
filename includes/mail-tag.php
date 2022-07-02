@@ -16,7 +16,7 @@ add_filter( 'wpcf7_special_mail_tags', 'nt_wpcf7sn_special_mail_tags', 10, 2 );
  */
 function nt_wpcf7sn_special_mail_tags( $output, $name ) {
 	
-	if ( preg_match( '/^_serial_number_[0-9]+$/', $name ) ) {
+	if ( preg_match( '/^' . NT_WPCF7SN_MAIL_TAG . '[0-9]+$/', $name ) ) {
 
 		// メールタグからIDを取得
 		preg_match('/(?P<id>[0-9]+)$/', $name, $match);
