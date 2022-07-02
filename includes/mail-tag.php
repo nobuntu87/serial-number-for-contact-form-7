@@ -1,10 +1,19 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
+/**
+ * フィルターフック設定
+ */
 add_filter( 'wpcf7_special_mail_tags', 'nt_wpcf7sn_special_mail_tags', 10, 2 );
 
 
+/**
+ * メールタグを変換する。
+ *
+ * @param string $output メールタグの出力文字列
+ * @param string $mail_tag メールタグのタグ名
+ * @return string メールタグの出力文字列を返す。
+ */
 function nt_wpcf7sn_special_mail_tags( $output, $name ) {
 	
 	if ( preg_match( '/^_serial_number_[0-9]+$/', $name ) ) {

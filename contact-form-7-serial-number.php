@@ -14,25 +14,30 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
+/**
+ * プラグイン定義：設定関連
+ */
 define( 'NT_WPCF7SN_VERSION', '0.0.0' );
 
-// [contact-form-7-serial-number]
 define( 'NT_WPCF7SN_TEXT_DOMAIN', 'contact-form-7-serial-number' );
 
-// [\~\wp-content\plugins\contact-form-7-serial-number\contact-form-7-serial-number.php]
+/**
+ * プラグイン定義：パス関連
+ * 
+ * _PLUGIN          : ~\wp-content\plugins\plugin-name\plugin-name.php
+ * _PLUGIN_BASENAME : plugin-name\plugin-name.php
+ * _PLUGIN_NAME     : plugin-name
+ * _PLUGIN_DIR      : ~\wp-content\plugins\plugin-name
+ * _PLUGIN_URL      : ~/wp-content/plugins/plugin-name
+ */
 define( 'NT_WPCF7SN_PLUGIN', __FILE__ );
-
-// [contact-form-7-serial-number/contact-form-7-serial-number.php]
 define( 'NT_WPCF7SN_PLUGIN_BASENAME', plugin_basename( NT_WPCF7SN_PLUGIN ) );
-
-// [contact-form-7-serial-number]
 define( 'NT_WPCF7SN_PLUGIN_NAME', trim( dirname( NT_WPCF7SN_PLUGIN_BASENAME ), '/' ) );
-
-// [\~\wp-content\plugins\contact-form-7-serial-number]
 define( 'NT_WPCF7SN_PLUGIN_DIR', untrailingslashit( dirname( NT_WPCF7SN_PLUGIN ) ) );
-
-// [//~/wp-content/plugins/contact-form-7-serial-number]
 define( 'NT_WPCF7SN_PLUGIN_URL', untrailingslashit( plugins_url( '', NT_WPCF7SN_PLUGIN ) ) );
 
+
+/**
+ * ファイル読み込み
+ */
 require_once NT_WPCF7SN_PLUGIN_DIR . '/load.php';

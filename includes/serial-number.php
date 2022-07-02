@@ -4,6 +4,15 @@ if (!defined('ABSPATH')) exit;
 
 class NT_WPCF7SN_Serial_Number {
 
+	/**
+	 * シリアル番号を取得する。
+	 * 
+	 * カウント値が未指定の場合は現在の設定値を使用する。
+	 *
+	 * @param int $form_id コンタクトフォームID
+	 * @param int $count メールカウント (Default:false)
+	 * @return string シリアル番号を返す。
+	 */
 	public function get_serial_number( $form_id, $count = false ) {
 		$serial_num = '';
 
@@ -49,6 +58,11 @@ class NT_WPCF7SN_Serial_Number {
 		return $prefix . $serial_num;
 	}
 
+	/**
+	 * タイムスタンプ(UNIX時間)を取得する
+	 *
+	 * @return string タイムスタンプを返す。
+	 */
 	private function get_unix_timestamp() {
 		$timestamp = '';
 
@@ -58,6 +72,11 @@ class NT_WPCF7SN_Serial_Number {
 		return $timestamp;
 	}
 
+	/**
+	 * タイムスタンプ(日付)を取得する
+	 *
+	 * @return string タイムスタンプを返す。
+	 */
 	private function get_date_timestamp( $format ) {
 		$timestamp = '';
 
@@ -66,6 +85,12 @@ class NT_WPCF7SN_Serial_Number {
 		return $timestamp;
 	}
 
+	/**
+	 * ユニークIDを取得する。
+	 *
+	 * @param int $count メールカウント
+	 * @return string ユニークIDを返す。
+	 */
 	private function get_unique_id( $count ) {
 		$unique_id = '';
 
@@ -88,6 +113,13 @@ class NT_WPCF7SN_Serial_Number {
 		return $unique_id;
 	}
 
+	/**
+	 * カウント値を桁数表示に変換する。
+	 *
+	 * @param int $count メールカウント
+	 * @param int $digits 表示桁数
+	 * @return string 桁数表示のカウント値を返す。
+	 */
 	private function count_digits( $count, $digits ) {
 		if ( $digits == 0 ) {
 			return sprintf( "%d", $count );

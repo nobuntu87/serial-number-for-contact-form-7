@@ -1,7 +1,9 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
+/**
+ * ファイル読み込み
+ */
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
@@ -9,6 +11,9 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 
 class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
+	/**
+	 * コンストラクタ
+	 */
 	public function __construct() {
 		parent::__construct( array(
 			'plural'   => 'nt-wpcf7sn',
@@ -17,6 +22,13 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		) );
 	}
 
+	/**
+	 * カラム情報を取得する。
+	 * 
+	 * テーブルに表示するカラム情報を定義する。
+	 *
+	 * @return string[] カラム情報を返す。
+	 */
 	public function get_columns() {
 		$columns = array(
 			'mail_tag' => __( 'Mail-Tag', NT_WPCF7SN_TEXT_DOMAIN ),
@@ -26,6 +38,15 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		return $columns;
 	}
 
+	/**
+	 * 表示するアイテムリストを作成する。
+	 * 
+	 * カラムヘッダーを設定する。
+	 * 表示するアイテムリストを作成する。
+	 * ページ割りを設定する。
+	 *
+	 * @return void
+	 */
 	public function prepare_items() {
 		$columns = $this->get_columns();
 		$hidden = array();
@@ -42,6 +63,13 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		) );
 	}
 
+	/**
+	 * 表示するアイテムデータを取得する。
+	 * 
+	 * POSTデータからコンタクトフォーム情報を取得する。
+	 *
+	 * @return string[] 取得したPOSTデータを返す。
+	 */
 	public function get_contact_form_items(){
 		$data = get_posts( array(
 			'post_type'   => 'wpcf7_contact_form',
@@ -53,6 +81,12 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		return $data;
 	}
 
+	/**
+	 * 「メールタグ」カラムの内容を表示する。
+	 *
+	 * @param object[] $item 表示するアイテム配列 (コンタクトフォーム情報)
+	 * @return string 表示する出力文字列を返す。
+	 */
 	public function column_mail_tag( $item ) {
 		$output = '';
 
@@ -77,6 +111,12 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		return trim( $output );
 	}
 
+	/**
+	 * 「設定」カラムの内容を表示する。
+	 *
+	 * @param object[] $item 表示するアイテム配列 (コンタクトフォーム情報)
+	 * @return string 表示する出力文字列を返す。
+	 */
 	public function column_setting( $item ) {
 		$output = '';
 
@@ -130,6 +170,12 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		return trim( $output );
 	}
 
+	/**
+	 * 「カウント」カラムの内容を表示する。
+	 *
+	 * @param object[] $item 表示するアイテム配列 (コンタクトフォーム情報)
+	 * @return string 表示する出力文字列を返す。
+	 */
 	public function column_count( $item ) {
 		$output = '';
 
