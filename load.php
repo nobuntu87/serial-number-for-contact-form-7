@@ -118,6 +118,5 @@ class NT_WPCF7SN
  * @return void
  */
 function nt_wpcf7sn_init() {
-	$timezone = get_option( 'timezone_string', 'UTC' );
-	date_default_timezone_set( $timezone );
+	nt_wpcf7sn_set_timezone();
 }
