@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * タイムゾーン未指定の場合はWordPressのタイムゾーン設定を使用する。
  *
  * @param string $timezone_id タイムゾーンID (オプション)
- * @return bool タイムゾーンの設定結果を返す。
+ * @return bool タイムゾーンの設定結果true/falseを返す。
  */
 function nt_wpcf7sn_set_timezone( $timezone_id = false ) {
 	if ( false === $timezone_id ) {

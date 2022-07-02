@@ -15,7 +15,7 @@ add_filter( 'wpcf7_posted_data', 'nt_wpcf7sn_posted_data', 10, 1 );
 /**
  * メール送信後の処理を行う。
  *
- * @param object[] $contact_form コンタクトフォーム情報
+ * @param mixed[] $contact_form コンタクトフォーム情報
  * @return void
  */
 function nt_wpcf7sn_submit( $contact_form ) {
@@ -29,11 +29,10 @@ function nt_wpcf7sn_submit( $contact_form ) {
  * 
  * POSTデータにシリアル番号を追加する。
  *
- * @param object[] $posted_data POSTデータ
- * @return object[] POSTデータを返す。
+ * @param mixed[] $posted_data POSTデータ
+ * @return mixed[] POSTデータを返す。
  */
 function nt_wpcf7sn_posted_data( $posted_data ) {
-
 	if ( class_exists( 'WPCF7_Submission' ) ) {
 
 		$submission = WPCF7_Submission::get_instance();

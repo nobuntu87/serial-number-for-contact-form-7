@@ -10,7 +10,7 @@ class NT_WPCF7SN_Serial_Number {
 	 * カウント値が指定された場合は引数の値を使用する。
 	 *
 	 * @param int $form_id コンタクトフォームID
-	 * @param int $count メールカウント (Default:false)
+	 * @param int $count カウント (オプション)
 	 * @return string シリアル番号を返す。
 	 */
 	public function get_serial_number( $form_id, $count = false ) {
@@ -71,6 +71,7 @@ class NT_WPCF7SN_Serial_Number {
 	/**
 	 * タイムスタンプ(日付)を取得する
 	 *
+	 * @param string $format 表示フォーマット
 	 * @return string タイムスタンプを返す。
 	 */
 	private function get_date_timestamp( $format ) {
@@ -84,7 +85,7 @@ class NT_WPCF7SN_Serial_Number {
 	/**
 	 * ユニークIDを取得する。
 	 *
-	 * @param int $count メールカウント
+	 * @param int $count カウント
 	 * @return string ユニークIDを返す。
 	 */
 	private function get_unique_id( $count ) {
@@ -110,11 +111,11 @@ class NT_WPCF7SN_Serial_Number {
 	}
 
 	/**
-	 * カウント値を桁数表示に変換する。
+	 * カウントを桁数表示に変換する。
 	 *
-	 * @param int $count メールカウント
+	 * @param int $count カウント
 	 * @param int $digits 表示桁数
-	 * @return string 桁数表示のカウント値を返す。
+	 * @return string 桁数表示のカウントを返す。
 	 */
 	private function count_digits( $count, $digits ) {
 		if ( $digits == 0 ) {

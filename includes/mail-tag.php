@@ -20,7 +20,7 @@ function nt_wpcf7sn_special_mail_tags( $output, $name ) {
 	}
 
 	// メールタグからIDを取得
-	preg_match('/(?P<id>[0-9]+)$/', $name, $match);
+	preg_match( '/(?P<id>[0-9]+)$/', $name, $match );
 	$form_id = intval( $match['id'] );
 
 	if ( class_exists( 'WPCF7_Submission' ) ) {

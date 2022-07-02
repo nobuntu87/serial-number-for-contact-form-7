@@ -24,15 +24,16 @@ class NT_WPCF7SN
 {
 	
 	/**
-	 * オプション(コンタクトフォーム設定)を取得する。
+	 * コンタクトフォームのオプションを取得する。
 	 * 
+	 * 指定したコンタクトフォームのオプションを取得する。
 	 * オプションが未設定の場合はデフォルト値で初期化を行う。
 	 *
 	 * @param string $name オプション名
 	 * @param int $form_id コンタクトフォームID
-	 * @return string|int|bool オプションの設定値を返す。
-	 *                         オプションが未設定の場合はデフォルト値を返す。
-	 *                         オプション名が定義されていない場合はFALSEを返す。
+	 * @return mixed オプションの設定値を返す。
+	 *               オプションが未設定の場合はデフォルト値を返す。
+	 *               オプション名が定義されていない場合はfalseを返す。
 	 */
 	public function get_form_option( $name, $form_id ) {
 		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
@@ -62,10 +63,12 @@ class NT_WPCF7SN
 	}
 
 	/**
-	 * オプション(コンタクトフォーム全設定)を取得する。
+	 * コンタクトフォームのオプションを取得する。
+	 * 
+	 * 全てのコンタクトフォームのオプションを取得する。
 	 *
 	 * @param int $form_id コンタクトフォームID
-	 * @return string[] コンタクトフォームの全設定を返す。
+	 * @return mixed[] コンタクトフォームの全設定を返す。
 	 */
 	public function get_form_options( $form_id ) {
 		$form_options = [];
@@ -79,12 +82,12 @@ class NT_WPCF7SN
 	}
 
 	/**
-	 * オプション(コンタクトフォーム設定)を更新する。
+	 * コンタクトフォームのオプションを更新する。
 	 *
 	 * @param string $name オプション名
 	 * @param int $form_id コンタクトフォームID
 	 * @param mixed $option オプション値
-	 * @return bool オプション名が定義されていない場合はFALSEを返す。
+	 * @return bool オプション名が定義されていない場合はfalseを返す。
 	 */
 	public function update_form_option( $name, $form_id, $option ) {
 		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {

@@ -68,7 +68,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	 * 
 	 * POSTデータからコンタクトフォーム情報を取得する。
 	 *
-	 * @return string[] 取得したPOSTデータを返す。
+	 * @return mixed[] 取得したPOSTデータを返す。
 	 */
 	public function get_contact_form_items(){
 		$data = get_posts( array(
@@ -84,7 +84,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	/**
 	 * 「メールタグ」カラムの内容を表示する。
 	 *
-	 * @param object[] $item 表示するアイテム配列 (コンタクトフォーム情報)
+	 * @param mixed[] $item 表示するアイテム配列 (コンタクトフォーム情報)
 	 * @return string 表示する出力文字列を返す。
 	 */
 	public function column_mail_tag( $item ) {
@@ -116,7 +116,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	/**
 	 * 「設定」カラムの内容を表示する。
 	 *
-	 * @param object[] $item 表示するアイテム配列 (コンタクトフォーム情報)
+	 * @param mixed[] $item 表示するアイテム配列 (コンタクトフォーム情報)
 	 * @return string 表示する出力文字列を返す。
 	 */
 	public function column_setting( $item ) {
@@ -213,7 +213,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	/**
 	 * 「カウント」カラムの内容を表示する。
 	 *
-	 * @param object[] $item 表示するアイテム配列 (コンタクトフォーム情報)
+	 * @param mixed[] $item 表示するアイテム配列 (コンタクトフォーム情報)
 	 * @return string 表示する出力文字列を返す。
 	 */
 	public function column_count( $item ) {
