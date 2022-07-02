@@ -7,7 +7,7 @@ class NT_WPCF7SN_Serial_Number {
 	/**
 	 * シリアル番号を取得する。
 	 * 
-	 * カウント値が未指定の場合は現在の設定値を使用する。
+	 * カウント値が指定された場合は引数の値を使用する。
 	 *
 	 * @param int $form_id コンタクトフォームID
 	 * @param int $count メールカウント (Default:false)
@@ -16,20 +16,16 @@ class NT_WPCF7SN_Serial_Number {
 	public function get_serial_number( $form_id, $count = false ) {
 		$serial_num = '';
 
-		$type = intval( get_option( 'nt_wpcf7sn_type_' . $form_id ) );
-		$prefix = get_option( 'nt_wpcf7sn_prefix_' . $form_id );
-		$digits = intval( get_option( 'nt_wpcf7sn_digits_' . $form_id ) );
-		$separator = get_option( 'nt_wpcf7sn_separator_' . $form_id );
-		$year2dig = get_option( 'nt_wpcf7sn_year2dig_' . $form_id );
-		$nocount = get_option( 'nt_wpcf7sn_nocount_' . $form_id );
+		$option = NT_WPCF7SN::get_form_options( $form_id );
 
-		if ( false === $count ) {
-			$count = intval( get_option( 'nt_wpcf7sn_count_' . $form_id ) );
+		if ( false !== $count ) {
+			$option['count'] = intval( $count );
 		}
 
-		$num = self::count_digits( $count, $digits );
-		$sep = ( $separator == 'yes' ? '-' : '' );
+		$num = self::count_digits( $option['count'], $option['digits'] );
+		$sep = $option['separator'] == 'yes' ? '-' : '';
 
+		$type = $option['type'];
 		switch( $type ) {
 			case 0: // 通し番号
 				$serial_num = $num;
@@ -39,23 +35,23 @@ class NT_WPCF7SN_Serial_Number {
 				$serial_num = $time . $sep . $num;
 				break;
 			case 2: // タイムスタンプ (年月日)
-				$format = ( $year2dig == 'yes' ? 'ymd' : 'Ymd' );
+				$format = $option['year2dig'] == 'yes' ? 'ymd' : 'Ymd';
 				$date = self::get_date_timestamp( $format );
 				$serial_num = $date . $sep . $num;
 				break;
 			case 3: // タイムスタンプ (年月日+時分秒)
-				$format = ( $year2dig == 'yes' ? 'ymd' : 'Ymd' );
+				$format = $option['year2dig'] == 'yes' ? 'ymd' : 'Ymd';
 				$date = self::get_date_timestamp( $format );
 				$time = self::get_date_timestamp( 'His' );
 				$serial_num = $date . $sep . $time . $sep . $num;
 				break;
 			case 4: // ユニークID (英数字)
 				$id = self::get_unique_id( $count );
-				$serial_num = ( $nocount == 'yes' ? $id : $id . $sep . $num );
+				$serial_num = $option['nocount'] == 'yes' ? $id : $id . $sep . $num;
 				break;
 		}
 
-		return $prefix . $serial_num;
+		return $option['prefix'] . $serial_num;
 	}
 
 	/**
