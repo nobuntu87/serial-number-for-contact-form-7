@@ -51,7 +51,7 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
 
 
 /**
- * カウント値を増加する。
+ * メールカウントを増加する。
  *
  * @param int $form_id コンタクトフォームID
  * @return void
