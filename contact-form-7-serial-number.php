@@ -84,6 +84,8 @@ define( 'NT_WPCF7SN_FORM_OPTION', array(
 
 define( 'NT_WPCF7SN_MAIL_TAG', '_serial_number_' );
 
+define( 'NT_WPCF7SN_POST_FIELD', 'serial-number' );
+
 
 /**
  * ファイル読み込み

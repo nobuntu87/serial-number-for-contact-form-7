@@ -43,7 +43,7 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
 
 		$count = NT_WPCF7SN::get_form_option( 'count', $form_id );
 
-		$posted_data['serial-number'] = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $count + 1 );
+		$posted_data[NT_WPCF7SN_POST_FIELD] = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $count + 1 );
 	}
 
 	return $posted_data;

@@ -30,7 +30,7 @@ function nt_wpcf7sn_special_mail_tags( $output, $name ) {
 
 			// シリアル番号を取得
 			if ( $form_id == intval( $contact_form->id ) ) {
-				$output = $submission->get_posted_data( 'serial-number' );
+				$output = $submission->get_posted_data( NT_WPCF7SN_POST_FIELD );
 			}
 
 		}
