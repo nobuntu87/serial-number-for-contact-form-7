@@ -85,11 +85,15 @@ function nt_wpcf7sn_admin_enqueue_scripts( $hook_suffix ) {
  * @return string[] プラグインのアクションリンクを返す。
  */
 function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
-
-	if ( $plugin_file == NT_WPCF7SN_PLUGIN_BASENAME ) {
-		$settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=' . NT_WPCF7SN_PREFIX['-'] . '">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
-		array_unshift( $actions, $settings_link );
+	if ( NT_WPCF7SN_PLUGIN_BASENAME != $plugin_file ) {
+		return $actions;
 	}
+
+	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
+	$settings_link = '<a href="' . $page_url . '">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
+	
+	// 先頭に追加
+	array_unshift( $actions, $settings_link );
 
 	return $actions;
 }
