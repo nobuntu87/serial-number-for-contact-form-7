@@ -12,6 +12,7 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
  */
 add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 10, 0 );
 add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
+add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
 
 /**
  * フィルターフック設定
@@ -42,6 +43,8 @@ function nt_wpcf7sn_admin_menu() {
  */
 function nt_wpcf7sn_admin_management_page() {
 	$output = '';
+
+	do_action( 'nt_wpcf7sn_admin_warnings' );
 
 	$list_table = new NT_WPCF7SN_Contact_Forms_List_Table();
 	$list_table->prepare_items();
@@ -96,4 +99,39 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 	array_unshift( $actions, $settings_link );
 
 	return $actions;
+}
+
+
+/**
+ * WordPressバージョンのエラーメッセージを表示する。
+ *
+ * 要求バージョンを満たさない場合にエラーメッセージ表示する。
+ * 
+ * @return void
+ */
+function nt_wpcf7sn_wp_version_error() {
+	$wp_current_ver = get_bloginfo( 'version' );
+	$wp_require_ver = NT_WPCF7SN_REQUIRED_WP_VERSION;
+
+	if ( ! version_compare( $wp_current_ver, $wp_require_ver, '<' ) ) {
+		return;
+	}
+
+	$message = sprintf(
+		__(
+			'<strong>Contact Form 7 Serial Number Addon %1$s requires WordPress %2$s or higher.</strong>'
+			. ' Please <a href="%3$s">update WordPress</a> first.'
+			, NT_WPCF7SN_TEXT_DOMAIN
+		),
+		NT_WPCF7SN_VERSION,
+		NT_WPCF7SN_REQUIRED_WP_VERSION,
+		admin_url( 'update-core.php' )
+	);
+
+	$output = ''
+	. '<div class="notice notice-warning">'
+	. '  <p> ' . $message . '</p>'
+	. '</div>';
+	
+	echo trim( $output );
 }
