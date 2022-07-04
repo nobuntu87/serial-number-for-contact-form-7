@@ -235,7 +235,47 @@ class NT_WPCF7SN
 		}
 	}
 
+	/**
+	 * プラグインのオプションを取得する。
+	 * 
+	 * DBに存在しない場合デフォルト値を設定する。
+	 *
+	 * @param string $name オプション名
+	 * @param mixed $default デフォルト値 (オプション)
+	 * @return mixed プラグインのオプションを返す。
+	 */
+	public function get_option( $name, $default = false ) {
+		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
 
+		if ( false === $option ) {
+			self::update_option( $name, $default );
+			return $default;
+		}
+
+		if ( isset( $option[$name] ) ) {
+			return $option[$name];
+		} else {
+			self::update_option( $name, $default );
+			return $default;
+		}
+	}
+
+	/**
+	 * プラグインのオプションを更新する。
+	 *
+	 * @param string $name オプション名
+	 * @param mixed $value オプション値
+	 * @return void
+	 */
+	public function update_option( $name, $value ) {
+		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
+
+		$option = ( false === $option ) ? array() : (array) $option;
+
+		$option = array_merge( $option, array( $name => $value ) );
+
+		update_option( NT_WPCF7SN_PREFIX['_'], $option );
+	}
 
 }
 
