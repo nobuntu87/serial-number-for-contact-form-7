@@ -40,7 +40,7 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
 		$contact_form = $submission->get_contact_form();
 		$form_id = intval( $contact_form->id );
 
-		$count = NT_WPCF7SN::get_form_option( 'count', $form_id );
+		$count = NT_WPCF7SN::get_form_option( $form_id, 'count' );
 		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $count + 1 );
 
 		$posted_data[NT_WPCF7SN_POST_FIELD] = $serial_num;
@@ -57,6 +57,6 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
  * @return void
  */
 function nt_wpcf7sn_increment_count( $form_id ) {
-	$count = NT_WPCF7SN::get_form_option( 'count', $form_id );
-	NT_WPCF7SN::update_form_option( 'count', $form_id, $count + 1 );
+	$count = NT_WPCF7SN::get_form_option( $form_id, 'count' );
+	NT_WPCF7SN::update_form_option( $form_id, 'count', $count + 1 );
 }

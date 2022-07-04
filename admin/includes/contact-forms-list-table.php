@@ -126,14 +126,17 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$option = NT_WPCF7SN::get_form_options( $form_id );
 
-		$option_key = array(
-			'type'      => NT_WPCF7SN_FORM_OPTION['type']['key'] . $form_id,
-			'digits'    => NT_WPCF7SN_FORM_OPTION['digits']['key'] . $form_id,
-			'prefix'    => NT_WPCF7SN_FORM_OPTION['prefix']['key'] . $form_id,
-			'separator' => NT_WPCF7SN_FORM_OPTION['separator']['key'] . $form_id,
-			'year2dig'  => NT_WPCF7SN_FORM_OPTION['year2dig']['key'] . $form_id,
-			'nocount'   => NT_WPCF7SN_FORM_OPTION['nocount']['key'] . $form_id,
-		);
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
+
+		$option_key = [];
+		foreach( $option as $key => $value ) {
+			$option_key[$key] = $option_name . '[' . $key . ']';
+		}
+
+		$page_options = '';
+		foreach( $option as $key => $value ) {
+			$page_options .= '<input type="hidden" name="' . $option_key[$key] . '" value="' . $option[$key] . '" />';
+		}
 
 		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $option['count'] + 1 );
 
@@ -141,7 +144,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_setting_' . $form_id . '" class="' . NT_WPCF7SN_PREFIX['_'] . '_setting clearfix">'
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
 		. '    <input type="hidden" name="action" value="update" />'
-		. '    <input type="hidden" name="page_options" value="' . esc_attr( implode( ',', $option_key ) ) . '" />'
+		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '" />' . $page_options
 		. '    <div class="item-box type">'
 		. '      <h4 class="item-title">' . __( 'Type', NT_WPCF7SN_TEXT_DOMAIN ) . '</h4>'
 		. '      <div class="item radio"><label>'
@@ -223,15 +226,23 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$option = NT_WPCF7SN::get_form_options( $form_id );
 
-		$option_key = array(
-			'count'   => NT_WPCF7SN_FORM_OPTION['count']['key'] . $form_id,
-		);
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
+
+		$option_key = [];
+		foreach( $option as $key => $value ) {
+			$option_key[$key] = $option_name . '[' . $key . ']';
+		}
+
+		$page_options = '';
+		foreach( $option as $key => $value ) {
+			$page_options .= '<input type="hidden" name="' . $option_key[$key] . '" value="' . $option[$key] . '" />';
+		}
 
 		$output .= ''
 		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_count_' . $form_id . '" class="' . NT_WPCF7SN_PREFIX['_'] . '_count clearfix">'
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
 		. '    <input type="hidden" name="action" value="update" />'
-		. '    <input type="hidden" name="page_options" value="' . esc_attr( implode( ',', $option_key ) ) . '" />'
+		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '" />' . $page_options
 		. '    <div class="item-box count">'
 		. '      <h4 class="item-title">' . __( 'Current Count', NT_WPCF7SN_TEXT_DOMAIN ) . '</h4>'
 		. '      <div class="item text">'

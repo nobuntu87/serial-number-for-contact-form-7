@@ -24,93 +24,130 @@ class NT_WPCF7SN
 {
 	
 	/**
-	 * コンタクトフォームのオプションを取得する。
+	 * コンタクトフォームのオプションをセットアップする。
 	 * 
-	 * 指定したコンタクトフォームのオプションを取得する。
-	 * オプションが未設定の場合はデフォルト値で初期化を行う。
+	 * デフォルト値で初期化しDBに保存する。
 	 *
-	 * @param string $name オプション名
 	 * @param int $form_id コンタクトフォームID
-	 * @return mixed オプションの設定値を返す。
-	 *               オプションが未設定の場合はデフォルト値を返す。
-	 *               オプション名が定義されていない場合はfalseを返す。
+	 * @return mixed[] コンタクトフォームのオプションを返す。
 	 */
-	public function get_form_option( $name, $form_id ) {
-		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
-			return false;
-		}
-	
-		$key = NT_WPCF7SN_FORM_OPTION[$name]['key'] . $form_id;
-		$default = NT_WPCF7SN_FORM_OPTION[$name]['default'];
+	public function setup_form_options( $form_id ) {
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
-		// DBからオプション値を取得
-		$option = get_option( $key );
-		if ( false === $option ) {
-			update_option( $key, $default );
-			return $default;
+		$option_value = [];
+
+		// 全てのオプションを設定
+		foreach( NT_WPCF7SN_FORM_OPTION as $key => $value ) {
+			$default = $value['default'];
+
+			// 変数型の変換
+			$type = $value['type'];
+			switch ( $type ) {
+				case 'int' :
+					$default = intval( $default );
+					break;
+				case 'string' :
+					$default = strval( $default );
+					break;
+				default :
+			}
+			
+			$option_value[$key] = $default;
 		}
 
-		// 変数型の変換
-		$type = NT_WPCF7SN_FORM_OPTION[$name]['type'];
-		switch ( $type ) {
-			case 'int' :
-				return intval( $option );
-			case 'string' :
-				return strval( $option );
-			default :
-				return $option;
-		}
+		update_option( $option_name, $option_value );
+
+		return $option_value;
 	}
 
 	/**
 	 * コンタクトフォームのオプションを取得する。
 	 * 
-	 * 全てのコンタクトフォームのオプションを取得する。
-	 *
+	 * DBに存在しない場合は初期化し新規追加する。
+	 * 
 	 * @param int $form_id コンタクトフォームID
-	 * @return mixed[] コンタクトフォームの全設定を返す。
+	 * @return mixed[] コンタクトフォームのオプションを返す。
 	 */
 	public function get_form_options( $form_id ) {
-		$form_options = [];
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 		
-		// 全てのオプション値を取得
-		foreach( NT_WPCF7SN_FORM_OPTION as $key => $value ) {
-			$form_options[$key] = self::get_form_option( $key, $form_id );
+		$option_value = get_option( $option_name );
+
+		// DBに存在しない場合はセットアップ
+		if ( false === $option_value ) {
+			return self::setup_form_options( $form_id );
 		}
 
-		return $form_options;
+		// 変数型の変換
+		foreach( $option_value as $key => $value ) {
+			$type = NT_WPCF7SN_FORM_OPTION[$key]['type'];
+			switch ( $type ) {
+				case 'int' :
+					$option_value[$key] = intval( $value );
+					break;
+				case 'string' :
+					$option_value[$key] = strval( $value );
+					break;
+				default :
+			}
+		}
+
+		return $option_value;
+	}
+
+	/**
+	 * コンタクトフォームのオプションを取得する。
+	 *
+	 * @param int $form_id コンタクトフォームID
+	 * @param string $name オプション名
+	 * @return mixed コンタクトフォームのオプションを返す。
+	 */
+	public function get_form_option( $form_id, $name ) {
+		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
+			return false;
+		}
+
+		$option_value = self::get_form_options( $form_id );
+
+		if ( isset( $option_value[$name] ) ) {
+			return $option_value[$name];
+		} else {
+			return NT_WPCF7SN_FORM_OPTION[$name]['default'];
+		}
 	}
 
 	/**
 	 * コンタクトフォームのオプションを更新する。
 	 *
-	 * @param string $name オプション名
 	 * @param int $form_id コンタクトフォームID
-	 * @param mixed $option オプション値
+	 * @param string $name オプション名
+	 * @param mixed $value オプション値
 	 * @return bool オプション名が定義されていない場合はfalseを返す。
 	 */
-	public function update_form_option( $name, $form_id, $option ) {
+	public function update_form_option( $form_id, $name, $value ) {
 		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
 			return false;
 		}
 
-		$key = NT_WPCF7SN_FORM_OPTION[$name]['key'] . $form_id;
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
+
+		$option_value = self::get_form_options( $form_id );
 
 		// 変数型の変換
 		$type = NT_WPCF7SN_FORM_OPTION[$name]['type'];
 		switch ( $type ) {
 			case 'int' :
-				$option = intval( $option );
+				$value = intval( $value );
 				break;
 			case 'string' :
-				$option = strval( $option );
+				$value = strval( $value );
 				break;
 			default :
-				break;
 		}
 
-		// DBにオプション値を設定
-		update_option( $key, $option );
+		$option_value = array_merge( $option_value, array( $name => $value ) );
+
+		update_option( $option_name, $option_value );
 	}
 
 }

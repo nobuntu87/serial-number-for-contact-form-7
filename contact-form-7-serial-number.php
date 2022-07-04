@@ -46,42 +46,16 @@ define( 'NT_WPCF7SN_PLUGIN_URL', untrailingslashit( plugins_url( '', NT_WPCF7SN_
 /**
  * プラグイン定義：オプション関連
  */
+define( 'NT_WPCF7SN_FORM_OPTION_NAME', NT_WPCF7SN_PREFIX['_'] . '_form_' );
+
 define( 'NT_WPCF7SN_FORM_OPTION', array(
-	'type' => array(
-		'key'     => NT_WPCF7SN_PREFIX['_'] . '_type_',
-		'default' => 0,
-		'type'    => 'int',
-	),
-	'count' => array(
-		'key'     => NT_WPCF7SN_PREFIX['_'] . '_count_',
-		'default' => 0,
-		'type'    => 'int',
-	),
-	'digits' => array(
-		'key'     => NT_WPCF7SN_PREFIX['_'] . '_digits_',
-		'default' => 1,
-		'type'    => 'int',
-	),
-	'prefix' => array(
-		'key'     => NT_WPCF7SN_PREFIX['_'] . '_prefix_',
-		'default' => '',
-		'type'    => 'string',
-	),
-	'separator' => array(
-		'key'     => NT_WPCF7SN_PREFIX['_'] . '_separator_',
-		'default' => '',
-		'type'    => 'string',
-	),
-	'year2dig' => array(
-		'key'     => NT_WPCF7SN_PREFIX['_'] . '_year2dig_',
-		'default' => '',
-		'type'    => 'string',
-	),
-	'nocount' => array(
-		'key'     => NT_WPCF7SN_PREFIX['_'] . '_nocount_',
-		'default' => '',
-		'type'    => 'string',
-	),
+	'type'      => array( 'default' => 0,  'type' => 'int'    ),
+	'count'     => array( 'default' => 0,  'type' => 'int'    ),
+	'digits'    => array( 'default' => 1,  'type' => 'int'    ),
+	'prefix'    => array( 'default' => '', 'type' => 'string' ),
+	'separator' => array( 'default' => '', 'type' => 'string' ),
+	'year2dig'  => array( 'default' => '', 'type' => 'string' ),
+	'nocount'   => array( 'default' => '', 'type' => 'string' ),
 ) );
 
 define( 'NT_WPCF7SN_MAIL_TAG', '_serial_number_' );
