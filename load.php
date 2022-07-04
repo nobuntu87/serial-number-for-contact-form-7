@@ -44,7 +44,7 @@ class NT_WPCF7SN
 			// 変数型の変換
 			$type = $value['type'];
 			switch ( $type ) {
-				case 'int' :
+				case 'integer' :
 					$default = intval( $default );
 					break;
 				case 'string' :
@@ -83,7 +83,7 @@ class NT_WPCF7SN
 		foreach( $option_value as $key => $value ) {
 			$type = NT_WPCF7SN_FORM_OPTION[$key]['type'];
 			switch ( $type ) {
-				case 'int' :
+				case 'integer' :
 					$option_value[$key] = intval( $value );
 					break;
 				case 'string' :
@@ -137,7 +137,7 @@ class NT_WPCF7SN
 		// 変数型の変換
 		$type = NT_WPCF7SN_FORM_OPTION[$name]['type'];
 		switch ( $type ) {
-			case 'int' :
+			case 'integer' :
 				$value = intval( $value );
 				break;
 			case 'string' :

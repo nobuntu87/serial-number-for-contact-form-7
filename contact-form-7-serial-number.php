@@ -49,13 +49,13 @@ define( 'NT_WPCF7SN_PLUGIN_URL', untrailingslashit( plugins_url( '', NT_WPCF7SN_
 define( 'NT_WPCF7SN_FORM_OPTION_NAME', NT_WPCF7SN_PREFIX['_'] . '_form_' );
 
 define( 'NT_WPCF7SN_FORM_OPTION', array(
-	'type'      => array( 'default' => 0,  'type' => 'int'    ),
-	'count'     => array( 'default' => 0,  'type' => 'int'    ),
-	'digits'    => array( 'default' => 1,  'type' => 'int'    ),
-	'prefix'    => array( 'default' => '', 'type' => 'string' ),
-	'separator' => array( 'default' => '', 'type' => 'string' ),
-	'year2dig'  => array( 'default' => '', 'type' => 'string' ),
-	'nocount'   => array( 'default' => '', 'type' => 'string' ),
+	'type'      => array( 'default' => 0,  'type' => 'integer' ),
+	'count'     => array( 'default' => 0,  'type' => 'integer' ),
+	'digits'    => array( 'default' => 1,  'type' => 'integer' ),
+	'prefix'    => array( 'default' => '', 'type' => 'string'  ),
+	'separator' => array( 'default' => '', 'type' => 'string'  ),
+	'year2dig'  => array( 'default' => '', 'type' => 'string'  ),
+	'nocount'   => array( 'default' => '', 'type' => 'string'  ),
 ) );
 
 define( 'NT_WPCF7SN_MAIL_TAG', '_serial_number_' );
