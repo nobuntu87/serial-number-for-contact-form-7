@@ -18,6 +18,7 @@ if ( is_admin() ) {
  * アクションフック設定
  */
 add_action( 'init', 'nt_wpcf7sn_init', 10, 0 );
+add_action( 'admin_init', 'nt_wpcf7sn_upgrade', 10, 0 );
 
 
 class NT_WPCF7SN
@@ -160,4 +161,14 @@ class NT_WPCF7SN
  */
 function nt_wpcf7sn_init() {
 	nt_wpcf7sn_set_timezone();
+}
+
+
+/**
+ * プラグインのアップグレードを行う。
+ * 
+ * @return void
+ */
+function nt_wpcf7sn_upgrade() {
+
 }
