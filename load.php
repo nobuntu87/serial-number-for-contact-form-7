@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * ファイル読み込み
  */
 require_once NT_WPCF7SN_PLUGIN_DIR . '/includes/functions.php';
+require_once NT_WPCF7SN_PLUGIN_DIR . '/includes/form-options.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/includes/serial-number.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/includes/submission.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/includes/mail-tag.php';
