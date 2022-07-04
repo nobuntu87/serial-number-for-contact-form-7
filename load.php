@@ -151,6 +151,48 @@ class NT_WPCF7SN
 		update_option( $option_name, $option_value );
 	}
 
+	/**
+	 * プラグインのオプションを取得する。
+	 * 
+	 * DBに存在しない場合デフォルト値を設定する。
+	 *
+	 * @param string $name オプション名
+	 * @param mixed $default デフォルト値 (オプション)
+	 * @return mixed プラグインのオプションを返す。
+	 */
+	public function get_option( $name, $default = false ) {
+		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
+
+		if ( false === $option ) {
+			self::update_option( $name, $default );
+			return $default;
+		}
+
+		if ( isset( $option[$name] ) ) {
+			return $option[$name];
+		} else {
+			self::update_option( $name, $default );
+			return $default;
+		}
+	}
+
+	/**
+	 * プラグインのオプションを更新する。
+	 *
+	 * @param string $name オプション名
+	 * @param mixed $value オプション値
+	 * @return void
+	 */
+	public function update_option( $name, $value ) {
+		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
+
+		$option = ( false === $option ) ? array() : (array) $option;
+
+		$option = array_merge( $option, array( $name => $value ) );
+
+		update_option( NT_WPCF7SN_PREFIX['_'], $option );
+	}
+
 }
 
 
@@ -167,8 +209,18 @@ function nt_wpcf7sn_init() {
 /**
  * プラグインのアップグレードを行う。
  * 
+ * バージョン番号が変化した場合にアップグレード処理を行う。
+ * 
  * @return void
  */
 function nt_wpcf7sn_upgrade() {
+	$old_ver = NT_WPCF7SN::get_option( 'version', '0' );
+	$new_ver = NT_WPCF7SN_VERSION;
 
+	if ( $old_ver == $new_ver ) {
+		return;
+	}
+
+	// バージョン更新
+	NT_WPCF7SN::update_option( 'version', $new_ver );
 }
