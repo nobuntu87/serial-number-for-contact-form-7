@@ -102,6 +102,7 @@ class NT_WPCF7SN
 	 * @param int $form_id コンタクトフォームID
 	 * @param string $name オプション名
 	 * @return mixed コンタクトフォームのオプションを返す。
+	 *               オプション名が定義されていない場合はfalseを返す。
 	 */
 	public function get_form_option( $form_id, $name ) {
 		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
@@ -152,46 +153,89 @@ class NT_WPCF7SN
 	}
 
 	/**
-	 * プラグインのオプションを取得する。
-	 * 
-	 * DBに存在しない場合デフォルト値を設定する。
+	 * コンタクトフォームのオプションを削除する。
 	 *
+	 * @param int $form_id コンタクトフォームID
 	 * @param string $name オプション名
-	 * @param mixed $default デフォルト値 (オプション)
-	 * @return mixed プラグインのオプションを返す。
+	 * @return void
 	 */
-	public function get_option( $name, $default = false ) {
-		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
+	public function delete_form_option( $form_id, $name ) {
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
-		if ( false === $option ) {
-			self::update_option( $name, $default );
-			return $default;
-		}
+		$option_value = self::get_form_options( $form_id );
 
-		if ( isset( $option[$name] ) ) {
-			return $option[$name];
-		} else {
-			self::update_option( $name, $default );
-			return $default;
+		unset( $option_value[$name] );
+
+		update_option( $option_name, $option_value );
+	}
+
+	/**
+	 * コンタクトフォームのオプションの整合性をチェックする。
+	 * 
+	 * DBに存在するすべてのオプションをチェックする。
+	 *
+	 * @return void
+	 */
+	public function check_form_options() {
+		global $wpdb;
+	
+		$options = $wpdb->get_results( "
+			SELECT * FROM $wpdb->options
+			WHERE option_name like '" . NT_WPCF7SN_FORM_OPTION_NAME . "%'
+		" );
+	
+		foreach ( $options as $option ) {
+			$option_name = $option->option_name;
+
+			preg_match( '/(?P<id>[0-9]+)$/', $option_name, $match );
+			$form_id = intval( $match['id'] );
+
+			self::check_form_option( $form_id );
 		}
 	}
 
 	/**
-	 * プラグインのオプションを更新する。
+	 * コンタクトフォームのオプションの整合性をチェックする。
+	 * 
+	 * 不要(削除)オプションをチェックする。 (DB[有]/定義[無])
+	 * 不足(追加)オプションをチェックする。 (DB[無]/定義[有])
 	 *
-	 * @param string $name オプション名
-	 * @param mixed $value オプション値
+	 * @param int $form_id コンタクトフォームID
 	 * @return void
 	 */
-	public function update_option( $name, $value ) {
-		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
+	public function check_form_option( $form_id ) {
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
-		$option = ( false === $option ) ? array() : (array) $option;
+		$option_value = get_option( $option_name );
 
-		$option = array_merge( $option, array( $name => $value ) );
+		// DBに存在しない場合は終了
+		if ( false === $option_value ) {
+			return;
+		}
 
-		update_option( NT_WPCF7SN_PREFIX['_'], $option );
+		// 整合性チェック：DB[有] / 定義[無] = 不要(削除オプション)
+		foreach ( $option_value as $key => $value ) {
+			if ( ! isset( NT_WPCF7SN_FORM_OPTION[$key] ) ) {
+				self::delete_form_option( $form_id, $key );
+			} else {
+				// 変数型チェック
+				$type = NT_WPCF7SN_FORM_OPTION[$key]['type'];
+				if ( $type != gettype( $value ) ){
+					self::update_form_option( $form_id, $key, $value );
+				}
+			}
+		}
+
+		// 整合性チェック：DB[無] / 定義[有] = 不足(追加オプション)
+		foreach( NT_WPCF7SN_FORM_OPTION as $key => $value ) {
+			if ( ! isset( $option_value[$key] ) ) {
+				$default = $value['default'];
+				self::update_form_option( $form_id, $key, $default );
+			}
+		}
 	}
+
+
 
 }
 
@@ -210,7 +254,8 @@ function nt_wpcf7sn_init() {
  * プラグインのアップグレードを行う。
  * 
  * バージョン番号が変化した場合にアップグレード処理を行う。
- * 
+ * オプションデータの整合性チェックを行う。
+ *
  * @return void
  */
 function nt_wpcf7sn_upgrade() {
@@ -223,4 +268,7 @@ function nt_wpcf7sn_upgrade() {
 
 	// バージョン更新
 	NT_WPCF7SN::update_option( 'version', $new_ver );
+
+	// フォームオプションのチェック
+	NT_WPCF7SN::check_form_options();
 }
