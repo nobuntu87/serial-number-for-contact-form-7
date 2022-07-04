@@ -186,16 +186,19 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '        (' . __( '1~9 digits', NT_WPCF7SN_TEXT_DOMAIN ) . ')'
 		. '      </div>'
 		. '      <div class="item check"><label>'
+		. '        <input type="hidden"   name="' . $option_key['separator'] . '" />'
 		. '        <input type="checkbox" name="' . $option_key['separator'] . '"'
 		. '               value="yes" '. ( $option['separator'] == 'yes' ? 'checked' : '' ) . ' />'
 		.          __( 'Display the delimiter "-".', NT_WPCF7SN_TEXT_DOMAIN )
 		. '      </label></div>'
 		. '      <div class="item check"><label>'
+		. '        <input type="hidden"   name="' . $option_key['year2dig'] . '" />'
 		. '        <input type="checkbox" name="' . $option_key['year2dig'] . '"'
 		. '               value="yes" '. ( $option['year2dig'] == 'yes' ? 'checked' : '' ) . ' />'
 		.          __( 'Omit the number of years to 2 digits.', NT_WPCF7SN_TEXT_DOMAIN )
 		. '      </label></div>'
 		. '      <div class="item check"><label>'
+		. '        <input type="hidden"   name="' . $option_key['nocount'] . '" />'
 		. '        <input type="checkbox" name="' . $option_key['nocount'] . '"'
 		. '               value="yes" '. ( $option['nocount'] == 'yes' ? 'checked' : '' ) . ' />'
 		.          __( 'Don\'t display count with unique ID.', NT_WPCF7SN_TEXT_DOMAIN )
