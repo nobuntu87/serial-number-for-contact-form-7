@@ -149,5 +149,13 @@ function nt_wpcf7sn_create_form( $wpcf7_object ) {
  * @return void
  */
 function nt_wpcf7sn_delete_form( $post_id, $post_data ) {
+	if ( 'wpcf7_contact_form' != $post_data->post_type ) {
+		return;
+	}
 
+	$form_id = intval( $post_data->ID );
+
+	$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
+
+	delete_option( $option_name );
 }
