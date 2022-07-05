@@ -22,6 +22,7 @@ add_action( 'init', 'nt_wpcf7sn_init', 10, 0 );
 add_action( 'admin_init', 'nt_wpcf7sn_upgrade', 10, 0 );
 add_action( 'activate_' . NT_WPCF7SN_PLUGIN_BASENAME, 'nt_wpcf7sn_install', 10, 0 );
 add_action( 'wpcf7_after_create', 'nt_wpcf7sn_create_form', 10, 1 );
+add_action( 'delete_post', 'nt_wpcf7sn_delete_form', 10, 2 );
 
 
 class NT_WPCF7SN {
@@ -132,5 +133,19 @@ function nt_wpcf7sn_install() {
  * @return void
  */
 function nt_wpcf7sn_create_form( $wpcf7_object ) {
+
+}
+
+
+/**
+ * コンタクトフォームが削除された時の処理を行う。
+ * 
+ * 対象のフォームオプションを削除する。
+ *
+ * @param int $post_id PostID
+ * @param mixed $post_data Postオブジェクト (WP_Post)
+ * @return void
+ */
+function nt_wpcf7sn_delete_form( $post_id, $post_data ) {
 
 }
