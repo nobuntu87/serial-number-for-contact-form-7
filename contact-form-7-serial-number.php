@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Contact Form 7 Serial Number Addon
+Plugin Name: Serial Number for Contact Form 7
 Plugin URI: 
 Description: An add-on for the Contact Form 7 plugin. Add a mail-tag to display the serial number.
 Author: Nobuntu

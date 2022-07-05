@@ -29,7 +29,7 @@ add_filter( 'set_screen_option_nt_wpcf7sn_form_option_per_page', 'nt_wpcf7sn_set
  */
 function nt_wpcf7sn_admin_menu() {
 	add_options_page(
-		__( 'Contact Form 7 Serial Number Addon', NT_WPCF7SN_TEXT_DOMAIN ),
+		__( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ),
 		__( 'CF7 Serial Number', NT_WPCF7SN_TEXT_DOMAIN ),
 		'manage_options',
 		NT_WPCF7SN_PREFIX['-'],
@@ -53,7 +53,7 @@ function nt_wpcf7sn_admin_management_page() {
 	
 	$output = ''
 	. '<div class="wrap">'
-	. '  <h2> ' . __( 'Contact Form 7 Serial Number Addon', NT_WPCF7SN_TEXT_DOMAIN ) . '</h2>'
+	. '  <h2> ' . __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) . '</h2>'
 	. '</div>';
 	
 	echo trim( $output );
@@ -149,7 +149,7 @@ function nt_wpcf7sn_wp_version_error() {
 
 	$message = sprintf(
 		__(
-			'<strong>Contact Form 7 Serial Number Addon %1$s requires WordPress %2$s or higher.</strong>'
+			'<strong>Serial Number for Contact Form 7 %1$s requires WordPress %2$s or higher.</strong>'
 			. ' Please <a href="%3$s">update WordPress</a> first.'
 			, NT_WPCF7SN_TEXT_DOMAIN
 		),
