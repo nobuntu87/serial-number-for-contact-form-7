@@ -12,6 +12,7 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
  */
 add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 10, 0 );
 add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
+add_action( 'load-settings_page_nt-wpcf7sn', 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
 add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
 
 /**
@@ -99,6 +100,18 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 	array_unshift( $actions, $settings_link );
 
 	return $actions;
+}
+
+
+/**
+ * 管理ページ読み込み時の処理を行う。
+ * 
+ * 表示オプションの設定を行う。
+ *
+ * @return void
+ */
+function nt_wpcf7sn_load_admin_management_page() {
+
 }
 
 
