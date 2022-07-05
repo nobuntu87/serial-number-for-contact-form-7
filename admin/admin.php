@@ -111,7 +111,10 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
  * @return void
  */
 function nt_wpcf7sn_load_admin_management_page() {
-
+	add_screen_option( 'per_page', array(
+		'default' => 5,
+		'option'  => 'nt_wpcf7sn_form_option_per_page',
+	) );
 }
 
 
