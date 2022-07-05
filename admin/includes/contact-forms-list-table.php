@@ -54,12 +54,18 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		$data = $this->get_contact_form_items();
+
+		$per_page = $this->get_items_per_page( 'nt_wpcf7sn_form_option_per_page' );
+		$current_page = $this->get_pagenum();
+		$total_items = count( $data );
+
+		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
 		$this->items = $data;
 
 		$this->set_pagination_args( array(
-			'total_items' => count( $data ),
-			'total_pages' => 0,
-			'per_page'    => 0,
+			'per_page'    => $per_page,
+			'total_items' => $total_items,
+			'total_pages' => ceil( $total_items / $per_page ),
 		) );
 	}
 
