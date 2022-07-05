@@ -48,18 +48,28 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	 * @return void
 	 */
 	public function prepare_items() {
+		// カラムヘッダー設定
 		$columns = $this->get_columns();
 		$hidden = array();
 		$sortable = array();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
+		// データ取得
 		$data = $this->get_contact_form_items();
+
+		// ページネーション設定
+		$per_page = $this->get_items_per_page( 'nt_wpcf7sn_form_option_per_page' );
+		$current_page = $this->get_pagenum();
+		$total_items = count( $data );
+
+		// 表示データ設定
+		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
 		$this->items = $data;
 
 		$this->set_pagination_args( array(
-			'total_items' => count( $data ),
-			'total_pages' => 0,
-			'per_page'    => 0,
+			'per_page'    => $per_page,
+			'total_items' => $total_items,
+			'total_pages' => ceil( $total_items / $per_page ),
 		) );
 	}
 
@@ -72,11 +82,12 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	 */
 	public function get_contact_form_items(){
 		$data = get_posts( array(
-			'post_type'   => 'wpcf7_contact_form',
+			'post_type'      => 'wpcf7_contact_form',
+			'post_status'    => 'publish',
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
 			'posts_per_page' => -1,
-			'orderby' => 'title',
-			'order' => 'ASC',
-			'offset' => 0,
+			'offset'         => 0,
 		) );
 		return $data;
 	}
