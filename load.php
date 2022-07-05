@@ -102,7 +102,7 @@ function nt_wpcf7sn_upgrade() {
 	NT_WPCF7SN::update_option( 'version', $new_ver );
 
 	// フォームオプションのチェック
-	NT_WPCF7SN_Form_Options::check_form_options();
+	NT_WPCF7SN_Form_Options::check_all_options();
 }
 
 
@@ -118,7 +118,7 @@ function nt_wpcf7sn_install() {
 		return;
 	}
 
-	NT_WPCF7SN_Form_Options::setup_all_form_options();
+	NT_WPCF7SN_Form_Options::setup_all_options();
 
 	nt_wpcf7sn_upgrade();
 }
@@ -135,7 +135,7 @@ function nt_wpcf7sn_install() {
 function nt_wpcf7sn_create_form( $wpcf7_object ) {
 	$form_id = intval(  $wpcf7_object->__get( 'id' ) );
 
-	NT_WPCF7SN_Form_Options::setup_form_options( $form_id );
+	NT_WPCF7SN_Form_Options::setup_options( $form_id );
 }
 
 

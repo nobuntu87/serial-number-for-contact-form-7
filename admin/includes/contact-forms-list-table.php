@@ -124,7 +124,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$form_id = intval( $item->ID );
 
-		$option = NT_WPCF7SN_Form_Options::get_form_options( $form_id );
+		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
@@ -227,7 +227,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$form_id = intval( $item->ID );
 
-		$option = NT_WPCF7SN_Form_Options::get_form_options( $form_id );
+		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
