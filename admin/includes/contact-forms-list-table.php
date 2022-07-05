@@ -48,17 +48,21 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	 * @return void
 	 */
 	public function prepare_items() {
+		// カラムヘッダー設定
 		$columns = $this->get_columns();
 		$hidden = array();
 		$sortable = array();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
+		// データ取得
 		$data = $this->get_contact_form_items();
 
+		// ページネーション設定
 		$per_page = $this->get_items_per_page( 'nt_wpcf7sn_form_option_per_page' );
 		$current_page = $this->get_pagenum();
 		$total_items = count( $data );
 
+		// 表示データ設定
 		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
 		$this->items = $data;
 
