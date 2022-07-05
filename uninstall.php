@@ -11,10 +11,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 function nt_wpcf7sn_delete_plugin() {
 	global $wpdb;
 
-	// プラグインオプション削除
+	// プラグインのオプションを削除
 	delete_option( 'nt_wpcf7sn' );
 
-	// コンタクトフォームオプション削除
+	// コンタクトフォームのオプションを削除
 	$options = $wpdb->get_results( "
 		SELECT *
 		  FROM $wpdb->options

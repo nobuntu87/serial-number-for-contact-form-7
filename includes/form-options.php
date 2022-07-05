@@ -24,7 +24,7 @@ class NT_WPCF7SN_Form_Options {
 	/**
 	 * コンタクトフォームのオプションをセットアップする。
 	 * 
-	 * デフォルト値で初期化しDBに保存する。
+	 * デフォルト値で新規作成する。
 	 *
 	 * @param int $form_id コンタクトフォームID
 	 * @return mixed[] コンタクトフォームのオプションを返す。
@@ -34,7 +34,7 @@ class NT_WPCF7SN_Form_Options {
 
 		$option_value = [];
 
-		// 全てのオプションを設定
+		// 全てのコンタクトフォームのオプションを設定
 		foreach( NT_WPCF7SN_FORM_OPTION as $key => $value ) {
 			$default = $value['default'];
 
@@ -61,7 +61,7 @@ class NT_WPCF7SN_Form_Options {
 	/**
 	 * コンタクトフォームのオプションを取得する。
 	 * 
-	 * DBに存在しない場合は初期化し新規追加する。
+	 * DBに存在しない場合デフォルト値で新規作成する。
 	 * 
 	 * @param int $form_id コンタクトフォームID
 	 * @return mixed[] コンタクトフォームのオプションを返す。
@@ -71,7 +71,7 @@ class NT_WPCF7SN_Form_Options {
 		
 		$option_value = get_option( $option_name );
 
-		// DBに存在しない場合はセットアップ
+		// DBに存在しない場合はデフォルト値で新規作成
 		if ( false === $option_value ) {
 			return self::setup_options( $form_id );
 		}
@@ -169,7 +169,7 @@ class NT_WPCF7SN_Form_Options {
 	/**
 	 * コンタクトフォームのオプションの整合性をチェックする。
 	 * 
-	 * DBに存在するすべてのオプションをチェックする。
+	 * DBに存在する全てのコンタクトフォームのオプションをチェックする。
 	 *
 	 * @return void
 	 */

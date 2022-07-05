@@ -30,15 +30,16 @@ class NT_WPCF7SN {
 	/**
 	 * プラグインのオプションを取得する。
 	 * 
-	 * DBに存在しない場合デフォルト値を設定する。
+	 * DBに存在しない場合デフォルト値で新規作成する。
 	 *
 	 * @param string $name オプション名
-	 * @param mixed $default デフォルト値 (オプション)
-	 * @return mixed プラグインのオプションを返す。
+	 * @param mixed $default デフォルト値 (オプション/デフォルト:false)
+	 * @return mixed プラグインのオプション値を返す。
 	 */
 	public function get_option( $name, $default = false ) {
 		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
 
+		// DBに存在しない場合はデフォルト値で新規作成
 		if ( false === $option ) {
 			self::update_option( $name, $default );
 			return $default;
@@ -54,7 +55,7 @@ class NT_WPCF7SN {
 
 	/**
 	 * プラグインのオプションを更新する。
-	 *
+	 * 
 	 * @param string $name オプション名
 	 * @param mixed $value オプション値
 	 * @return void
@@ -73,20 +74,23 @@ class NT_WPCF7SN {
 
 
 /**
- * プラグインを初期化する。
+ * プラグインの初期化処理を行う。
+ * 
+ * タイムゾーンを設定する。
  * 
  * @return void
  */
 function nt_wpcf7sn_init() {
+	// タイムゾーン設定
 	nt_wpcf7sn_set_timezone();
 }
 
 
 /**
- * プラグインのアップグレードを行う。
+ * プラグインのアップグレード処理を行う。
  * 
  * バージョン番号が変化した場合にアップグレード処理を行う。
- * オプションデータの整合性チェックを行う。
+ * コンタクトフォームのオプションの整合性チェックを行う。
  *
  * @return void
  */
@@ -101,7 +105,7 @@ function nt_wpcf7sn_upgrade() {
 	// バージョン更新
 	NT_WPCF7SN::update_option( 'version', $new_ver );
 
-	// フォームオプションのチェック
+	// コンタクトフォームのオプションをチェック
 	NT_WPCF7SN_Form_Options::check_all_options();
 }
 
@@ -109,7 +113,7 @@ function nt_wpcf7sn_upgrade() {
 /**
  * プラグインが初めて有効化された時のインストール処理を行う。
  * 
- * フォームオプションの初期化を行う。
+ * コンタクトフォームのオプションの初期化を行う。
  *
  * @return void
  */
@@ -118,16 +122,18 @@ function nt_wpcf7sn_install() {
 		return;
 	}
 
+	// コンタクトフォームのオプションを初期化
 	NT_WPCF7SN_Form_Options::setup_all_options();
 
+	// アップグレード処理
 	nt_wpcf7sn_upgrade();
 }
 
 
 /**
- * コンタクトフォームが生成された時の処理を行う。
+ * コンタクトフォームが新規追加された時の処理を行う。
  * 
- * 対象のフォームオプションを作成する。
+ * 対象のコンタクトフォームのオプションを作成する。
  *
  * @param mixed $wpcf7_object クラスオブジェクト (WPCF7_ContactForm)
  * @return void
@@ -135,6 +141,7 @@ function nt_wpcf7sn_install() {
 function nt_wpcf7sn_create_form( $wpcf7_object ) {
 	$form_id = intval(  $wpcf7_object->__get( 'id' ) );
 
+	// コンタクトフォームのオプションを初期化
 	NT_WPCF7SN_Form_Options::setup_options( $form_id );
 }
 
@@ -142,9 +149,9 @@ function nt_wpcf7sn_create_form( $wpcf7_object ) {
 /**
  * コンタクトフォームが削除された時の処理を行う。
  * 
- * 対象のフォームオプションを削除する。
+ * 対象のコンタクトフォームのオプションを削除する。
  *
- * @param int $post_id PostID
+ * @param int $post_id Post ID
  * @param mixed $post_data Postオブジェクト (WP_Post)
  * @return void
  */

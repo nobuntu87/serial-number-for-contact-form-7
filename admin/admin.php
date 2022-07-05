@@ -83,9 +83,9 @@ function nt_wpcf7sn_admin_enqueue_scripts( $hook_suffix ) {
 /**
  * プラグインメニューにアクションリンクを設定する。
  *
- * @param string[] $actions プラグインのアクションリンク
+ * @param string[] $actions アクションリンク
  * @param string $plugin_file プラグインの相対パス
- * @return string[] プラグインのアクションリンクを返す。
+ * @return string[] アクションリンクを返す。
  */
 function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 	if ( NT_WPCF7SN_PLUGIN_BASENAME != $plugin_file ) {

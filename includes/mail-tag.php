@@ -10,17 +10,17 @@ add_filter( 'wpcf7_special_mail_tags', 'nt_wpcf7sn_special_mail_tags', 10, 2 );
 /**
  * メールタグを変換する。
  *
- * @param string $output メールタグの出力文字列
- * @param string $mail_tag メールタグのタグ名
- * @return string メールタグの出力文字列を返す。
+ * @param string $output メールタグの変換結果
+ * @param string $mail_tag メールタグ名
+ * @return string メールタグの変換結果を返す。
  */
-function nt_wpcf7sn_special_mail_tags( $output, $name ) {
+function nt_wpcf7sn_special_mail_tags( $output, $mail_tag ) {
 	if ( 1 != preg_match( '/^' . NT_WPCF7SN_MAIL_TAG . '[0-9]+$/', $mail_tag ) ) {
 		return $output;
 	}
 
-	// メールタグからIDを取得
-	preg_match( '/(?P<id>[0-9]+)$/', $name, $match );
+	// メールタグからコンタクトフォームIDを抽出
+	preg_match( '/(?P<id>[0-9]+)$/', $mail_tag, $match );
 	$form_id = intval( $match['id'] );
 
 	if ( class_exists( 'WPCF7_Submission' ) ) {

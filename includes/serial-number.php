@@ -10,7 +10,7 @@ class NT_WPCF7SN_Serial_Number {
 	 * メールカウントが指定された場合は引数の値を使用する。
 	 *
 	 * @param int $form_id コンタクトフォームID
-	 * @param int $count メールカウント (オプション)
+	 * @param int $count メールカウント (オプション/デフォルト:false)
 	 * @return string シリアル番号を返す。
 	 */
 	public function get_serial_number( $form_id, $count = false ) {
@@ -22,7 +22,10 @@ class NT_WPCF7SN_Serial_Number {
 			$option['count'] = intval( $count );
 		}
 
-		$num = self::count_digits( $option['count'], $option['digits'] );
+		$num = self::count_digits( 
+			intval( $option['count'] ),
+			intval( $option['digits'] )
+		);
 		$sep = $option['separator'] == 'yes' ? '-' : '';
 
 		$type = $option['type'];
