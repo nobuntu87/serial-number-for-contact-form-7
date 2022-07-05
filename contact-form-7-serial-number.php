@@ -5,7 +5,7 @@ Plugin URI:
 Description: An add-on for the Contact Form 7 plugin. Add a mail-tag to display the serial number.
 Author: Nobuntu
 Author URI: https://profiles.wordpress.org/nobuntu87/
-Text Domain: contact-form-7-serial-number
+Text Domain: serial-number-for-contact-form-7
 Domain Path: /languages/
 Version: 0.0.0
 License: GPL2+ (GNU General Public License v2 or later)
@@ -21,7 +21,7 @@ define( 'NT_WPCF7SN_VERSION', '0.0.0' );
 
 define( 'NT_WPCF7SN_REQUIRED_WP_VERSION', '5.9' );
 
-define( 'NT_WPCF7SN_TEXT_DOMAIN', 'contact-form-7-serial-number' );
+define( 'NT_WPCF7SN_TEXT_DOMAIN', 'serial-number-for-contact-form-7' );
 
 define( 'NT_WPCF7SN_PREFIX', array(
 	'_' => 'nt_wpcf7sn',
