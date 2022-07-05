@@ -14,20 +14,24 @@ add_filter( 'wpcf7_posted_data', 'nt_wpcf7sn_posted_data', 10, 1 );
 
 /**
  * メール送信後の処理を行う。
+ * 
+ * メールカウントの更新を行う。
  *
  * @param mixed[] $contact_form コンタクトフォーム情報
  * @return void
  */
 function nt_wpcf7sn_submit( $contact_form ) {
 	$form_id = intval( $contact_form->id );
+
+	// メールカウントの更新
 	nt_wpcf7sn_increment_count( $form_id );
 }
 
 
 /**
- * POSTデータを作成する。
+ * 送信メールのPOSTデータを作成する。
  * 
- * POSTデータにシリアル番号を追加する。
+ * 送信メールのPOSTデータにシリアル番号を追加する。
  *
  * @param mixed[] $posted_data POSTデータ
  * @return mixed[] POSTデータを返す。
@@ -40,7 +44,7 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
 		$contact_form = $submission->get_contact_form();
 		$form_id = intval( $contact_form->id );
 
-		$count = NT_WPCF7SN_Option::get_form_option( $form_id, 'count' );
+		$count = NT_WPCF7SN_Form_Options::get_option( $form_id, 'count' );
 		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $count + 1 );
 
 		$posted_data[NT_WPCF7SN_POST_FIELD] = $serial_num;
@@ -57,6 +61,7 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
  * @return void
  */
 function nt_wpcf7sn_increment_count( $form_id ) {
-	$count = NT_WPCF7SN_Option::get_form_option( $form_id, 'count' );
-	NT_WPCF7SN_Option::update_form_option( $form_id, 'count', $count + 1 );
+	$count = NT_WPCF7SN_Form_Options::get_option( $form_id, 'count' );
+	
+	NT_WPCF7SN_Form_Options::update_option( $form_id, 'count', $count + 1 );
 }
