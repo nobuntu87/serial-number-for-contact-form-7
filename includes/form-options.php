@@ -176,11 +176,19 @@ class NT_WPCF7SN_Form_Options {
 	public function check_all_options() {
 		global $wpdb;
 	
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . '%';
 		$options = $wpdb->get_results( "
-			SELECT * FROM $wpdb->options
-			WHERE option_name like '" . NT_WPCF7SN_FORM_OPTION_NAME . "%'
+			SELECT *
+			  FROM $wpdb->options
+			WHERE 1 = 1
+			  AND option_name like '$option_name'
+			ORDER BY option_name
 		" );
-	
+
+		if ( empty( $options ) ) {
+			return;
+		}
+
 		foreach ( $options as $option ) {
 			$option_name = $option->option_name;
 
