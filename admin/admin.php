@@ -19,6 +19,7 @@ add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
  * フィルターフック設定
  */
 add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
+add_filter( 'set_screen_option_nt_wpcf7sn_form_option_per_page', 'nt_wpcf7sn_set_screen_option', 10, 3 );
 
 
 /**
@@ -115,6 +116,19 @@ function nt_wpcf7sn_load_admin_management_page() {
 		'default' => 5,
 		'option'  => 'nt_wpcf7sn_form_option_per_page',
 	) );
+}
+
+
+/**
+ * 表示オプションの設定時の処理を行う。
+ * 
+ * @param mixed $screen_option 
+ * @param string $option オプション名
+ * @param int $value オプション値
+ * @return int ページ毎の表示数を返す。
+ */
+function nt_wpcf7sn_set_screen_option( $screen_option, $option, $value ) {
+	return $value;
 }
 
 
