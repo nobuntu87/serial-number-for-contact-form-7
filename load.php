@@ -133,7 +133,9 @@ function nt_wpcf7sn_install() {
  * @return void
  */
 function nt_wpcf7sn_create_form( $wpcf7_object ) {
+	$form_id = intval(  $wpcf7_object->__get( 'id' ) );
 
+	NT_WPCF7SN_Option::setup_form_options( $form_id );
 }
 
 
