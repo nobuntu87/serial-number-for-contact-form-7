@@ -20,6 +20,7 @@ if ( is_admin() ) {
  */
 add_action( 'init', 'nt_wpcf7sn_init', 10, 0 );
 add_action( 'admin_init', 'nt_wpcf7sn_upgrade', 10, 0 );
+add_action( 'activate_' . NT_WPCF7SN_PLUGIN_BASENAME, 'nt_wpcf7sn_install', 10, 0 );
 
 
 class NT_WPCF7SN {
@@ -100,4 +101,22 @@ function nt_wpcf7sn_upgrade() {
 
 	// フォームオプションのチェック
 	NT_WPCF7SN_Option::check_form_options();
+}
+
+
+/**
+ * プラグインが初めて有効化された時のインストール処理を行う。
+ * 
+ * フォームオプションの初期化を行う。
+ *
+ * @return void
+ */
+function nt_wpcf7sn_install() {
+	if ( get_option( NT_WPCF7SN_PREFIX['_'] ) ) {
+		return;
+	}
+
+	NT_WPCF7SN_Option::setup_all_form_options();
+
+	nt_wpcf7sn_upgrade();
 }
