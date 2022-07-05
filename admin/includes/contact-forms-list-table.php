@@ -82,11 +82,12 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 	 */
 	public function get_contact_form_items(){
 		$data = get_posts( array(
-			'post_type'   => 'wpcf7_contact_form',
+			'post_type'      => 'wpcf7_contact_form',
+			'post_status'    => 'publish',
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
 			'posts_per_page' => -1,
-			'orderby' => 'title',
-			'order' => 'ASC',
-			'offset' => 0,
+			'offset'         => 0,
 		) );
 		return $data;
 	}
