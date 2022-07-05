@@ -16,7 +16,7 @@ class NT_WPCF7SN_Serial_Number {
 	public function get_serial_number( $form_id, $count = false ) {
 		$serial_num = '';
 
-		$option = NT_WPCF7SN_Option::get_form_options( $form_id );
+		$option = NT_WPCF7SN_Form_Options::get_form_options( $form_id );
 
 		if ( false !== $count ) {
 			$option['count'] = intval( $count );
