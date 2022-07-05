@@ -6,6 +6,24 @@ class NT_WPCF7SN_Option {
 	/**
 	 * コンタクトフォームのオプションをセットアップする。
 	 * 
+	 * DBに存在する全コンタクトフォームのオプションをセットアップする。
+	 *
+	 * @return void
+	 */
+	public function setup_all_form_options() {
+		$wpcf7_items = get_posts( array(
+			'post_type'      => 'wpcf7_contact_form',
+		) );
+
+		foreach( $wpcf7_items as $wpcf7_item ) {
+			$form_id = intval( $wpcf7_item->ID );
+			self::setup_form_options( $form_id );
+		}
+	}
+
+	/**
+	 * コンタクトフォームのオプションをセットアップする。
+	 * 
 	 * デフォルト値で初期化しDBに保存する。
 	 *
 	 * @param int $form_id コンタクトフォームID

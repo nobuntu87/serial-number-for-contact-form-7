@@ -106,9 +106,17 @@ function nt_wpcf7sn_upgrade() {
 
 /**
  * プラグインが初めて有効化された時のインストール処理を行う。
+ * 
+ * フォームオプションの初期化を行う。
  *
  * @return void
  */
 function nt_wpcf7sn_install() {
+	if ( get_option( NT_WPCF7SN_PREFIX['_'] ) ) {
+		return;
+	}
 
+	NT_WPCF7SN_Option::setup_all_form_options();
+
+	nt_wpcf7sn_upgrade();
 }
