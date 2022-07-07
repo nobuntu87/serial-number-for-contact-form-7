@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 define( 'NT_WPCF7SN_VERSION', '0.1.0' );
 
-define( 'NT_WPCF7SN_REQUIRED_WP_VERSION', '5.9' );
+define( 'NT_WPCF7SN_REQUIRED_WP_VERSION', '9.9' );
 
 define( 'NT_WPCF7SN_TEXT_DOMAIN', 'serial-number-for-contact-form-7' );
 
@@ -61,6 +61,29 @@ define( 'NT_WPCF7SN_FORM_OPTION', array(
 define( 'NT_WPCF7SN_MAIL_TAG', '_serial_number_' );
 
 define( 'NT_WPCF7SN_POST_FIELD', 'serial-number' );
+
+/**
+ * プラグイン定義：サニタイズ関連
+ */
+define( 'NT_WPCF7SN_ALLOWED_HTML', wp_kses_allowed_html( 'post' ) + array(
+	'input' => array(
+		'class' => array(),
+		'id' => array(),
+		'type' => array(),
+		'name' => array(),
+		'value' => array(),
+		'checked' => array(),
+		'size' => array(),
+		'maxlength' => array(),
+		'pattern' => array(),
+	),
+	'form' => array(
+		'class' => array(),
+		'id' => array(),
+		'method' => array(),
+		'action' => array(),
+	),
+) );
 
 
 /**

@@ -51,14 +51,19 @@ function nt_wpcf7sn_admin_management_page() {
 	$list_table = new NT_WPCF7SN_Contact_Forms_List_Table();
 	$list_table->prepare_items();
 	
-	$output = ''
+	$output_before = ''
 	. '<div class="wrap">'
-	. '  <h2> ' . esc_html( __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h2>'
-	. '</div>';
-	
-	echo trim( $output );
+	. '  <h2> ' . esc_html( __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h2>';
 
+	$output_after = ''
+	. '</div>';
+
+	echo wp_kses( trim( $output_before ), NT_WPCF7SN_ALLOWED_HTML );
+
+	// テーブルリスト表示
 	$list_table->display();
+
+	echo wp_kses( trim( $output_after ), NT_WPCF7SN_ALLOWED_HTML );
 }
 
 
@@ -97,6 +102,8 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
 	$settings_link = '<a href="' . esc_url( $page_url) . '">' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</a>';
 	
+	$settings_link =  wp_kses( $settings_link, NT_WPCF7SN_ALLOWED_HTML );
+
 	// 先頭に追加
 	array_unshift( $actions, $settings_link );
 
@@ -163,5 +170,5 @@ function nt_wpcf7sn_wp_version_error() {
 	. '  <p> ' . $message . '</p>'
 	. '</div>';
 	
-	echo trim( $output );
+	echo wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 }

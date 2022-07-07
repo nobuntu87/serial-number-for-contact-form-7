@@ -123,7 +123,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '    </div>'
 		. '</div>';
 
-		return trim( $output );
+		return wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 	}
 
 	/**
@@ -234,7 +234,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '  </form>'
 		. '</div>';
 
-		return trim( $output );
+		return wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 	}
 
 	/**
@@ -285,7 +285,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '  </form>'
 		. '</div>';
 
-		return trim( $output );
+		return wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 	}
 	
 }
