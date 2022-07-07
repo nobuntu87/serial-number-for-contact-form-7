@@ -53,7 +53,7 @@ function nt_wpcf7sn_admin_management_page() {
 	
 	$output = ''
 	. '<div class="wrap">'
-	. '  <h2> ' . __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) . '</h2>'
+	. '  <h2> ' . esc_html( __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h2>'
 	. '</div>';
 	
 	echo trim( $output );
@@ -95,7 +95,7 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 	}
 
 	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
-	$settings_link = '<a href="' . $page_url . '">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
+	$settings_link = '<a href="' . esc_url( $page_url) . '">' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</a>';
 	
 	// 先頭に追加
 	array_unshift( $actions, $settings_link );
