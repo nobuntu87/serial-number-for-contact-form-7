@@ -55,7 +55,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		// データ取得
-		$data = $this->get_contact_form_items();
+		$data = nt_wpcf7sn_get_posts_wpcf7();
 
 		// ページネーション設定
 		$per_page = $this->get_items_per_page( 'nt_wpcf7sn_form_option_per_page' );
@@ -71,25 +71,6 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 			'total_items' => $total_items,
 			'total_pages' => ceil( $total_items / $per_page ),
 		) );
-	}
-
-	/**
-	 * 表示するアイテムデータを取得する。
-	 * 
-	 * POSTデータからコンタクトフォーム情報を取得する。
-	 *
-	 * @return mixed[] 取得したPOSTデータを返す。
-	 */
-	public function get_contact_form_items(){
-		$data = get_posts( array(
-			'post_type'      => 'wpcf7_contact_form',
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-			'offset'         => 0,
-		) );
-		return $data;
 	}
 
 	/**
