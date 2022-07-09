@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 define( 'NT_WPCF7SN_VERSION', '0.1.0' );
 
-define( 'NT_WPCF7SN_REQUIRED_WP_VERSION', '9.9' );
+define( 'NT_WPCF7SN_REQUIRED_WP_VERSION', '5.9' );
 
 define( 'NT_WPCF7SN_TEXT_DOMAIN', 'serial-number-for-contact-form-7' );
 
