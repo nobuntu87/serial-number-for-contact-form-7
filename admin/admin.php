@@ -29,7 +29,7 @@ add_filter( 'set_screen_option_nt_wpcf7sn_form_option_per_page', 'nt_wpcf7sn_set
  */
 function nt_wpcf7sn_admin_menu() {
 	add_options_page(
-		__( 'Contact Form 7 Serial Number Addon', NT_WPCF7SN_TEXT_DOMAIN ),
+		__( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ),
 		__( 'CF7 Serial Number', NT_WPCF7SN_TEXT_DOMAIN ),
 		'manage_options',
 		NT_WPCF7SN_PREFIX['-'],
@@ -51,14 +51,19 @@ function nt_wpcf7sn_admin_management_page() {
 	$list_table = new NT_WPCF7SN_Contact_Forms_List_Table();
 	$list_table->prepare_items();
 	
-	$output = ''
+	$output_before = ''
 	. '<div class="wrap">'
-	. '  <h2> ' . __( 'Contact Form 7 Serial Number Addon', NT_WPCF7SN_TEXT_DOMAIN ) . '</h2>'
-	. '</div>';
-	
-	echo trim( $output );
+	. '  <h2> ' . esc_html( __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h2>';
 
+	$output_after = ''
+	. '</div>';
+
+	echo wp_kses( trim( $output_before ), NT_WPCF7SN_ALLOWED_HTML );
+
+	// テーブルリスト表示
 	$list_table->display();
+
+	echo wp_kses( trim( $output_after ), NT_WPCF7SN_ALLOWED_HTML );
 }
 
 
@@ -95,8 +100,10 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 	}
 
 	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
-	$settings_link = '<a href="' . $page_url . '">' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) . '</a>';
+	$settings_link = '<a href="' . esc_url( $page_url) . '">' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</a>';
 	
+	$settings_link =  wp_kses( $settings_link, NT_WPCF7SN_ALLOWED_HTML );
+
 	// 先頭に追加
 	array_unshift( $actions, $settings_link );
 
@@ -149,7 +156,7 @@ function nt_wpcf7sn_wp_version_error() {
 
 	$message = sprintf(
 		__(
-			'<strong>Contact Form 7 Serial Number Addon %1$s requires WordPress %2$s or higher.</strong>'
+			'<strong>Serial Number for Contact Form 7 %1$s requires WordPress %2$s or higher.</strong>'
 			. ' Please <a href="%3$s">update WordPress</a> first.'
 			, NT_WPCF7SN_TEXT_DOMAIN
 		),
@@ -163,5 +170,5 @@ function nt_wpcf7sn_wp_version_error() {
 	. '  <p> ' . $message . '</p>'
 	. '</div>';
 	
-	echo trim( $output );
+	echo wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 }

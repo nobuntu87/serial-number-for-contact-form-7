@@ -107,21 +107,23 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$mail_tag = '[' . NT_WPCF7SN_MAIL_TAG . $form_id . ']';
 
 		$output .= ''
-		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_mail_tag_' . $form_id . '" class="' . NT_WPCF7SN_PREFIX['_'] . '_mail_tag clearfix">'
+		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_mail_tag_' . esc_attr( $form_id ) . '"'
+		. '     class="' . NT_WPCF7SN_PREFIX['_'] . '_mail_tag clearfix">'
 		. '    <div class="item-box title">'
 		. '      <h4 class="form-title">'
-		. '        <span class="title">' . esc_attr( $form_title ) . '</span>'
-		. '        <span class="id">[id:' . esc_attr( $form_id ) . ']</span>'
+		. '        <span class="title">' . esc_html( $form_title ) . '</span>'
+		. '        <span class="id">[id:' . esc_html( $form_id ) . ']</span>'
 		. '      </h4>'
 		. '    </div>'
 		. '    <div class="item-box mail_tag">'
 		. '      <div class="item text">'
-		. '        <input type="text" readonly="readonly" onfocus="this.select();" value="' . esc_attr( $mail_tag ) . '"/>'
+		. '        <input type="text" readonly="readonly" onfocus="this.select();"'
+		. '               value="' . esc_attr( $mail_tag ) . '"/>'
 		. '      </div>'
 		. '    </div>'
 		. '</div>';
 
-		return trim( $output );
+		return wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 	}
 
 	/**
@@ -146,85 +148,93 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$page_options = '';
 		foreach( $option as $key => $value ) {
-			$page_options .= '<input type="hidden" name="' . $option_key[$key] . '" value="' . $option[$key] . '" />';
+			$page_options .= ''
+			. '<input type="hidden" name="' . esc_attr( $option_key[$key] ) . '"'
+			. '       value="' . esc_attr( $option[$key] ) . '" />';
 		}
 
 		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $option['count'] + 1 );
 
 		$output .= ''
-		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_setting_' . $form_id . '" class="' . NT_WPCF7SN_PREFIX['_'] . '_setting clearfix">'
+		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_setting_' . esc_attr( $form_id ) . '"'
+		. '     class="' . NT_WPCF7SN_PREFIX['_'] . '_setting clearfix">'
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
 		. '    <input type="hidden" name="action" value="update" />'
 		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '" />' . $page_options
 		. '    <div class="item-box type">'
-		. '      <h4 class="item-title">' . __( 'Type', NT_WPCF7SN_TEXT_DOMAIN ) . '</h4>'
+		. '      <h4 class="item-title">' . esc_html( __( 'Type', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h4>'
 		. '      <div class="item radio"><label>'
-		. '        <input type="radio" name="' . $option_key['type'] . '"'
-		. '               value="0" ' . ( $option['type'] == 0 ? 'checked' : '' ) . ' />'
-		.          __( 'Serial Number', NT_WPCF7SN_TEXT_DOMAIN )
+		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
+		. '               value="0" ' . ( 0 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		.         esc_html(  __( 'Serial Number', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
-		. '        <input type="radio" name="' . $option_key['type'] . '"'
-		. '               value="1" ' . ( $option['type'] == 1 ? 'checked' : '' ) . ' />'
-		.          __( 'Timestamp (UnixTime)', NT_WPCF7SN_TEXT_DOMAIN )
+		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
+		. '               value="1" ' . ( 1 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		.          esc_html( __( 'Timestamp (UnixTime)', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
-		. '        <input type="radio" name="' . $option_key['type'] . '"'
-		. '               value="2" ' . ( $option['type'] == 2 ? 'checked' : '' ) . ' />'
-		.          __( 'Timestamp (Date)', NT_WPCF7SN_TEXT_DOMAIN )
+		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
+		. '               value="2" ' . ( 2 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		.          esc_html( __( 'Timestamp (Date)', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
-		. '        <input type="radio" name="' . $option_key['type'] . '"'
-		. '               value="3" ' . ( $option['type'] == 3 ? 'checked' : '' ) . ' />'
-		.          __( 'Timestamp (Date + Time)', NT_WPCF7SN_TEXT_DOMAIN )
+		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
+		. '               value="3" ' . ( 3 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		.          esc_html( __( 'Timestamp (Date + Time)', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
-		. '        <input type="radio" name="' . $option_key['type'] . '"'
-		. '               value="4" ' . ( $option['type'] == 4 ? 'checked' : '' ) . ' />'
-		.          __( 'Unique ID', NT_WPCF7SN_TEXT_DOMAIN )
+		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
+		. '               value="4" ' . ( 4 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		.          esc_html( __( 'Unique ID', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '    </div>'
 		. '    <div class="item-box option">'
-		. '      <h4 class="item-title">' . __( 'Options', NT_WPCF7SN_TEXT_DOMAIN ) . '</h4>'
-		. '      <div class="item text">' . __( 'Prefix', NT_WPCF7SN_TEXT_DOMAIN )
-		. '        <input type="text" name="' . $option_key['prefix'] . '"'
-		. '               value="' . $option['prefix'] . '" size="15" maxlength="10" />'
-		. '        (' . __( 'Within 10 characters', NT_WPCF7SN_TEXT_DOMAIN ) . ')'
+		. '      <h4 class="item-title">' . esc_html( __( 'Options', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h4>'
+		. '      <div class="item text">' . esc_html( __( 'Prefix', NT_WPCF7SN_TEXT_DOMAIN ) )
+		. '        <input type="text" name="' . esc_attr( $option_key['prefix'] ) . '"'
+		. '               value="' . esc_attr( $option['prefix'] ) . '"' 
+		. '               size="15" maxlength="10" />'
+		. '        (' . esc_html( __( 'Within 10 characters', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')'
 		. '      </div>'
-		. '      <div class="item text">' . __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN )
-		. '        <input type="text" name="' . $option_key['digits'] . '"'
-		. '                value="' . $option['digits'] . '" size="1" maxlength="1" pattern="[1-9]"/>'
-		. '        (' . __( '1~9 digits', NT_WPCF7SN_TEXT_DOMAIN ) . ')'
+		. '      <div class="item text">' . esc_html( __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN ) )
+		. '        <input type="text" name="' . esc_attr( $option_key['digits'] ) . '"'
+		. '                value="' . esc_attr( $option['digits'] ) . '"'
+		. '                size="1" maxlength="1" pattern="[1-9]"/>'
+		. '        (' . esc_html( __( '1~9 digits', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')'
 		. '      </div>'
 		. '      <div class="item check"><label>'
-		. '        <input type="hidden"   name="' . $option_key['separator'] . '" />'
-		. '        <input type="checkbox" name="' . $option_key['separator'] . '"'
+		. '        <input type="hidden"   name="' . esc_attr( $option_key['separator'] ) . '" />'
+		. '        <input type="checkbox" name="' . esc_attr( $option_key['separator'] ) . '"'
 		. '               value="yes" '. ( $option['separator'] == 'yes' ? 'checked' : '' ) . ' />'
-		.          __( 'Display the delimiter "-".', NT_WPCF7SN_TEXT_DOMAIN )
+		.          esc_html( __( 'Display the delimiter "-".', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item check"><label>'
-		. '        <input type="hidden"   name="' . $option_key['year2dig'] . '" />'
-		. '        <input type="checkbox" name="' . $option_key['year2dig'] . '"'
+		. '        <input type="hidden"   name="' . esc_attr( $option_key['year2dig'] ) . '" />'
+		. '        <input type="checkbox" name="' . esc_attr( $option_key['year2dig'] ) . '"'
 		. '               value="yes" '. ( $option['year2dig'] == 'yes' ? 'checked' : '' ) . ' />'
-		.          __( 'Omit the number of years to 2 digits.', NT_WPCF7SN_TEXT_DOMAIN )
+		.          esc_html( __( 'Omit the number of years to 2 digits.', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item check"><label>'
-		. '        <input type="hidden"   name="' . $option_key['nocount'] . '" />'
-		. '        <input type="checkbox" name="' . $option_key['nocount'] . '"'
+		. '        <input type="hidden"   name="' . esc_attr( $option_key['nocount'] ) . '" />'
+		. '        <input type="checkbox" name="' . esc_attr( $option_key['nocount'] ) . '"'
 		. '               value="yes" '. ( $option['nocount'] == 'yes' ? 'checked' : '' ) . ' />'
-		.          __( 'Don\'t display count with unique ID.', NT_WPCF7SN_TEXT_DOMAIN )
+		.          esc_html( __( 'Don\'t display count with unique ID.', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '    </div>'
 		. '    <div class="item-box update">'
-		. '      <div class="item example"><span>' . __( 'Example', NT_WPCF7SN_TEXT_DOMAIN ) . ' [' . $serial_num . ']</span></div>'
+		. '      <div class="item example">'
+		. '        <span>' . esc_html( sprintf( __( 'Example [%1$s]', NT_WPCF7SN_TEXT_DOMAIN ), $serial_num ) ) . '</span>'
+		. '      </div>'
 		. '      <div class="item submit_button">'
-		. '        <input type="submit" class="button-primary" value="' . __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) .'" />'
+		. '        <input type="submit" class="button-primary"'
+		. '               value="' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) .'" />'
 		. '      </div>'
 		. '    </div>'
 		. '  </form>'
 		. '</div>';
 
-		return trim( $output );
+		return wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 	}
 
 	/**
@@ -249,28 +259,33 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$page_options = '';
 		foreach( $option as $key => $value ) {
-			$page_options .= '<input type="hidden" name="' . $option_key[$key] . '" value="' . $option[$key] . '" />';
+			$page_options .= ''
+			. '<input type="hidden" name="' . esc_attr( $option_key[$key] ) . '"'
+			. '       value="' . esc_attr( $option[$key] ) . '" />';
 		}
 
 		$output .= ''
-		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_count_' . $form_id . '" class="' . NT_WPCF7SN_PREFIX['_'] . '_count clearfix">'
+		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_count_' . esc_attr( $form_id ) . '"'
+		. '     class="' . NT_WPCF7SN_PREFIX['_'] . '_count clearfix">'
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
 		. '    <input type="hidden" name="action" value="update" />'
 		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '" />' . $page_options
 		. '    <div class="item-box count">'
-		. '      <h4 class="item-title">' . __( 'Current Count', NT_WPCF7SN_TEXT_DOMAIN ) . '</h4>'
+		. '      <h4 class="item-title">' . esc_html( __( 'Current Count', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h4>'
 		. '      <div class="item text">'
-		. '        <input type="text" name="' . $option_key['count'] . '"'
-		. '               value="' . $option['count'] . '" size="5" maxlength="5" pattern="[0-9]+"/>'
+		. '        <input type="text" name="' . esc_attr( $option_key['count'] ) . '"'
+		. '               value="' . esc_attr( $option['count'] ) . '"'
+		. '               size="5" maxlength="5" pattern="[0-9]+"/>'
 		. '      </div>'
 		. '      <div class="item submit_button">'
-		. '        <input type="submit" class="button-primary" value="' . __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) .'" />'
+		. '        <input type="submit" class="button-primary"'
+		. '               value="' . esc_html( __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) ) .'" />'
 		. '      </div>'
 		. '    </div>'
 		. '  </form>'
 		. '</div>';
 
-		return trim( $output );
+		return wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
 	}
 	
 }
