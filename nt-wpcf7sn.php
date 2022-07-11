@@ -52,7 +52,7 @@ define( 'NT_WPCF7SN_FORM_OPTION', array(
 	'type'      => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-4]$'                      ),
 	'count'     => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-9]{1,5}$'                 ),
 	'digits'    => array( 'default' => 1,  'type' => 'integer', 'pattern' => '^[1-9]$'                      ),
-	'prefix'    => array( 'default' => '', 'type' => 'string',  'pattern' => '^(?!.*[\"&\'<>\\\])\S{0,10}$' ),
+	'prefix'    => array( 'default' => '', 'type' => 'string',  'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'  ),
 	'separator' => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                     ),
 	'year2dig'  => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                     ),
 	'nocount'   => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                     ),
