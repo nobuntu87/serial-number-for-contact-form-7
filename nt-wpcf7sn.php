@@ -91,6 +91,16 @@ define( 'NT_WPCF7SN_ALLOWED_HTML', wp_kses_allowed_html( 'post' ) + array(
 	),
 ) );
 
+/**
+ * プラグイン定義：スクリーンオプション関連
+ */
+define( 'NT_WPCF7SN_FORM_OPTION_SCREEN', array(
+	'per_page' => array(
+		'default' => 5,
+		'option'  => NT_WPCF7SN_PREFIX['_'] . '_form_option_per_page',
+	),
+) );
+
 
 /**
  * ファイル読み込み

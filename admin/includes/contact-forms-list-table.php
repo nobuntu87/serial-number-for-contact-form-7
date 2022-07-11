@@ -58,7 +58,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$data = nt_wpcf7sn_get_posts_wpcf7();
 
 		// ページネーション設定
-		$per_page = $this->get_items_per_page( 'nt_wpcf7sn_form_option_per_page' );
+		$per_page = $this->get_items_per_page( NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] );
 		$current_page = $this->get_pagenum();
 		$total_items = count( $data );
 

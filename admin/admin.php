@@ -20,7 +20,10 @@ add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
  * フィルターフック設定
  */
 add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
-add_filter( 'set_screen_option_nt_wpcf7sn_form_option_per_page', 'nt_wpcf7sn_set_screen_option', 10, 3 );
+add_filter( 
+	'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
+	'nt_wpcf7sn_set_screen_option', 10, 3
+);
 
 
 /**
@@ -122,8 +125,8 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
  */
 function nt_wpcf7sn_load_admin_management_page() {
 	add_screen_option( 'per_page', array(
-		'default' => 5,
-		'option'  => 'nt_wpcf7sn_form_option_per_page',
+		'default' => NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['default'],
+		'option'  => NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'],
 	) );
 }
 
