@@ -55,7 +55,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		// データ取得
-		$data = $this->get_contact_form_items();
+		$data = nt_wpcf7sn_get_posts_wpcf7();
 
 		// ページネーション設定
 		$per_page = $this->get_items_per_page( 'nt_wpcf7sn_form_option_per_page' );
@@ -71,25 +71,6 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 			'total_items' => $total_items,
 			'total_pages' => ceil( $total_items / $per_page ),
 		) );
-	}
-
-	/**
-	 * 表示するアイテムデータを取得する。
-	 * 
-	 * POSTデータからコンタクトフォーム情報を取得する。
-	 *
-	 * @return mixed[] 取得したPOSTデータを返す。
-	 */
-	public function get_contact_form_items(){
-		$data = get_posts( array(
-			'post_type'      => 'wpcf7_contact_form',
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-			'offset'         => 0,
-		) );
-		return $data;
 	}
 
 	/**
@@ -138,6 +119,9 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$form_id = intval( $item->ID );
 
 		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
+
+		// サニタイズ処理時にコンタクトフォームIDの識別用に一時保持(設定時に削除される)
+		$option['id'] = $form_id;
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
@@ -194,14 +178,14 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '      <div class="item text">' . esc_html( __( 'Prefix', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '        <input type="text" name="' . esc_attr( $option_key['prefix'] ) . '"'
 		. '               value="' . esc_attr( $option['prefix'] ) . '"' 
-		. '               size="15" maxlength="10" />'
-		. '        (' . esc_html( __( 'Within 10 characters', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')'
+		. '               size="15" maxlength="10" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['pattern'] ) .'" />'
+		. '        <p class="pattern">(' . esc_html( __( 'Within 10 characters. Unusable \\"&\'<>', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '      </div>'
 		. '      <div class="item text">' . esc_html( __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '        <input type="text" name="' . esc_attr( $option_key['digits'] ) . '"'
 		. '                value="' . esc_attr( $option['digits'] ) . '"'
-		. '                size="1" maxlength="1" pattern="[1-9]"/>'
-		. '        (' . esc_html( __( '1~9 digits', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')'
+		. '                size="1" maxlength="1" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['digits'] ) .'" />'
+		. '        <p class="pattern">(' . esc_html( __( '1 digit integer. 1~9', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '      </div>'
 		. '      <div class="item check"><label>'
 		. '        <input type="hidden"   name="' . esc_attr( $option_key['separator'] ) . '" />'
@@ -250,6 +234,9 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
 
+		// サニタイズ処理時にコンタクトフォームIDの識別用に一時保持(設定時に削除される)
+		$option['id'] = $form_id;
+
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
 		$option_key = [];
@@ -275,12 +262,13 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '      <div class="item text">'
 		. '        <input type="text" name="' . esc_attr( $option_key['count'] ) . '"'
 		. '               value="' . esc_attr( $option['count'] ) . '"'
-		. '               size="5" maxlength="5" pattern="[0-9]+"/>'
+		. '               size="5" maxlength="5" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['count'] ) .'"/>'
 		. '      </div>'
 		. '      <div class="item submit_button">'
 		. '        <input type="submit" class="button-primary"'
 		. '               value="' . esc_html( __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) ) .'" />'
 		. '      </div>'
+		. '      <p class="pattern">(' . esc_html( __( 'Up to 5 digits integer. 0~99999', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '    </div>'
 		. '  </form>'
 		. '</div>';

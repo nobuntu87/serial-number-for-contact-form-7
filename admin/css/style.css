@@ -35,6 +35,11 @@ table.nt_wpcf7sn .item.check {
 	white-space: nowrap;
 }
 
+table.nt_wpcf7sn .pattern {
+	display: inline-block;
+}
+
+
 /* =============================================
  テーブルカラム：メールタグ
 ============================================= */

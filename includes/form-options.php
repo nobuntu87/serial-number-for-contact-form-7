@@ -11,12 +11,10 @@ class NT_WPCF7SN_Form_Options {
 	 * @return void
 	 */
 	public function setup_all_options() {
-		$wpcf7_items = get_posts( array(
-			'post_type'      => 'wpcf7_contact_form',
-		) );
+		$wpcf7_posts = nt_wpcf7sn_get_posts_wpcf7();
 
-		foreach( $wpcf7_items as $wpcf7_item ) {
-			$form_id = intval( $wpcf7_item->ID );
+		foreach( $wpcf7_posts as $wpcf7_post ) {
+			$form_id = intval( $wpcf7_post->ID );
 			self::setup_options( $form_id );
 		}
 	}

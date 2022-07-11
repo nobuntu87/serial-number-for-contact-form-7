@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * ファイル読み込み
  */
+require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/form-settings.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.php';
 
 
