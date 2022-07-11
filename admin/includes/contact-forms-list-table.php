@@ -179,13 +179,13 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '        <input type="text" name="' . esc_attr( $option_key['prefix'] ) . '"'
 		. '               value="' . esc_attr( $option['prefix'] ) . '"' 
 		. '               size="15" maxlength="10" />'
-		. '        (' . esc_html( __( 'Within 10 characters', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')'
+		. '        <p class="pattern">(' . esc_html( __( 'Within 10 characters. Unusable "\'&<>\\', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '      </div>'
 		. '      <div class="item text">' . esc_html( __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '        <input type="text" name="' . esc_attr( $option_key['digits'] ) . '"'
 		. '                value="' . esc_attr( $option['digits'] ) . '"'
 		. '                size="1" maxlength="1" pattern="[1-9]"/>'
-		. '        (' . esc_html( __( '1~9 digits', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')'
+		. '        <p class="pattern">(' . esc_html( __( '1 digit integer. 1~9', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '      </div>'
 		. '      <div class="item check"><label>'
 		. '        <input type="hidden"   name="' . esc_attr( $option_key['separator'] ) . '" />'
@@ -268,6 +268,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '        <input type="submit" class="button-primary"'
 		. '               value="' . esc_html( __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) ) .'" />'
 		. '      </div>'
+		. '      <p class="pattern">(' . esc_html( __( 'Up to 5 digits integer. 0~99999', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '    </div>'
 		. '  </form>'
 		. '</div>';
