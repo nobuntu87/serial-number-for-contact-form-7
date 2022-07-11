@@ -120,6 +120,9 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 
 		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
 
+		// サニタイズ処理時にコンタクトフォームIDの識別用に一時保持(設定時に削除される)
+		$option['id'] = $form_id;
+
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
 		$option_key = [];
@@ -230,6 +233,9 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$form_id = intval( $item->ID );
 
 		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
+
+		// サニタイズ処理時にコンタクトフォームIDの識別用に一時保持(設定時に削除される)
+		$option['id'] = $form_id;
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 

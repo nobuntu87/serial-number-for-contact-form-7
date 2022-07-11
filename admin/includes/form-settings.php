@@ -39,6 +39,8 @@ function nt_wpcf7sn_register_setting() {
  * @return mixed[] サニタイズ処理したオプション値を返す。
  */
 function nt_wpcf7sn_sanitize_form_options( $options ) {
+	$form_id = intval( $options['id'] );
+
 	foreach( $option as $key => $value ) {
 		switch ( $key ) {
 			case 'type' :
@@ -49,7 +51,9 @@ function nt_wpcf7sn_sanitize_form_options( $options ) {
 			case 'year2dig' :
 			case 'nocount' :
 			default :
-		}
+				// 未定義の設定項目を削除
+				unset( $options[$key] );
+				break;		}
 	}
 	
 	return $options;
