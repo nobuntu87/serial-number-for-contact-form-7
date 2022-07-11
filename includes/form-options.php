@@ -61,6 +61,27 @@ class NT_WPCF7SN_Form_Options {
 	}
 
 	/**
+	 * DBからコンタクトフォームのオプションを取得する。
+	 *
+	 * @return mixed[] コンタクトフォームのオプションを返す。
+	 */
+	public function get_wpdb_options() {
+		global $wpdb;
+
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . '%';
+
+		$options = $wpdb->get_results( "
+			SELECT *
+			  FROM $wpdb->options
+			WHERE 1 = 1
+			  AND option_name like '$option_name'
+			ORDER BY option_name
+		" );
+
+		return $options;
+	}
+
+	/**
 	 * コンタクトフォームのオプションを取得する。
 	 * 
 	 * DBに存在しない場合デフォルト値で新規作成する。
@@ -189,23 +210,14 @@ class NT_WPCF7SN_Form_Options {
 	 * @return void
 	 */
 	public function check_all_options() {
-		global $wpdb;
-	
-		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . '%';
-		$options = $wpdb->get_results( "
-			SELECT *
-			  FROM $wpdb->options
-			WHERE 1 = 1
-			  AND option_name like '$option_name'
-			ORDER BY option_name
-		" );
-
-		if ( empty( $options ) ) {
+		// DBからコンタクトフォームのオプションを取得
+		$wpdb_options = self::get_wpdb_options();
+		if ( empty( $wpdb_options ) ) {
 			return;
 		}
 
-		foreach ( $options as $option ) {
-			$option_name = $option->option_name;
+		foreach ( $wpdb_options as $wpdb_option ) {
+			$option_name = $wpdb_option->option_name;
 
 			preg_match( '/(?P<id>[0-9]+)$/', $option_name, $match );
 			$form_id = intval( $match['id'] );
