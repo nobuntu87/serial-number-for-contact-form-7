@@ -48,6 +48,7 @@ class NT_WPCF7SN {
 		if ( isset( $option[$name] ) ) {
 			return $option[$name];
 		} else {
+			// オプションが未設定(NULL)の場合はデフォルト値で更新
 			self::update_option( $name, $default );
 			return $default;
 		}
@@ -63,10 +64,11 @@ class NT_WPCF7SN {
 	public function update_option( $name, $value ) {
 		$option = get_option( NT_WPCF7SN_PREFIX['_'] );
 
+		// DBに存在しない場合は空の配列を作成
 		$option = ( false === $option ) ? array() : (array) $option;
 
+		// 現在の設定にマージする
 		$option = array_merge( $option, array( $name => $value ) );
-
 		update_option( NT_WPCF7SN_PREFIX['_'], $option );
 	}
 
@@ -121,9 +123,6 @@ function nt_wpcf7sn_install() {
 	if ( get_option( NT_WPCF7SN_PREFIX['_'] ) ) {
 		return;
 	}
-
-	// コンタクトフォームのオプションを初期化
-	NT_WPCF7SN_Form_Options::setup_all_options();
 
 	// アップグレード処理
 	nt_wpcf7sn_upgrade();

@@ -54,7 +54,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		$sortable = array();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
-		// データ取得
+		// POSTデータからコンタクトフォーム情報を取得
 		$data = nt_wpcf7sn_get_posts_wpcf7();
 
 		// ページネーション設定
@@ -134,7 +134,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		foreach( $option as $key => $value ) {
 			$page_options .= ''
 			. '<input type="hidden" name="' . esc_attr( $option_key[$key] ) . '"'
-			. '       value="' . esc_attr( $option[$key] ) . '" />';
+			. '       value="' . esc_attr( $option[$key] ) . '"/>';
 		}
 
 		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $option['count'] + 1 );
@@ -143,33 +143,33 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_setting_' . esc_attr( $form_id ) . '"'
 		. '     class="' . NT_WPCF7SN_PREFIX['_'] . '_setting clearfix">'
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
-		. '    <input type="hidden" name="action" value="update" />'
-		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '" />' . $page_options
+		. '    <input type="hidden" name="action" value="update"/>'
+		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '"/>' . $page_options
 		. '    <div class="item-box type">'
 		. '      <h4 class="item-title">' . esc_html( __( 'Type', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h4>'
 		. '      <div class="item radio"><label>'
 		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
-		. '               value="0" ' . ( 0 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		. '               value="0" ' . ( 0 == intval( $option['type'] ) ? 'checked' : '' ) . '/>'
 		.         esc_html(  __( 'Serial Number', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
 		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
-		. '               value="1" ' . ( 1 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		. '               value="1" ' . ( 1 == intval( $option['type'] ) ? 'checked' : '' ) . '/>'
 		.          esc_html( __( 'Timestamp (UnixTime)', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
 		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
-		. '               value="2" ' . ( 2 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		. '               value="2" ' . ( 2 == intval( $option['type'] ) ? 'checked' : '' ) . '/>'
 		.          esc_html( __( 'Timestamp (Date)', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
 		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
-		. '               value="3" ' . ( 3 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		. '               value="3" ' . ( 3 == intval( $option['type'] ) ? 'checked' : '' ) . '/>'
 		.          esc_html( __( 'Timestamp (Date + Time)', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item radio"><label>'
 		. '        <input type="radio" name="' . esc_attr( $option_key['type'] ) . '"'
-		. '               value="4" ' . ( 4 == intval( $option['type'] ) ? 'checked' : '' ) . ' />'
+		. '               value="4" ' . ( 4 == intval( $option['type'] ) ? 'checked' : '' ) . '/>'
 		.          esc_html( __( 'Unique ID', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '    </div>'
@@ -178,31 +178,31 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '      <div class="item text">' . esc_html( __( 'Prefix', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '        <input type="text" name="' . esc_attr( $option_key['prefix'] ) . '"'
 		. '               value="' . esc_attr( $option['prefix'] ) . '"' 
-		. '               size="15" maxlength="10" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['pattern'] ) .'" />'
+		. '               size="15" maxlength="10" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['pattern'] ) .'"/>'
 		. '        <p class="pattern">(' . esc_html( __( 'Within 10 characters. Unusable \\"&\'<>', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '      </div>'
 		. '      <div class="item text">' . esc_html( __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '        <input type="text" name="' . esc_attr( $option_key['digits'] ) . '"'
 		. '                value="' . esc_attr( $option['digits'] ) . '"'
-		. '                size="1" maxlength="1" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['digits'] ) .'" />'
+		. '                size="1" maxlength="1" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['digits'] ) .'"/>'
 		. '        <p class="pattern">(' . esc_html( __( '1 digit integer. 1~9', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '      </div>'
 		. '      <div class="item check"><label>'
-		. '        <input type="hidden"   name="' . esc_attr( $option_key['separator'] ) . '" />'
+		. '        <input type="hidden"   name="' . esc_attr( $option_key['separator'] ) . '"/>'
 		. '        <input type="checkbox" name="' . esc_attr( $option_key['separator'] ) . '"'
-		. '               value="yes" '. ( $option['separator'] == 'yes' ? 'checked' : '' ) . ' />'
+		. '               value="yes" '. ( $option['separator'] == 'yes' ? 'checked' : '' ) . '/>'
 		.          esc_html( __( 'Display the delimiter "-".', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item check"><label>'
-		. '        <input type="hidden"   name="' . esc_attr( $option_key['year2dig'] ) . '" />'
+		. '        <input type="hidden"   name="' . esc_attr( $option_key['year2dig'] ) . '"/>'
 		. '        <input type="checkbox" name="' . esc_attr( $option_key['year2dig'] ) . '"'
-		. '               value="yes" '. ( $option['year2dig'] == 'yes' ? 'checked' : '' ) . ' />'
+		. '               value="yes" '. ( $option['year2dig'] == 'yes' ? 'checked' : '' ) . '/>'
 		.          esc_html( __( 'Omit the number of years to 2 digits.', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '      <div class="item check"><label>'
-		. '        <input type="hidden"   name="' . esc_attr( $option_key['nocount'] ) . '" />'
+		. '        <input type="hidden"   name="' . esc_attr( $option_key['nocount'] ) . '"/>'
 		. '        <input type="checkbox" name="' . esc_attr( $option_key['nocount'] ) . '"'
-		. '               value="yes" '. ( $option['nocount'] == 'yes' ? 'checked' : '' ) . ' />'
+		. '               value="yes" '. ( $option['nocount'] == 'yes' ? 'checked' : '' ) . '/>'
 		.          esc_html( __( 'Don\'t display count with unique ID.', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
 		. '    </div>'
@@ -212,7 +212,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '      </div>'
 		. '      <div class="item submit_button">'
 		. '        <input type="submit" class="button-primary"'
-		. '               value="' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) .'" />'
+		. '               value="' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) .'"/>'
 		. '      </div>'
 		. '    </div>'
 		. '  </form>'
@@ -248,15 +248,15 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		foreach( $option as $key => $value ) {
 			$page_options .= ''
 			. '<input type="hidden" name="' . esc_attr( $option_key[$key] ) . '"'
-			. '       value="' . esc_attr( $option[$key] ) . '" />';
+			. '       value="' . esc_attr( $option[$key] ) . '"/>';
 		}
 
 		$output .= ''
 		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_count_' . esc_attr( $form_id ) . '"'
 		. '     class="' . NT_WPCF7SN_PREFIX['_'] . '_count clearfix">'
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
-		. '    <input type="hidden" name="action" value="update" />'
-		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '" />' . $page_options
+		. '    <input type="hidden" name="action" value="update"/>'
+		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '"/>' . $page_options
 		. '    <div class="item-box count">'
 		. '      <h4 class="item-title">' . esc_html( __( 'Current Count', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h4>'
 		. '      <div class="item text">'
@@ -266,7 +266,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '      </div>'
 		. '      <div class="item submit_button">'
 		. '        <input type="submit" class="button-primary"'
-		. '               value="' . esc_html( __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) ) .'" />'
+		. '               value="' . esc_html( __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) ) .'"/>'
 		. '      </div>'
 		. '      <p class="pattern">(' . esc_html( __( 'Up to 5 digits integer. 0~99999', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '    </div>'

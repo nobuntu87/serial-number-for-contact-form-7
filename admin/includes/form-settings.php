@@ -15,8 +15,10 @@ add_action( 'admin_init', 'nt_wpcf7sn_register_setting', 10, 0 );
  * @return void
  */
 function nt_wpcf7sn_register_setting() {
+	// POSTデータからコンタクトフォーム情報を取得
 	$wpcf7_posts = nt_wpcf7sn_get_posts_wpcf7();
 
+	// 全てのコンタクトフォームのオプションを設定
 	foreach( $wpcf7_posts as $wpcf7_post ) {
 		$form_id = intval( $wpcf7_post->ID );
 	

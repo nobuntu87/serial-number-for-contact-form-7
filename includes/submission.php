@@ -40,7 +40,10 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
 	if ( class_exists( 'WPCF7_Submission' ) ) {
 
 		$submission = WPCF7_Submission::get_instance();
-		
+		if ( ! $submission ) {
+			return $posted_data;
+		}
+
 		$contact_form = $submission->get_contact_form();
 		$form_id = intval( $contact_form->id );
 
@@ -61,6 +64,8 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
  * @return void
  */
 function nt_wpcf7sn_increment_count( $form_id ) {
+	$form_id = intval( $form_id );
+
 	$count = NT_WPCF7SN_Form_Options::get_option( $form_id, 'count' );
 	
 	NT_WPCF7SN_Form_Options::update_option( $form_id, 'count', $count + 1 );

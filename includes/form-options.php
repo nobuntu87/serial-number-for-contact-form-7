@@ -11,8 +11,10 @@ class NT_WPCF7SN_Form_Options {
 	 * @return void
 	 */
 	public function setup_all_options() {
+		// POSTデータからコンタクトフォーム情報を取得
 		$wpcf7_posts = nt_wpcf7sn_get_posts_wpcf7();
 
+		// 全てのコンタクトフォームのオプションをセットアップ
 		foreach( $wpcf7_posts as $wpcf7_post ) {
 			$form_id = intval( $wpcf7_post->ID );
 			self::setup_options( $form_id );
@@ -28,7 +30,7 @@ class NT_WPCF7SN_Form_Options {
 	 * @return mixed[] コンタクトフォームのオプションを返す。
 	 */
 	public function setup_options( $form_id ) {
-		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
+		$form_id = intval( $form_id );
 
 		$option_value = [];
 
@@ -51,6 +53,8 @@ class NT_WPCF7SN_Form_Options {
 			$option_value[$key] = $default;
 		}
 
+		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
+
 		update_option( $option_name, $option_value );
 
 		return $option_value;
@@ -65,6 +69,8 @@ class NT_WPCF7SN_Form_Options {
 	 * @return mixed[] コンタクトフォームのオプションを返す。
 	 */
 	public function get_options( $form_id ) {
+		$form_id = intval( $form_id );
+
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 		
 		$option_value = get_option( $option_name );
@@ -100,16 +106,22 @@ class NT_WPCF7SN_Form_Options {
 	 *               オプション名が定義されていない場合はfalseを返す。
 	 */
 	public function get_option( $form_id, $name ) {
+		// オプション名が未定義の場合はfalse
 		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
 			return false;
 		}
+
+		$form_id = intval( $form_id );
 
 		$option_value = self::get_options( $form_id );
 
 		if ( isset( $option_value[$name] ) ) {
 			return $option_value[$name];
 		} else {
-			return NT_WPCF7SN_FORM_OPTION[$name]['default'];
+			// オプションが未設定(NULL)の場合はデフォルト値で更新
+			$default = NT_WPCF7SN_FORM_OPTION[$name]['default'];
+			self::update_option( $form_id, $name, $default );
+			return $default;
 		}
 	}
 
@@ -122,9 +134,12 @@ class NT_WPCF7SN_Form_Options {
 	 * @return bool オプション名が定義されていない場合はfalseを返す。
 	 */
 	public function update_option( $form_id, $name, $value ) {
+		// オプション名が未定義の場合はfalse
 		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
 			return false;
 		}
+
+		$form_id = intval( $form_id );
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
@@ -142,8 +157,8 @@ class NT_WPCF7SN_Form_Options {
 			default :
 		}
 
+		// 現在の設定にマージする
 		$option_value = array_merge( $option_value, array( $name => $value ) );
-
 		update_option( $option_name, $option_value );
 	}
 
@@ -155,12 +170,14 @@ class NT_WPCF7SN_Form_Options {
 	 * @return void
 	 */
 	public function delete_option( $form_id, $name ) {
+		$form_id = intval( $form_id );
+
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
 		$option_value = self::get_options( $form_id );
 
+		// 現在の設定から指定オプションを削除し更新
 		unset( $option_value[$name] );
-
 		update_option( $option_name, $option_value );
 	}
 
@@ -204,9 +221,11 @@ class NT_WPCF7SN_Form_Options {
 	 * 不足(追加)オプションをチェックする。 (DB[無]/定義[有])
 	 *
 	 * @param int $form_id コンタクトフォームID
-	 * @return void
+	 * @return bool DBに存在しない場合はfalseを返す
 	 */
 	public function check_options( $form_id ) {
+		$form_id = intval( $form_id );
+
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
 		$option_value = get_option( $option_name );
