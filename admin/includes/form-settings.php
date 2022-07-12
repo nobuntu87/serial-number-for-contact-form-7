@@ -202,7 +202,7 @@ function nt_wpcf7sn_sanitize_form_option_prefix( $form_id, $value ) {
 	$value = NT_WPCF7SN_Form_Options::cast_type_option( $name, esc_attr( $value ) );
 
 	// フォーマットチェック
-	if ( 1 !== preg_match( '/' . NT_WPCF7SN_FORM_OPTION[$name]['pattern'] . '/', $value ) ) {
+	if ( 1 !== preg_match( '/' . NT_WPCF7SN_FORM_OPTION[$name]['pattern'] . '/u', $value ) ) {
 		// 規定外の入力はエラー表示
 		$message = sprintf( '[id:%s] '.
 			__( 'Prefix', NT_WPCF7SN_TEXT_DOMAIN ) . ' : ' .
