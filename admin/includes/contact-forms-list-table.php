@@ -184,7 +184,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '      <div class="item text">' . esc_html( __( 'Digits', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '        <input type="text" name="' . esc_attr( $option_key['digits'] ) . '"'
 		. '                value="' . esc_attr( $option['digits'] ) . '"'
-		. '                size="1" maxlength="1" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['digits'] ) .'"/>'
+		. '                size="1" maxlength="1" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['digits']['pattern'] ) .'"/>'
 		. '        <p class="pattern">(' . esc_html( __( '1 digit integer. 1~9', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
 		. '      </div>'
 		. '      <div class="item check"><label>'
@@ -262,7 +262,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '      <div class="item text">'
 		. '        <input type="text" name="' . esc_attr( $option_key['count'] ) . '"'
 		. '               value="' . esc_attr( $option['count'] ) . '"'
-		. '               size="5" maxlength="5" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['prefix']['count'] ) .'"/>'
+		. '               size="5" maxlength="5" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['count']['pattern'] ) .'"/>'
 		. '      </div>'
 		. '      <div class="item submit_button">'
 		. '        <input type="submit" class="button-primary"'
