@@ -2,7 +2,7 @@
 /*
 Plugin Name: Serial Number for Contact Form 7
 Plugin URI: 
-Description: An add-on for the Contact Form 7 plugin. Add a mail-tag to display the serial number.
+Description: Add-on for Contact Form 7 plugin. Add your own mail-tag to display the serial number.
 Author: Nobuntu
 Author URI: https://profiles.wordpress.org/nobuntu87/
 Text Domain: serial-number-for-contact-form-7
@@ -30,7 +30,7 @@ define( 'NT_WPCF7SN_PREFIX', array(
 
 // Description
 __( 
-	'An add-on for the Contact Form 7 plugin. Add a mail-tag to display the serial number.',
+	'Add-on for Contact Form 7 plugin. Add your own mail-tag to display the serial number.',
 	NT_WPCF7SN_TEXT_DOMAIN
 );
 
