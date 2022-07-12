@@ -39,16 +39,7 @@ class NT_WPCF7SN_Form_Options {
 			$default = $value['default'];
 
 			// 変数型の変換
-			$type = $value['type'];
-			switch ( $type ) {
-				case 'integer' :
-					$default = intval( $default );
-					break;
-				case 'string' :
-					$default = strval( $default );
-					break;
-				default :
-			}
+			$default = self::cast_type_option( $key, $value );
 			
 			$option_value[$key] = $default;
 		}
@@ -102,18 +93,7 @@ class NT_WPCF7SN_Form_Options {
 		}
 
 		// 変数型の変換
-		foreach( $option_value as $key => $value ) {
-			$type = NT_WPCF7SN_FORM_OPTION[$key]['type'];
-			switch ( $type ) {
-				case 'integer' :
-					$option_value[$key] = intval( $value );
-					break;
-				case 'string' :
-					$option_value[$key] = strval( $value );
-					break;
-				default :
-			}
-		}
+		$option_value = self::cast_type_options( $option_value );
 
 		return $option_value;
 	}
@@ -137,10 +117,11 @@ class NT_WPCF7SN_Form_Options {
 		$option_value = self::get_options( $form_id );
 
 		if ( isset( $option_value[$name] ) ) {
-			return $option_value[$name];
+			return self::cast_type_option( $name, $option_value[$name] );
 		} else {
 			// オプションが未設定(NULL)の場合はデフォルト値で更新
 			$default = NT_WPCF7SN_FORM_OPTION[$name]['default'];
+			$default = self::cast_type_option( $name, $default );
 			self::update_option( $form_id, $name, $default );
 			return $default;
 		}
@@ -167,16 +148,7 @@ class NT_WPCF7SN_Form_Options {
 		$option_value = self::get_options( $form_id );
 
 		// 変数型の変換
-		$type = NT_WPCF7SN_FORM_OPTION[$name]['type'];
-		switch ( $type ) {
-			case 'integer' :
-				$value = intval( $value );
-				break;
-			case 'string' :
-				$value = strval( $value );
-				break;
-			default :
-		}
+		$value = self::cast_type_option( $name, $value );
 
 		// 現在の設定にマージする
 		$option_value = array_merge( $option_value, array( $name => $value ) );
@@ -212,9 +184,6 @@ class NT_WPCF7SN_Form_Options {
 	public function check_all_options() {
 		// DBからコンタクトフォームのオプションを取得
 		$wpdb_options = self::get_wpdb_options();
-		if ( empty( $wpdb_options ) ) {
-			return;
-		}
 
 		foreach ( $wpdb_options as $wpdb_option ) {
 			$option_name = $wpdb_option->option_name;
@@ -247,26 +216,77 @@ class NT_WPCF7SN_Form_Options {
 			return;
 		}
 
-		// 整合性チェック：DB[有] / 定義[無] = 不要(削除オプション)
 		foreach ( $option_value as $key => $value ) {
+			// 整合性チェック：DB[有] / 定義[無] = 不要(削除オプション)
 			if ( ! isset( NT_WPCF7SN_FORM_OPTION[$key] ) ) {
 				self::delete_option( $form_id, $key );
 			} else {
-				// 変数型チェック
+				// 整合性チェック：DB[有] / 定義[有] / 型不一致 = 変更(変更オプション)
 				$type = NT_WPCF7SN_FORM_OPTION[$key]['type'];
 				if ( $type != gettype( $value ) ){
-					self::update_option( $form_id, $key, $value );
+					// データ構造が変更された可能性があるため初期値で更新
+					$default = NT_WPCF7SN_FORM_OPTION[$key]['default'];
+					$default = self::cast_type_option( $key, $default );
+					self::update_option( $form_id, $key, $default );
 				}
 			}
 		}
 
-		// 整合性チェック：DB[無] / 定義[有] = 不足(追加オプション)
 		foreach( NT_WPCF7SN_FORM_OPTION as $key => $value ) {
+			// 整合性チェック：DB[無] / 定義[有] = 不足(追加オプション)
 			if ( ! isset( $option_value[$key] ) ) {
 				$default = $value['default'];
+				$default = self::cast_type_option( $key, $default );
 				self::update_option( $form_id, $key, $default );
 			}
 		}
+	}
+
+	/**
+	 * コンタクトフォームのオプションの変数型を変換する。
+	 *
+	 * @param mixed $options コンタクトフォームのオプション
+	 * @return mixed[] コンタクトフォームのオプションを返す。
+	 */
+	public function cast_type_options( $options ) {
+		foreach( $options as $key => $value ) {
+			$value = self::cast_type_option( $key, $value );
+			$options[$key] = $value;
+		}
+
+		return $options;
+	}
+
+	/**
+	 * コンタクトフォームのオプションの変数型を変換する。
+	 *
+	 * @param string $name オプション名
+	 * @param mixed $value オプション値
+	 * @return mixed[] コンタクトフォームのオプションを返す。
+	 */
+	public function cast_type_option( $name, $value ) {
+		// オプション名が未定義の場合は終了
+		if ( ! isset( NT_WPCF7SN_FORM_OPTION[$name] ) ) {
+			return $value;
+		}
+
+		$type = NT_WPCF7SN_FORM_OPTION[$name]['type'];
+
+		if ( $type == gettype( $value ) ){
+			return $value;
+		}
+		
+		switch ( $type ) {
+			case 'integer' :
+				$value = intval( $value );
+				break;
+			case 'string' :
+				$value = strval( $value );
+				break;
+			default :
+		}
+
+		return $value;
 	}
 
 }
