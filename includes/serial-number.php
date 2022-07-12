@@ -16,16 +16,15 @@ class NT_WPCF7SN_Serial_Number {
 	public function get_serial_number( $form_id, $count = false ) {
 		$serial_num = '';
 
+		$form_id = intval( $form_id );
+
 		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
 
 		if ( false !== $count ) {
 			$option['count'] = intval( $count );
 		}
 
-		$num = self::count_digits( 
-			intval( $option['count'] ),
-			intval( $option['digits'] )
-		);
+		$num = self::count_digits( intval( $option['count'] ),intval( $option['digits'] ) );
 		$sep = $option['separator'] == 'yes' ? '-' : '';
 
 		$type = $option['type'];
@@ -89,7 +88,7 @@ class NT_WPCF7SN_Serial_Number {
 		$randum = sprintf( '%02d', mt_rand( 0, 99 ) );
 
 		// ユニークIDの算出値を作成 (逆順変換)
-		$basecode = $microtime . $count . $randum;
+		$basecode = $microtime . intval( $count ) . $randum;
 		$basecode = strrev( $basecode );
 
 		// 10進数を36進数[0-9/a-z]に変換 (大文字変換)
@@ -107,6 +106,9 @@ class NT_WPCF7SN_Serial_Number {
 	 * @return string 桁数表示のメールカウントを返す。
 	 */
 	private function count_digits( $count, $digits ) {
+		$count = intval( $count );
+		$digits = intval( $digits );
+
 		if ( $digits == 0 ) {
 			return sprintf( "%d", $count );
 		} else {

@@ -28,6 +28,12 @@ define( 'NT_WPCF7SN_PREFIX', array(
 	'-' => 'nt-wpcf7sn',
 ) );
 
+// Description
+__( 
+	'An add-on for the Contact Form 7 plugin. Add a mail-tag to display the serial number.',
+	NT_WPCF7SN_TEXT_DOMAIN
+);
+
 /**
  * プラグイン定義：パス関連
  * 
@@ -49,13 +55,13 @@ define( 'NT_WPCF7SN_PLUGIN_URL', untrailingslashit( plugins_url( '', NT_WPCF7SN_
 define( 'NT_WPCF7SN_FORM_OPTION_NAME', NT_WPCF7SN_PREFIX['_'] . '_form_' );
 
 define( 'NT_WPCF7SN_FORM_OPTION', array(
-	'type'      => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-4]$'                      ),
-	'count'     => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-9]{1,5}$'                 ),
-	'digits'    => array( 'default' => 1,  'type' => 'integer', 'pattern' => '^[1-9]$'                      ),
-	'prefix'    => array( 'default' => '', 'type' => 'string',  'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'  ),
-	'separator' => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                     ),
-	'year2dig'  => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                     ),
-	'nocount'   => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                     ),
+	'type'      => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-4]$'                     ),
+	'count'     => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-9]{1,5}$'                ),
+	'digits'    => array( 'default' => 1,  'type' => 'integer', 'pattern' => '^[1-9]$'                     ),
+	'prefix'    => array( 'default' => '', 'type' => 'string',  'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$' ),
+	'separator' => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                    ),
+	'year2dig'  => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                    ),
+	'nocount'   => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                    ),
 ) );
 
 define( 'NT_WPCF7SN_MAIL_TAG', '_serial_number_' );
@@ -82,6 +88,16 @@ define( 'NT_WPCF7SN_ALLOWED_HTML', wp_kses_allowed_html( 'post' ) + array(
 		'id' => array(),
 		'method' => array(),
 		'action' => array(),
+	),
+) );
+
+/**
+ * プラグイン定義：スクリーンオプション関連
+ */
+define( 'NT_WPCF7SN_FORM_OPTION_SCREEN', array(
+	'per_page' => array(
+		'default' => 5,
+		'option'  => NT_WPCF7SN_PREFIX['_'] . '_form_option_per_page',
 	),
 ) );
 

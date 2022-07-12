@@ -13,14 +13,17 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
  */
 add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 10, 0 );
 add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
-add_action( 'load-settings_page_nt-wpcf7sn', 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
+add_action( 'load-settings_page_' . NT_WPCF7SN_PREFIX['-'], 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
 add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
 
 /**
  * フィルターフック設定
  */
 add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
-add_filter( 'set_screen_option_nt_wpcf7sn_form_option_per_page', 'nt_wpcf7sn_set_screen_option', 10, 3 );
+add_filter( 
+	'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
+	'nt_wpcf7sn_set_screen_option', 10, 3
+);
 
 
 /**
@@ -103,10 +106,11 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
 	$settings_link = '<a href="' . esc_url( $page_url) . '">' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</a>';
 	
-	$settings_link =  wp_kses( $settings_link, NT_WPCF7SN_ALLOWED_HTML );
-
 	// 先頭に追加
-	array_unshift( $actions, $settings_link );
+	array_unshift(
+		$actions,
+		wp_kses( $settings_link, NT_WPCF7SN_ALLOWED_HTML )
+	);
 
 	return $actions;
 }
@@ -121,8 +125,8 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
  */
 function nt_wpcf7sn_load_admin_management_page() {
 	add_screen_option( 'per_page', array(
-		'default' => 5,
-		'option'  => 'nt_wpcf7sn_form_option_per_page',
+		'default' => NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['default'],
+		'option'  => NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'],
 	) );
 }
 

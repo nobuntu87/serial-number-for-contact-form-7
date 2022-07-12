@@ -24,7 +24,11 @@ function nt_wpcf7sn_special_mail_tags( $output, $mail_tag ) {
 	$form_id = intval( $match['id'] );
 
 	if ( class_exists( 'WPCF7_Submission' ) ) {
-		$submission = WPCF7_Submission::get_instance();	
+		$submission = WPCF7_Submission::get_instance();
+		if ( ! $submission ) {
+			return $output;
+		}
+
 		$contact_form = $submission->get_contact_form();
 
 		// POSTデータからシリアル番号を取得
