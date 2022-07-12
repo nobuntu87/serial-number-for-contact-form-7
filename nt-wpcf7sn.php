@@ -78,6 +78,8 @@ define( 'NT_WPCF7SN_ALLOWED_HTML', wp_kses_allowed_html( 'post' ) + array(
 		'type' => array(),
 		'name' => array(),
 		'value' => array(),
+		'readonly' => array(),
+		'onfocus' => array(),
 		'checked' => array(),
 		'size' => array(),
 		'maxlength' => array(),
