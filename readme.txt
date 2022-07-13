@@ -1,6 +1,6 @@
 === Serial Number for Contact Form 7 ===
 Contributors: nobuntu87
-Donate link: 
+Donate link: https://nobuntu.jp/donate/
 Tags: contact form 7, contact form 7 addon, serial number
 Requires at least: 5.9
 Tested up to: 6.0
@@ -13,13 +13,39 @@ Add-on for Contact Form 7 plugin. Add your own mail-tag to display the serial nu
 
 == Description ==
 
-The "Serial Number for Contact Form 7" plugin add an own mail-tag that displays serial number to the "Contact Form 7" plugin.
+The "Serial Number for Contact Form 7" plugin add your own mail-tag that displays serial number to the "Contact Form 7" plugin.
+
 Just like other standard mail-tags, it works by placing it anywhere in the mail template.
+
 You can customize the display format for each contact form.
+
+= Required plugins =
+
+To use this plugin, you need to install the following plugins.
+
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) by Takayuki Miyoshi
+
+= Recommended plugins =
+
+Some plugins that save submitted messages can also save the serial number as well.
+
+* [Flamingo](https://wordpress.org/plugins/flamingo/) by Takayuki Miyoshi
+* [Contact Form 7 Database Addon – CFDB7](https://wordpress.org/plugins/contact-form-cfdb7/) by Arshid
+
+\* Operation is not guaranteed.
+
+= Thank you for your support =
+
+Your support is needed to continue the development and support of the Plugin, which we distribute free of charge.
+
+If you like the plugin, please consider making a small [donation](https://nobuntu.jp/donate/).
+
+Your donation will help us continue development and provide better support.
 
 == Frequently Asked Questions ==
 
-Do you have questions or issues with a plugin? Please use these support channels appropriately.
+Do you have questions or issues with a plugin?
+Please use these support channels appropriately.
 
 1. [Support forum](https://wordpress.org/support/plugin/serial-number-for-contact-form-7)
 
@@ -38,6 +64,8 @@ Please see the [Installing Plugins](https://wordpress.org/support/article/managi
 
 = 0.1.0 =
 
-First release version.
+* First release version.
 
 == Upgrade Notice ==
+
+Nothing.

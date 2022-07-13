@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Serial Number for Contact Form 7
-Plugin URI: 
+Plugin URI: https://wordpress.org/plugins/serial-number-for-contact-form-7
 Description: Add-on for Contact Form 7 plugin. Add your own mail-tag to display the serial number.
 Author: Nobuntu
 Author URI: https://profiles.wordpress.org/nobuntu87/
