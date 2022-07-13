@@ -59,6 +59,7 @@ Please see the [Installing Plugins](https://wordpress.org/support/article/managi
 == Screenshots ==
 
 1. screenshot-1.png
+1. screenshot-2.png
 
 == Changelog ==
 
