@@ -39,7 +39,7 @@ class NT_WPCF7SN_Form_Options {
 			$default = $value['default'];
 
 			// 変数型の変換
-			$default = self::cast_type_option( $key, $value );
+			$default = self::cast_type_option( $key, $default );
 			
 			$option_value[$key] = $default;
 		}
