@@ -12,18 +12,37 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
 /**
  * アクションフック設定
  */
-add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 11, 0 );
-add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
-add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
+if ( NT_WPCF7SN_ADMIN::is_active_wpcf7() ) {
+	add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 11, 0 );
+	add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
+	add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
+}
 
 /**
  * フィルターフック設定
  */
-add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
-add_filter( 
-	'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
-	'nt_wpcf7sn_set_screen_option', 10, 3
-);
+if ( NT_WPCF7SN_ADMIN::is_active_wpcf7() ) {
+	add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
+	add_filter( 
+		'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
+		'nt_wpcf7sn_set_screen_option', 10, 3
+	);
+}
+
+
+class NT_WPCF7SN_ADMIN {
+
+	/**
+	 * Contact Form 7 プラグインが有効化されているか確認する。
+	 *
+	 * @return bool プラグインが有効化されている場合はtrueを返す。
+	 *              プラグインが有効化されていない場合はfalseを返す。
+	 */
+	public function is_active_wpcf7() {
+		return nt_wpcf7sn_is_active_plugin( NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7'] );
+	}
+
+}
 
 
 /**
