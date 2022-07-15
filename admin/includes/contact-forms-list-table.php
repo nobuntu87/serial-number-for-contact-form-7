@@ -205,6 +205,12 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '               value="yes" '. ( $option['nocount'] == 'yes' ? 'checked' : '' ) . ' />'
 		.          esc_html( __( 'Don\'t display count with unique ID.', NT_WPCF7SN_TEXT_DOMAIN ) )
 		. '      </label></div>'
+		. '      <div class="item check"><label>'
+		. '        <input type="hidden"   name="' . esc_attr( $option_key['dayreset'] ) . '"/>'
+		. '        <input type="checkbox" name="' . esc_attr( $option_key['dayreset'] ) . '"'
+		. '               value="yes" '. ( $option['dayreset'] == 'yes' ? 'checked' : '' ) . ' />'
+		.          esc_html( __( 'Use the daily reset counter.', NT_WPCF7SN_TEXT_DOMAIN ) )
+		. '      </label></div>'
 		. '    </div>'
 		. '    <div class="item-box update">'
 		. '      <div class="item example">'
@@ -257,7 +263,7 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '  <form method="post" action="options.php">' . wp_nonce_field( 'update-options' )
 		. '    <input type="hidden" name="action" value="update"/>'
 		. '    <input type="hidden" name="page_options" value="' . esc_attr( $option_name ) . '"/>' . $page_options
-		. '    <div class="item-box count">'
+		. '    <div class="item-box count' . ( $option['dayreset'] == 'yes' ? ' hidden' : '' ) . '">'
 		. '      <h4 class="item-title">' . esc_html( __( 'Current Count', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h4>'
 		. '      <div class="item text">'
 		. '        <input type="text" name="' . esc_attr( $option_key['count'] ) . '"'
@@ -269,6 +275,20 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 		. '               value="' . esc_html( __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) ) .'"/>'
 		. '      </div>'
 		. '      <p class="pattern">(' . esc_html( __( 'Up to 5 digits integer. 0~99999', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
+		. '    </div>'
+		. '    <div class="item-box count' . ( $option['dayreset'] == 'yes' ? '' : ' hidden' ) . '">'
+		. '      <h4 class="item-title">' . esc_html( __( 'Daily Count', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h4>'
+		. '      <div class="item text">'
+		. '        <input type="text" name="' . esc_attr( $option_key['daycount'] ) . '"'
+		. '               value="' . esc_attr( $option['daycount'] ) . '"'
+		. '               size="5" maxlength="5" pattern="'. esc_attr( NT_WPCF7SN_FORM_OPTION['daycount']['pattern'] ) .'"/>'
+		. '      </div>'
+		. '      <div class="item submit_button">'
+		. '        <input type="submit" class="button-primary"'
+		. '               value="' . esc_html( __( 'Change', NT_WPCF7SN_TEXT_DOMAIN ) ) .'"/>'
+		. '      </div>'
+		. '      <p class="pattern">(' . esc_html( __( 'Up to 5 digits integer. 0~99999', NT_WPCF7SN_TEXT_DOMAIN ) ) . ')</p>'
+		. '      <p class="description">' . esc_html( __( '* Reset on date change', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</p>'
 		. '    </div>'
 		. '  </form>'
 		. '</div>';
