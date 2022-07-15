@@ -11,9 +11,8 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
 /**
  * アクションフック設定
  */
-add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 10, 0 );
+add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 11, 0 );
 add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
-add_action( 'load-settings_page_' . NT_WPCF7SN_PREFIX['-'], 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
 add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
 
 /**
@@ -32,13 +31,16 @@ add_filter(
  * @return void
  */
 function nt_wpcf7sn_admin_menu() {
-	add_options_page(
+	$hook = add_submenu_page(
+		'wpcf7',
 		__( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ),
-		__( 'CF7 Serial Number', NT_WPCF7SN_TEXT_DOMAIN ),
+		__( 'Serial Number Settings', NT_WPCF7SN_TEXT_DOMAIN ),
 		'manage_options',
 		NT_WPCF7SN_PREFIX['-'],
 		'nt_wpcf7sn_admin_management_page'
 	);
+
+	add_action( 'load-' . $hook, 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
 }
 
 
@@ -104,7 +106,7 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 		return $actions;
 	}
 
-	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
+	$page_url = menu_page_url( NT_WPCF7SN_PREFIX['-'], false );
 	$settings_link = '<a href="' . esc_url( $page_url) . '">' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</a>';
 	
 	// 先頭に追加
