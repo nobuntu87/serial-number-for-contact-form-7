@@ -27,6 +27,8 @@ if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
 		'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
 		'nt_wpcf7sn_set_screen_option', 10, 3
 	);
+} else {
+	add_filter( 'plugin_row_meta', 'nt_wpcf7sn_dependent_error', 10, 2 );
 }
 
 
@@ -39,7 +41,9 @@ class NT_WPCF7SN_Admin {
 	 *              プラグインが有効化されていない場合はfalseを返す。
 	 */
 	public function is_active_wpcf7() {
-		return nt_wpcf7sn_is_active_plugin( NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7'] );
+		return nt_wpcf7sn_is_active_plugin(
+			NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['basename']
+		);
 	}
 
 }
@@ -199,4 +203,51 @@ function nt_wpcf7sn_wp_version_error() {
 	. '</div>';
 	
 	echo wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
+}
+
+
+/**
+ * 依存プラグインのエラーメッセージを表示する。
+ *
+ * @param string[] $plugin_meta プラグインメタ情報
+ * @param string $plugin_file プラグインの相対パス
+ * @return string[] プラグインメタ情報を返す。
+ */
+function nt_wpcf7sn_dependent_error( $plugin_meta, $plugin_file ) {
+	if ( NT_WPCF7SN_PLUGIN_BASENAME != $plugin_file ) {
+		return $plugin_meta;
+	}
+
+	$iframe_url = nt_wpcf7sn_get_plugin_iframe_url(
+		NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['slug']
+	);
+
+	$plugin_name = NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['name'];
+
+	$plugin_link = ''
+	. '<a href="' . esc_url( $iframe_url ) . '"'
+	. '   class="thickbox open-plugin-details-modal"'
+	. '   data-title="' . esc_attr( $plugin_name ) .'"'
+	. '>' . esc_html( $plugin_name ) . '</a>';
+
+	$message = sprintf(
+		__(
+			'<strong>Required the %s plugin to work.</strong>'
+			. ' Please install and activate the plugin first.'
+			, NT_WPCF7SN_TEXT_DOMAIN
+		),
+		$plugin_link
+	);
+
+	$output = ''
+	. '<div class="notice notice-warning notice-alt inline">'
+	. '  <p> ' . $message . '</p>'
+	. '</div>';
+
+	array_push(
+		$plugin_meta,
+		wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML )
+	);
+
+	return $plugin_meta;
 }

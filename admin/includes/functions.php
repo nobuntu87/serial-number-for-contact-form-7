@@ -26,3 +26,25 @@ function nt_wpcf7sn_is_active_plugin( $plugin ) {
 		return false;
 	}
 }
+
+
+/**
+ * プラグインページの埋め込みURLを取得する。
+ * 
+ * プラグインページURLに埋め込みクエリパラメータを付加する。
+ *
+ * @param string $plugin_slug プラグインスラッグ
+ * @return string プラグインページの埋め込みURLを返す。
+ */
+function nt_wpcf7sn_get_plugin_iframe_url( $plugin_slug ) {
+	return esc_url( add_query_arg(
+		array(
+			'tab'       => 'plugin-information',
+			'plugin'    => $plugin_slug,
+			'TB_iframe' => 'true',
+			'width'     => '600',
+			'height'    => '550',
+		),
+		admin_url( 'plugin-install.php' )
+	) );
+}
