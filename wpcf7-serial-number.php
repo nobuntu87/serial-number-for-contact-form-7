@@ -29,7 +29,11 @@ define( 'NT_WPCF7SN_PREFIX', array(
 ) );
 
 define( 'NT_WPCF7SN_EXTERNAL_PLUGIN', array(
-	'wpcf7' => 'contact-form-7/wp-contact-form-7.php',
+	'wpcf7' => array(
+		'name'     => 'Contact Form 7',
+		'slug'     => 'contact-form-7',
+		'basename' => 'contact-form-7/wp-contact-form-7.php',
+	),
 ) );
 
 /**

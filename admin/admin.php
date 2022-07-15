@@ -41,7 +41,9 @@ class NT_WPCF7SN_Admin {
 	 *              プラグインが有効化されていない場合はfalseを返す。
 	 */
 	public function is_active_wpcf7() {
-		return nt_wpcf7sn_is_active_plugin( NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7'] );
+		return nt_wpcf7sn_is_active_plugin(
+			NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['basename']
+		);
 	}
 
 }
