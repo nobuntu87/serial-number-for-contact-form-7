@@ -27,6 +27,8 @@ if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
 		'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
 		'nt_wpcf7sn_set_screen_option', 10, 3
 	);
+} else {
+	add_filter( 'plugin_row_meta', 'nt_wpcf7sn_dependent_error', 10, 2 );
 }
 
 
@@ -199,4 +201,20 @@ function nt_wpcf7sn_wp_version_error() {
 	. '</div>';
 	
 	echo wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
+}
+
+
+/**
+ * 依存プラグインのエラーメッセージを表示する。
+ *
+ * @param string[] $plugin_meta プラグインメタ情報
+ * @param string $plugin_file プラグインの相対パス
+ * @return string[] プラグインメタ情報を返す。
+ */
+function nt_wpcf7sn_dependent_error( $plugin_meta, $plugin_file ) {
+	if ( NT_WPCF7SN_PLUGIN_BASENAME != $plugin_file ) {
+		return $plugin_meta;
+	}
+
+	return $plugin_meta;
 }
