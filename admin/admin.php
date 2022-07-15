@@ -218,5 +218,36 @@ function nt_wpcf7sn_dependent_error( $plugin_meta, $plugin_file ) {
 		return $plugin_meta;
 	}
 
+	$iframe_url = nt_wpcf7sn_get_plugin_iframe_url(
+		NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['slug']
+	);
+
+	$plugin_name = NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['name'];
+
+	$plugin_link = ''
+	. '<a href="' . esc_url( $iframe_url ) . '"'
+	. '   class="thickbox open-plugin-details-modal"'
+	. '   data-title="' . esc_attr( $plugin_name ) .'"'
+	. '>' . esc_html( $plugin_name ) . '</a>';
+
+	$message = sprintf(
+		__(
+			'<strong>Required the %s plugin to work.</strong>'
+			. ' Please install and activate the plugin first.'
+			, NT_WPCF7SN_TEXT_DOMAIN
+		),
+		$plugin_link
+	);
+
+	$output = ''
+	. '<div class="notice notice-warning notice-alt inline">'
+	. '  <p> ' . $message . '</p>'
+	. '</div>';
+
+	array_push(
+		$plugin_meta,
+		wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML )
+	);
+
 	return $plugin_meta;
 }
