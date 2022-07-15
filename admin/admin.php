@@ -58,8 +58,7 @@ function nt_wpcf7sn_admin_management_page() {
 	$output_before = ''
 	. '<div class="wrap">'
 	. '  <h2>' . esc_html( __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h2>'
-	. '  <p>' . esc_html( __( 'Copy and paste the mail-tag anywhere in the mail template.', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</p>'
-	. '';
+	. '  <p>' . esc_html( __( 'Copy and paste the mail-tag anywhere in the mail template.', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</p>';
 
 	$output_after = ''
 	. '</div>';

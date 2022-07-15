@@ -28,12 +28,6 @@ define( 'NT_WPCF7SN_PREFIX', array(
 	'-' => 'nt-wpcf7sn',
 ) );
 
-// Description
-__( 
-	'Add-on for Contact Form 7 plugin. Add your own mail-tag to display the serial number.',
-	NT_WPCF7SN_TEXT_DOMAIN
-);
-
 /**
  * プラグイン定義：パス関連
  * 
