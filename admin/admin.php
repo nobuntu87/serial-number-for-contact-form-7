@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * ファイル読み込み
  */
+require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/functions.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/form-settings.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.php';
 
@@ -11,19 +12,37 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
 /**
  * アクションフック設定
  */
-add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 10, 0 );
-add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
-add_action( 'load-settings_page_' . NT_WPCF7SN_PREFIX['-'], 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
-add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
+if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
+	add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 11, 0 );
+	add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
+	add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
+}
 
 /**
  * フィルターフック設定
  */
-add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
-add_filter( 
-	'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
-	'nt_wpcf7sn_set_screen_option', 10, 3
-);
+if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
+	add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
+	add_filter( 
+		'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
+		'nt_wpcf7sn_set_screen_option', 10, 3
+	);
+}
+
+
+class NT_WPCF7SN_Admin {
+
+	/**
+	 * Contact Form 7 プラグインが有効化されているか確認する。
+	 *
+	 * @return bool プラグインが有効化されている場合はtrueを返す。
+	 *              プラグインが有効化されていない場合はfalseを返す。
+	 */
+	public function is_active_wpcf7() {
+		return nt_wpcf7sn_is_active_plugin( NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7'] );
+	}
+
+}
 
 
 /**
@@ -32,13 +51,16 @@ add_filter(
  * @return void
  */
 function nt_wpcf7sn_admin_menu() {
-	add_options_page(
+	$hook = add_submenu_page(
+		'wpcf7',
 		__( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ),
-		__( 'CF7 Serial Number', NT_WPCF7SN_TEXT_DOMAIN ),
+		__( 'Serial Number Settings', NT_WPCF7SN_TEXT_DOMAIN ),
 		'manage_options',
 		NT_WPCF7SN_PREFIX['-'],
 		'nt_wpcf7sn_admin_management_page'
 	);
+
+	add_action( 'load-' . $hook, 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
 }
 
 
@@ -104,7 +126,7 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 		return $actions;
 	}
 
-	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
+	$page_url = menu_page_url( NT_WPCF7SN_PREFIX['-'], false );
 	$settings_link = '<a href="' . esc_url( $page_url) . '">' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</a>';
 	
 	// 先頭に追加

@@ -28,6 +28,10 @@ define( 'NT_WPCF7SN_PREFIX', array(
 	'-' => 'nt-wpcf7sn',
 ) );
 
+define( 'NT_WPCF7SN_EXTERNAL_PLUGIN', array(
+	'wpcf7' => 'contact-form-7/wp-contact-form-7.php',
+) );
+
 /**
  * プラグイン定義：パス関連
  * 
