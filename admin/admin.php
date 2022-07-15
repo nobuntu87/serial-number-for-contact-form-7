@@ -12,7 +12,7 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
 /**
  * アクションフック設定
  */
-if ( NT_WPCF7SN_ADMIN::is_active_wpcf7() ) {
+if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
 	add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 11, 0 );
 	add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
 	add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
@@ -21,7 +21,7 @@ if ( NT_WPCF7SN_ADMIN::is_active_wpcf7() ) {
 /**
  * フィルターフック設定
  */
-if ( NT_WPCF7SN_ADMIN::is_active_wpcf7() ) {
+if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
 	add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
 	add_filter( 
 		'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
@@ -30,7 +30,7 @@ if ( NT_WPCF7SN_ADMIN::is_active_wpcf7() ) {
 }
 
 
-class NT_WPCF7SN_ADMIN {
+class NT_WPCF7SN_Admin {
 
 	/**
 	 * Contact Form 7 プラグインが有効化されているか確認する。
