@@ -289,4 +289,48 @@ class NT_WPCF7SN_Form_Options {
 		return $value;
 	}
 
+	/**
+	 * カウント値を取得する。
+	 * 
+	 * カウンタータイプによりカウント値またはデイリーカウント値を取得する。
+	 *
+	 * @param int $form_id コンタクトフォームID
+	 * @return int 現在のカウント値を返す。
+	 */
+	public function get_count( $form_id ) {
+		$form_id = intval( $form_id );
+
+		$options = self::get_options( $form_id );
+
+		if ( 'yes' == $options['dayreset'] ) {
+			$now_count = intval( $options['daycount'] );
+		} else {
+			$now_count = intval( $options['count'] );
+		}
+
+		return $now_count;
+	}
+
+	/**
+	 * カウントを増加する。
+	 * 
+	 * カウンタータイプにかかわらず全てのカウントを増加する。
+	 *
+	 * @param int $form_id コンタクトフォームID
+	 * @return void
+	 */
+	public function increment_count( $form_id ) {
+		$form_id = intval( $form_id );
+
+		$options = self::get_options( $form_id );
+
+		// カウント増加
+		$new_count = intval( $options['count'] ) + 1;
+		update_option( $form_id, 'count', $new_count );
+
+		// デイリーカウント増加
+		$new_daycount = intval( $options['daycount'] ) + 1;
+		update_option( $form_id, 'daycount', $new_daycount );
+	}
+
 }
