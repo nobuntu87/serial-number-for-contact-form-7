@@ -137,7 +137,8 @@ class NT_WPCF7SN_Contact_Forms_List_Table extends WP_List_Table {
 			. '       value="' . esc_attr( $option[$key] ) . '"/>';
 		}
 
-		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $option['count'] + 1 );
+		$count = NT_WPCF7SN_Form_Options::get_count( $form_id );
+		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $count + 1 );
 
 		$output .= ''
 		. '<div id="' . NT_WPCF7SN_PREFIX['_'] . '_setting_' . esc_attr( $form_id ) . '"'
