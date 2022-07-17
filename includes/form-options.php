@@ -333,4 +333,22 @@ class NT_WPCF7SN_Form_Options {
 		update_option( $form_id, 'daycount', $new_daycount );
 	}
 
+	/**
+	 * デイリーカウントをリセットする。
+	 * 
+	 * 全てのコンタクトフォームのオプションのカウント値をリセットする。
+	 *
+	 * @return void
+	 */
+	public function reset_daily_count() {
+		// POSTデータからコンタクトフォーム情報を取得
+		$wpcf7_posts = nt_wpcf7sn_get_posts_wpcf7();
+
+		// 全てのコンタクトフォームのオプションをセットアップ
+		foreach( $wpcf7_posts as $wpcf7_post ) {
+			$form_id = intval( $wpcf7_post->ID );
+			self::update_option( $form_id, 'daycount', 0 );
+		}
+	}
+
 }
