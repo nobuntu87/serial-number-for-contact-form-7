@@ -76,11 +76,14 @@ class NT_WPCF7SN_Form_Options {
 	 * コンタクトフォームのオプションを取得する。
 	 * 
 	 * DBに存在しない場合デフォルト値で新規作成する。
+	 * カウント値のリセットチェックアクションを実行する。
 	 * 
 	 * @param int $form_id コンタクトフォームID
 	 * @return mixed[] コンタクトフォームのオプションを返す。
 	 */
 	public function get_options( $form_id ) {
+		do_action( 'nt_wpcf7sn_check_reset_count' );
+
 		$form_id = intval( $form_id );
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
@@ -129,6 +132,8 @@ class NT_WPCF7SN_Form_Options {
 
 	/**
 	 * コンタクトフォームのオプションを更新する。
+	 * 
+	 * DBに存在しない場合デフォルト値で新規作成する。
 	 *
 	 * @param int $form_id コンタクトフォームID
 	 * @param string $name オプション名
@@ -145,7 +150,12 @@ class NT_WPCF7SN_Form_Options {
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
-		$option_value = self::get_options( $form_id );
+		$option_value = get_option( $option_name );
+
+		// DBに存在しない場合はデフォルト値で新規作成
+		if ( false === $option_value ) {
+			$option_value =  self::setup_options( $form_id );
+		}
 
 		// 変数型の変換
 		$value = self::cast_type_option( $name, $value );
@@ -287,6 +297,71 @@ class NT_WPCF7SN_Form_Options {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * カウント値を取得する。
+	 * 
+	 * カウンタータイプによりカウント値またはデイリーカウント値を取得する。
+	 *
+	 * @param int $form_id コンタクトフォームID
+	 * @return int 現在のカウント値を返す。
+	 */
+	public function get_count( $form_id ) {
+		$form_id = intval( $form_id );
+
+		$options = self::get_options( $form_id );
+
+		if ( 'yes' == $options['dayreset'] ) {
+			$now_count = intval( $options['daycount'] );
+		} else {
+			$now_count = intval( $options['count'] );
+		}
+
+		return $now_count;
+	}
+
+	/**
+	 * カウントを増加する。
+	 * 
+	 * カウンタータイプにかかわらず全てのカウントを増加する。
+	 *
+	 * @param int $form_id コンタクトフォームID
+	 * @return void
+	 */
+	public function increment_count( $form_id ) {
+		$form_id = intval( $form_id );
+
+		$options = self::get_options( $form_id );
+
+		// カウント増加
+		$new_count = intval( $options['count'] ) + 1;
+		self::update_option( $form_id, 'count', $new_count );
+
+		// デイリーカウント増加
+		$new_daycount = intval( $options['daycount'] ) + 1;
+		self::update_option( $form_id, 'daycount', $new_daycount );
+	}
+
+	/**
+	 * デイリーカウントをリセットする。
+	 * 
+	 * 全てのコンタクトフォームのオプションのカウント値をリセットする。
+	 *
+	 * @return void
+	 */
+	public function reset_daily_count() {
+		// DBからコンタクトフォームのオプションを取得
+		$wpdb_options = self::get_wpdb_options();
+
+		foreach ( $wpdb_options as $wpdb_option ) {
+			$option_name = $wpdb_option->option_name;
+
+			preg_match( '/(?P<id>[0-9]+)$/', $option_name, $match );
+			$form_id = intval( $match['id'] );
+
+			self::update_option( $form_id, 'daycount', 0 );
+		}
 	}
 
 }

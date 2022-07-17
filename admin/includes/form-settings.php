@@ -53,6 +53,9 @@ function nt_wpcf7sn_sanitize_form_options( $options ) {
 			case 'count' :
 				$options[$key] = nt_wpcf7sn_sanitize_form_option_count( $form_id, $value );
 				break;
+			case 'daycount' :
+				$options[$key] = nt_wpcf7sn_sanitize_form_option_daycount( $form_id, $value );
+				break;
 			case 'digits' :
 				$options[$key] = nt_wpcf7sn_sanitize_form_option_digits( $form_id, $value );
 				break;
@@ -66,6 +69,9 @@ function nt_wpcf7sn_sanitize_form_options( $options ) {
 				$options[$key] = nt_wpcf7sn_sanitize_form_option_checkbox( $form_id, $value, $key );
 				break;
 			case 'nocount' :
+				$options[$key] = nt_wpcf7sn_sanitize_form_option_checkbox( $form_id, $value, $key );
+				break;
+			case 'dayreset' :
 				$options[$key] = nt_wpcf7sn_sanitize_form_option_checkbox( $form_id, $value, $key );
 				break;
 			default :
@@ -122,6 +128,48 @@ function nt_wpcf7sn_sanitize_form_option_count( $form_id, $value ) {
 		// 規定外の入力はエラー表示
 		$message = sprintf( '[id:%s] '.
 			__( 'Current Count', NT_WPCF7SN_TEXT_DOMAIN ) . ' : ' .
+			__( 'Input value is invalid.', NT_WPCF7SN_TEXT_DOMAIN ) . ' ' .
+			__( 'Input range (%s)', NT_WPCF7SN_TEXT_DOMAIN ) . ' : ' .
+			__( 'Input [%s]', NT_WPCF7SN_TEXT_DOMAIN ),
+			esc_html( $form_id ),
+			__( 'Up to 5 digits integer. 0~99999', NT_WPCF7SN_TEXT_DOMAIN ),
+			esc_html( $value )
+		);
+
+		add_settings_error(
+			NT_WPCF7SN_FORM_OPTION_NAME . $form_id,
+			NT_WPCF7SN_FORM_OPTION_NAME . $form_id,
+			esc_html( $message ),
+			'error'
+		);
+
+		// 規定外の入力は元値に補正
+		return NT_WPCF7SN_Form_Options::get_option( $form_id, $name );
+	}
+
+	return $value;
+}
+
+
+/**
+ * コンタクトフォームのオプションのサニタイズ処理を行う。
+ *
+ * @param int $form_id コンタクトフォームID
+ * @param mixed $value 入力されたオプション値
+ * @return mixed サニタイズ処理したオプション値を返す。
+ */
+function nt_wpcf7sn_sanitize_form_option_daycount( $form_id, $value ) {
+	$form_id = intval( $form_id );
+	$name = 'daycount';
+
+	// 型変換・エスケープ処理
+	$value = NT_WPCF7SN_Form_Options::cast_type_option( $name, esc_attr( $value ) );
+
+	// フォーマットチェック
+	if ( 1 !== preg_match( '/' . NT_WPCF7SN_FORM_OPTION[$name]['pattern'] . '/', $value ) ) {
+		// 規定外の入力はエラー表示
+		$message = sprintf( '[id:%s] '.
+			__( 'Daily Count', NT_WPCF7SN_TEXT_DOMAIN ) . ' : ' .
 			__( 'Input value is invalid.', NT_WPCF7SN_TEXT_DOMAIN ) . ' ' .
 			__( 'Input range (%s)', NT_WPCF7SN_TEXT_DOMAIN ) . ' : ' .
 			__( 'Input [%s]', NT_WPCF7SN_TEXT_DOMAIN ),
