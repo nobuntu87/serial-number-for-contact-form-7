@@ -336,11 +336,11 @@ class NT_WPCF7SN_Form_Options {
 
 		// カウント増加
 		$new_count = intval( $options['count'] ) + 1;
-		update_option( $form_id, 'count', $new_count );
+		self::update_option( $form_id, 'count', $new_count );
 
 		// デイリーカウント増加
 		$new_daycount = intval( $options['daycount'] ) + 1;
-		update_option( $form_id, 'daycount', $new_daycount );
+		self::update_option( $form_id, 'daycount', $new_daycount );
 	}
 
 	/**
