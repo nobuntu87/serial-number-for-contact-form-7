@@ -148,7 +148,12 @@ class NT_WPCF7SN_Form_Options {
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
-		$option_value = self::get_options( $form_id );
+		$option_value = get_option( $option_name );
+
+		// DBに存在しない場合はデフォルト値で新規作成
+		if ( false === $option_value ) {
+			$option_value =  self::setup_options( $form_id );
+		}
 
 		// 変数型の変換
 		$value = self::cast_type_option( $name, $value );
@@ -346,7 +351,7 @@ class NT_WPCF7SN_Form_Options {
 	public function reset_daily_count() {
 		// DBからコンタクトフォームのオプションを取得
 		$wpdb_options = self::get_wpdb_options();
-		
+
 		foreach ( $wpdb_options as $wpdb_option ) {
 			$option_name = $wpdb_option->option_name;
 
