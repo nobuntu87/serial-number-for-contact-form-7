@@ -76,11 +76,14 @@ class NT_WPCF7SN_Form_Options {
 	 * コンタクトフォームのオプションを取得する。
 	 * 
 	 * DBに存在しない場合デフォルト値で新規作成する。
+	 * カウント値のリセットチェックアクションを実行する。
 	 * 
 	 * @param int $form_id コンタクトフォームID
 	 * @return mixed[] コンタクトフォームのオプションを返す。
 	 */
 	public function get_options( $form_id ) {
+		do_action( 'nt_wpcf7sn_check_reset_count' );
+
 		$form_id = intval( $form_id );
 
 		$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
