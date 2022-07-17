@@ -132,6 +132,8 @@ class NT_WPCF7SN_Form_Options {
 
 	/**
 	 * コンタクトフォームのオプションを更新する。
+	 * 
+	 * DBに存在しない場合デフォルト値で新規作成する。
 	 *
 	 * @param int $form_id コンタクトフォームID
 	 * @param string $name オプション名
