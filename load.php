@@ -25,6 +25,12 @@ add_action( 'wpcf7_after_create', 'nt_wpcf7sn_create_form', 10, 1 );
 add_action( 'delete_post', 'nt_wpcf7sn_delete_form', 10, 2 );
 add_action( 'nt_wpcf7sn_check_reset_count', 'nt_wpcf7sn_check_reset_count', 10, 0 );
 
+/**
+ * フィルターフック設定
+ */
+add_filter( 'wpcf7_refill_response', 'nt_wpcf7sn_feedback_response', 10, 1 );
+add_filter( 'wpcf7_feedback_response', 'nt_wpcf7sn_feedback_response', 10, 1 );
+
 
 class NT_WPCF7SN {
 	
@@ -202,4 +208,36 @@ function nt_wpcf7sn_check_reset_count() {
 		NT_WPCF7SN_Form_Options::reset_daily_count();
 		NT_WPCF7SN::update_option( 'last_reset', $now_time->format('Y-m-d H:i:s') );
 	}
+}
+
+
+/**
+ * カスタムDOMイベントのAPIレスポンスを設定する。
+ *
+ * @param mixed[] $items APIレスポンス情報
+ * @return mixed[] APIレスポンス情報を返す。
+ */
+function nt_wpcf7sn_feedback_response( $items ) {
+	if ( ! is_array( $items ) ) {
+		return $items;
+	}
+	
+	$form_id = intval( $items['contact_form_id'] );
+	
+	if ( class_exists( 'WPCF7_Submission' ) ) {
+		$submission = WPCF7_Submission::get_instance();
+		if ( ! $submission ) {
+			return $items;
+		}
+	
+		$contact_form = $submission->get_contact_form();
+	
+		// POSTデータからシリアル番号を取得
+		if ( $form_id == intval( $contact_form->id ) ) {
+			$serial_num = $submission->get_posted_data( NT_WPCF7SN_POST_FIELD );
+			$items['serial_number'] = rawurlencode( $serial_num );
+		}
+	}
+	
+	return $items;
 }
