@@ -234,7 +234,8 @@ function nt_wpcf7sn_feedback_response( $items ) {
 	
 		// POSTデータからシリアル番号を取得
 		if ( $form_id == intval( $contact_form->id ) ) {
-			$items['serial_number'] = $submission->get_posted_data( NT_WPCF7SN_POST_FIELD );
+			$serial_num = $submission->get_posted_data( NT_WPCF7SN_POST_FIELD );
+			$items['serial_number'] = rawurlencode( $serial_num );
 		}
 	}
 	
