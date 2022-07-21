@@ -218,6 +218,25 @@ function nt_wpcf7sn_check_reset_count() {
  * @return mixed[] APIレスポンス情報を返す。
  */
 function nt_wpcf7sn_feedback_response( $items ) {
-
+	if ( ! is_array( $items ) ) {
+		return $items;
+	}
+	
+	$form_id = intval( $items['contact_form_id'] );
+	
+	if ( class_exists( 'WPCF7_Submission' ) ) {
+		$submission = WPCF7_Submission::get_instance();
+		if ( ! $submission ) {
+			return $items;
+		}
+	
+		$contact_form = $submission->get_contact_form();
+	
+		// POSTデータからシリアル番号を取得
+		if ( $form_id == intval( $contact_form->id ) ) {
+			$items['serial_number'] = $submission->get_posted_data( NT_WPCF7SN_POST_FIELD );
+		}
+	}
+	
 	return $items;
 }
