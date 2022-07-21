@@ -1,9 +1,10 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * ファイル読み込み
  */
+require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/functions.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/form-settings.php';
 require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.php';
 
@@ -11,19 +12,41 @@ require_once NT_WPCF7SN_PLUGIN_DIR . '/admin/includes/contact-forms-list-table.p
 /**
  * アクションフック設定
  */
-add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 10, 0 );
-add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
-add_action( 'load-settings_page_' . NT_WPCF7SN_PREFIX['-'], 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
-add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
+if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
+	add_action( 'admin_menu', 'nt_wpcf7sn_admin_menu', 11, 0 );
+	add_action( 'admin_enqueue_scripts', 'nt_wpcf7sn_admin_enqueue_scripts', 10, 1 );
+	add_action( 'nt_wpcf7sn_admin_warnings', 'nt_wpcf7sn_wp_version_error', 10, 0 );
+}
 
 /**
  * フィルターフック設定
  */
-add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
-add_filter( 
-	'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
-	'nt_wpcf7sn_set_screen_option', 10, 3
-);
+if ( NT_WPCF7SN_Admin::is_active_wpcf7() ) {
+	add_filter( 'plugin_action_links', 'nt_wpcf7sn_plugin_action_links', 10, 2 );
+	add_filter( 
+		'set_screen_option_' . NT_WPCF7SN_FORM_OPTION_SCREEN['per_page']['option'] ,
+		'nt_wpcf7sn_set_screen_option', 10, 3
+	);
+} else {
+	add_filter( 'plugin_row_meta', 'nt_wpcf7sn_dependent_error', 10, 2 );
+}
+
+
+class NT_WPCF7SN_Admin {
+
+	/**
+	 * Contact Form 7 プラグインが有効化されているか確認する。
+	 *
+	 * @return bool プラグインが有効化されている場合はtrueを返す。
+	 *              プラグインが有効化されていない場合はfalseを返す。
+	 */
+	public function is_active_wpcf7() {
+		return nt_wpcf7sn_is_active_plugin(
+			NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['basename']
+		);
+	}
+
+}
 
 
 /**
@@ -32,13 +55,16 @@ add_filter(
  * @return void
  */
 function nt_wpcf7sn_admin_menu() {
-	add_options_page(
+	$hook = add_submenu_page(
+		'wpcf7',
 		__( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ),
-		__( 'CF7 Serial Number', NT_WPCF7SN_TEXT_DOMAIN ),
+		__( 'Serial Number Settings', NT_WPCF7SN_TEXT_DOMAIN ),
 		'manage_options',
 		NT_WPCF7SN_PREFIX['-'],
 		'nt_wpcf7sn_admin_management_page'
 	);
+
+	add_action( 'load-' . $hook, 'nt_wpcf7sn_load_admin_management_page', 10, 0 );
 }
 
 
@@ -58,8 +84,7 @@ function nt_wpcf7sn_admin_management_page() {
 	$output_before = ''
 	. '<div class="wrap">'
 	. '  <h2>' . esc_html( __( 'Serial Number for Contact Form 7', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</h2>'
-	. '  <p>' . esc_html( __( 'Copy and paste the mail-tag anywhere in the mail template.', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</p>'
-	. '';
+	. '  <p>' . esc_html( __( 'Copy and paste the mail-tag anywhere in the mail template.', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</p>';
 
 	$output_after = ''
 	. '</div>';
@@ -105,7 +130,7 @@ function nt_wpcf7sn_plugin_action_links( $actions, $plugin_file ) {
 		return $actions;
 	}
 
-	$page_url = admin_url( 'options-general.php?page=' ) . NT_WPCF7SN_PREFIX['-'];
+	$page_url = menu_page_url( NT_WPCF7SN_PREFIX['-'], false );
 	$settings_link = '<a href="' . esc_url( $page_url) . '">' . esc_html( __( 'Settings', NT_WPCF7SN_TEXT_DOMAIN ) ) . '</a>';
 	
 	// 先頭に追加
@@ -178,4 +203,51 @@ function nt_wpcf7sn_wp_version_error() {
 	. '</div>';
 	
 	echo wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML );
+}
+
+
+/**
+ * 依存プラグインのエラーメッセージを表示する。
+ *
+ * @param string[] $plugin_meta プラグインメタ情報
+ * @param string $plugin_file プラグインの相対パス
+ * @return string[] プラグインメタ情報を返す。
+ */
+function nt_wpcf7sn_dependent_error( $plugin_meta, $plugin_file ) {
+	if ( NT_WPCF7SN_PLUGIN_BASENAME != $plugin_file ) {
+		return $plugin_meta;
+	}
+
+	$iframe_url = nt_wpcf7sn_get_plugin_iframe_url(
+		NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['slug']
+	);
+
+	$plugin_name = NT_WPCF7SN_EXTERNAL_PLUGIN['wpcf7']['name'];
+
+	$plugin_link = ''
+	. '<a href="' . esc_url( $iframe_url ) . '"'
+	. '   class="thickbox open-plugin-details-modal"'
+	. '   data-title="' . esc_attr( $plugin_name ) .'"'
+	. '>' . esc_html( $plugin_name ) . '</a>';
+
+	$message = sprintf(
+		__(
+			'<strong>Required the %s plugin to work.</strong>'
+			. ' Please install and activate the plugin first.'
+			, NT_WPCF7SN_TEXT_DOMAIN
+		),
+		$plugin_link
+	);
+
+	$output = ''
+	. '<div class="notice notice-warning notice-alt inline">'
+	. '  <p> ' . $message . '</p>'
+	. '</div>';
+
+	array_push(
+		$plugin_meta,
+		wp_kses( trim( $output ), NT_WPCF7SN_ALLOWED_HTML )
+	);
+
+	return $plugin_meta;
 }

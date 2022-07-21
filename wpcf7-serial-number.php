@@ -7,17 +7,17 @@ Author: Nobuntu
 Author URI: https://profiles.wordpress.org/nobuntu87/
 Text Domain: serial-number-for-contact-form-7
 Domain Path: /languages/
-Version: 0.1.0
+Version: 0.1.1
 License: GPL2+ (GNU General Public License v2 or later)
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * プラグイン定義：設定関連
  */
-define( 'NT_WPCF7SN_VERSION', '0.1.0' );
+define( 'NT_WPCF7SN_VERSION', '0.1.1' );
 
 define( 'NT_WPCF7SN_REQUIRED_WP_VERSION', '5.9' );
 
@@ -28,11 +28,13 @@ define( 'NT_WPCF7SN_PREFIX', array(
 	'-' => 'nt-wpcf7sn',
 ) );
 
-// Description
-__( 
-	'Add-on for Contact Form 7 plugin. Add your own mail-tag to display the serial number.',
-	NT_WPCF7SN_TEXT_DOMAIN
-);
+define( 'NT_WPCF7SN_EXTERNAL_PLUGIN', array(
+	'wpcf7' => array(
+		'name'     => 'Contact Form 7',
+		'slug'     => 'contact-form-7',
+		'basename' => 'contact-form-7/wp-contact-form-7.php',
+	),
+) );
 
 /**
  * プラグイン定義：パス関連
@@ -57,11 +59,13 @@ define( 'NT_WPCF7SN_FORM_OPTION_NAME', NT_WPCF7SN_PREFIX['_'] . '_form_' );
 define( 'NT_WPCF7SN_FORM_OPTION', array(
 	'type'      => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-4]$'                     ),
 	'count'     => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-9]{1,5}$'                ),
+	'daycount'  => array( 'default' => 0,  'type' => 'integer', 'pattern' => '^[0-9]{1,5}$'                ),
 	'digits'    => array( 'default' => 1,  'type' => 'integer', 'pattern' => '^[1-9]$'                     ),
 	'prefix'    => array( 'default' => '', 'type' => 'string',  'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$' ),
 	'separator' => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                    ),
 	'year2dig'  => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                    ),
 	'nocount'   => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                    ),
+	'dayreset'  => array( 'default' => '', 'type' => 'string',  'pattern' => '^(|yes)$'                    ),
 ) );
 
 define( 'NT_WPCF7SN_MAIL_TAG', '_serial_number_' );

@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH')) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 
 class NT_WPCF7SN_Serial_Number {
@@ -20,11 +20,11 @@ class NT_WPCF7SN_Serial_Number {
 
 		$option = NT_WPCF7SN_Form_Options::get_options( $form_id );
 
-		if ( false !== $count ) {
-			$option['count'] = intval( $count );
+		if ( false === $count ) {
+			$count = NT_WPCF7SN_Form_Options::get_count( $form_id );
 		}
 
-		$num = self::count_digits( intval( $option['count'] ),intval( $option['digits'] ) );
+		$num = self::count_digits( intval( $count ), intval( $option['digits'] ) );
 		$sep = $option['separator'] == 'yes' ? '-' : '';
 
 		$type = $option['type'];
@@ -48,7 +48,7 @@ class NT_WPCF7SN_Serial_Number {
 				$serial_num = $date . $sep . $time . $sep . $num;
 				break;
 			case 4: // ユニークID (英数字)
-				$id = self::get_unique_id( $count );
+				$id = self::get_unique_id( intval( $count ) );
 				$serial_num = $option['nocount'] == 'yes' ? $id : $id . $sep . $num;
 				break;
 		}

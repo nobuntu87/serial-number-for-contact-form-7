@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * ファイル読み込み
@@ -23,6 +23,7 @@ add_action( 'admin_init', 'nt_wpcf7sn_upgrade', 10, 0 );
 add_action( 'activate_' . NT_WPCF7SN_PLUGIN_BASENAME, 'nt_wpcf7sn_install', 10, 0 );
 add_action( 'wpcf7_after_create', 'nt_wpcf7sn_create_form', 10, 1 );
 add_action( 'delete_post', 'nt_wpcf7sn_delete_form', 10, 2 );
+add_action( 'nt_wpcf7sn_check_reset_count', 'nt_wpcf7sn_check_reset_count', 10, 0 );
 
 
 class NT_WPCF7SN {
@@ -164,4 +165,41 @@ function nt_wpcf7sn_delete_form( $post_id, $post_data ) {
 	$option_name = NT_WPCF7SN_FORM_OPTION_NAME . $form_id;
 
 	delete_option( $option_name );
+}
+
+
+/**
+ * カウント値のリセットチェック処理を行う。
+ * 
+ * 最終リセットから1日以上経過している場合はリセットする。
+ *
+ * @return void
+ */
+function nt_wpcf7sn_check_reset_count() {
+	$now_time = new DateTime();
+
+	$timestamp = new DateTime( NT_WPCF7SN::get_option( 'last_reset', '0000-01-01' ) );
+
+	// DateTimeオブジェクト失敗時(フォーマット不整合など)は現在時刻で再初期化
+	if ( false === $timestamp ) {
+		NT_WPCF7SN::update_option( 'last_reset', $now_time->format('Y-m-d H:i:s') );
+		return;
+	}
+	
+	// リセット時間の基準時刻を補正
+	$last_reset_time = new DateTime(
+		sprintf(
+			'%s %s'
+			, $timestamp->format('Y-m-d')
+			, '00:00:00'
+		)
+	);
+
+	$diff = $last_reset_time->diff( $now_time );
+
+	// 前回のリセットから1日以上経過していたらリセット実行
+	if ( 1 <= intval( $diff->format('%a') ) ) {
+		NT_WPCF7SN_Form_Options::reset_daily_count();
+		NT_WPCF7SN::update_option( 'last_reset', $now_time->format('Y-m-d H:i:s') );
+	}
 }

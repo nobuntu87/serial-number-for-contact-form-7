@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * アクションフック設定
@@ -24,7 +24,7 @@ function nt_wpcf7sn_submit( $contact_form ) {
 	$form_id = intval( $contact_form->id );
 
 	// メールカウントの更新
-	nt_wpcf7sn_increment_count( $form_id );
+	NT_WPCF7SN_Form_Options::increment_count( $form_id );
 }
 
 
@@ -47,26 +47,11 @@ function nt_wpcf7sn_posted_data( $posted_data ) {
 		$contact_form = $submission->get_contact_form();
 		$form_id = intval( $contact_form->id );
 
-		$count = NT_WPCF7SN_Form_Options::get_option( $form_id, 'count' );
+		$count = NT_WPCF7SN_Form_Options::get_count( $form_id );
 		$serial_num = NT_WPCF7SN_Serial_Number::get_serial_number( $form_id, $count + 1 );
 
 		$posted_data[NT_WPCF7SN_POST_FIELD] = $serial_num;
 	}
 
 	return $posted_data;
-}
-
-
-/**
- * メールカウントを増加する。
- *
- * @param int $form_id コンタクトフォームID
- * @return void
- */
-function nt_wpcf7sn_increment_count( $form_id ) {
-	$form_id = intval( $form_id );
-
-	$count = NT_WPCF7SN_Form_Options::get_option( $form_id, 'count' );
-	
-	NT_WPCF7SN_Form_Options::update_option( $form_id, 'count', $count + 1 );
 }
