@@ -63,9 +63,13 @@ Please see the [Installing Plugins](https://wordpress.org/support/article/managi
 
 == Changelog ==
 
-= 0.1.1 =
+= 1.1.0 =
 
-[https://nobuntu.jp/blog/wpcf7sn-v0-1-1/](https://nobuntu.jp/blog/wpcf7sn-v0-1-1/)
+[https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-1-0/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-1-0/)
+
+= 1.0.0 =
+
+[https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-0-0/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-0-0/)
 
 = 0.1.0 =
 
