@@ -168,9 +168,11 @@ function nt_wpcf7sn_delete_form( $post_id, $post_data ) {
  * @return void
  */
 function nt_wpcf7sn_check_reset_count() {
-	$now_time = new DateTime();
+	$time_zone = new DateTimeZone( get_option( 'timezone_string', 'UTC' ) );
 
-	$timestamp = new DateTime( NT_WPCF7SN::get_option( 'last_reset', '0000-01-01' ) );
+	$now_time = new DateTime( '', $time_zone );
+
+	$timestamp = new DateTime( NT_WPCF7SN::get_option( 'last_reset', '0000-01-01' ), $time_zone );
 
 	// DateTimeオブジェクト失敗時(フォーマット不整合など)は現在時刻で再初期化
 	if ( false === $timestamp ) {
@@ -185,6 +187,7 @@ function nt_wpcf7sn_check_reset_count() {
 			, $timestamp->format('Y-m-d')
 			, '00:00:00'
 		)
+		, $time_zone
 	);
 
 	$diff = $last_reset_time->diff( $now_time );
