@@ -4,7 +4,7 @@ Donate link: https://nobuntu.jp/donate/
 Tags: contact form 7, contact form 7 addon, serial number
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 0.1.1
+Stable tag: 1.1.0
 Requires PHP: 5.6
 License: GPL2+ (GNU General Public License v2 or later)
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
