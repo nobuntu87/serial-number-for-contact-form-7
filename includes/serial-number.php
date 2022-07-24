@@ -65,7 +65,7 @@ class NT_WPCF7SN_Serial_Number {
 	private function get_timestamp( $format ) {
 		$timestamp = '';
 
-		$timestamp = date( $format );
+		$timestamp = date_i18n( $format );
 
 		return $timestamp;
 	}
