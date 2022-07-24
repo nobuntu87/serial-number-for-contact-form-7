@@ -18,7 +18,6 @@ if ( is_admin() ) {
 /**
  * アクションフック設定
  */
-add_action( 'init', 'nt_wpcf7sn_init', 10, 0 );
 add_action( 'admin_init', 'nt_wpcf7sn_upgrade', 10, 0 );
 add_action( 'activate_' . NT_WPCF7SN_PLUGIN_BASENAME, 'nt_wpcf7sn_install', 10, 0 );
 add_action( 'wpcf7_after_create', 'nt_wpcf7sn_create_form', 10, 1 );
@@ -79,19 +78,6 @@ class NT_WPCF7SN {
 		update_option( NT_WPCF7SN_PREFIX['_'], $option );
 	}
 
-}
-
-
-/**
- * プラグインの初期化処理を行う。
- * 
- * タイムゾーンを設定する。
- * 
- * @return void
- */
-function nt_wpcf7sn_init() {
-	// タイムゾーン設定
-	nt_wpcf7sn_set_timezone();
 }
 
 
