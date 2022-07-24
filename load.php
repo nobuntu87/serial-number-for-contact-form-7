@@ -18,7 +18,6 @@ if ( is_admin() ) {
 /**
  * アクションフック設定
  */
-add_action( 'init', 'nt_wpcf7sn_init', 10, 0 );
 add_action( 'admin_init', 'nt_wpcf7sn_upgrade', 10, 0 );
 add_action( 'activate_' . NT_WPCF7SN_PLUGIN_BASENAME, 'nt_wpcf7sn_install', 10, 0 );
 add_action( 'wpcf7_after_create', 'nt_wpcf7sn_create_form', 10, 1 );
@@ -79,19 +78,6 @@ class NT_WPCF7SN {
 		update_option( NT_WPCF7SN_PREFIX['_'], $option );
 	}
 
-}
-
-
-/**
- * プラグインの初期化処理を行う。
- * 
- * タイムゾーンを設定する。
- * 
- * @return void
- */
-function nt_wpcf7sn_init() {
-	// タイムゾーン設定
-	nt_wpcf7sn_set_timezone();
 }
 
 
@@ -182,9 +168,11 @@ function nt_wpcf7sn_delete_form( $post_id, $post_data ) {
  * @return void
  */
 function nt_wpcf7sn_check_reset_count() {
-	$now_time = new DateTime();
+	$time_zone = new DateTimeZone( get_option( 'timezone_string', 'UTC' ) );
 
-	$timestamp = new DateTime( NT_WPCF7SN::get_option( 'last_reset', '0000-01-01' ) );
+	$now_time = new DateTime( '', $time_zone );
+
+	$timestamp = new DateTime( NT_WPCF7SN::get_option( 'last_reset', '0000-01-01' ), $time_zone );
 
 	// DateTimeオブジェクト失敗時(フォーマット不整合など)は現在時刻で再初期化
 	if ( false === $timestamp ) {
@@ -199,6 +187,7 @@ function nt_wpcf7sn_check_reset_count() {
 			, $timestamp->format('Y-m-d')
 			, '00:00:00'
 		)
+		, $time_zone
 	);
 
 	$diff = $last_reset_time->diff( $now_time );
