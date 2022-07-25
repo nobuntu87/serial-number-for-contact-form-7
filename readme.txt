@@ -1,10 +1,10 @@
 === Serial Number for Contact Form 7 ===
 Contributors: nobuntu87
-Donate link: https://nobuntu.jp/donate/
+Donate link: https://nobuntu.jp/blog/serial-number-for-contact-form-7/donate/
 Tags: contact form 7, contact form 7 addon, serial number
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 0.1.1
+Stable tag: 1.1.0
 Requires PHP: 5.6
 License: GPL2+ (GNU General Public License v2 or later)
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,6 +18,10 @@ The "Serial Number for Contact Form 7" plugin add your own mail-tag that display
 Just like other standard mail-tags, it works by placing it anywhere in the mail template.
 
 You can customize the display format for each contact form.
+
+= Docs and Support =
+
+You can find [Docs](https://nobuntu.jp/blog/serial-number-for-contact-form-7/docs/), [FAQ](https://nobuntu.jp/blog/serial-number-for-contact-form-7/faq/), and more detailed information about the plugin on the [official website](https://nobuntu.jp/blog/category/serial-number-for-contact-form-7/).
 
 = Required plugins =
 
@@ -38,7 +42,7 @@ Some plugins that save submitted messages can also save the serial number as wel
 
 Your support is needed to continue the development and support of the Plugin, which we distribute free of charge.
 
-If you like the plugin, please consider making a small [donation](https://nobuntu.jp/donate/).
+If you like the plugin, please consider [making a small donation](https://nobuntu.jp/blog/serial-number-for-contact-form-7/donate/).
 
 Your donation will help us continue development and provide better support.
 
@@ -47,7 +51,11 @@ Your donation will help us continue development and provide better support.
 Do you have questions or issues with a plugin?
 Please use these support channels appropriately.
 
-1. [Support forum](https://wordpress.org/support/plugin/serial-number-for-contact-form-7)
+[Support forum](https://wordpress.org/support/plugin/serial-number-for-contact-form-7)
+
+1. [Docs](https://nobuntu.jp/blog/serial-number-for-contact-form-7/docs/)
+1. [FAQ](https://nobuntu.jp/blog/serial-number-for-contact-form-7/faq/)
+1. [Support](https://nobuntu.jp/blog/serial-number-for-contact-form-7/support/)
 
 == Installation ==
 
@@ -63,9 +71,15 @@ Please see the [Installing Plugins](https://wordpress.org/support/article/managi
 
 == Changelog ==
 
-= 0.1.1 =
+For more information, please see [Releases](https://nobuntu.jp/blog/serial-number-for-contact-form-7/releases/).
 
-[https://nobuntu.jp/blog/wpcf7sn-v0-1-1/](https://nobuntu.jp/blog/wpcf7sn-v0-1-1/)
+= 1.1.0 =
+
+[https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-1-0/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-1-0/)
+
+= 1.0.0 =
+
+[https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-0-0/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v1-0-0/)
 
 = 0.1.0 =
 
