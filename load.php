@@ -18,12 +18,17 @@ if ( is_admin() ) {
 /**
  * アクションフック設定
  */
-add_action( 'init', 'nt_wpcf7sn_init', 10, 0 );
 add_action( 'admin_init', 'nt_wpcf7sn_upgrade', 10, 0 );
 add_action( 'activate_' . NT_WPCF7SN_PLUGIN_BASENAME, 'nt_wpcf7sn_install', 10, 0 );
 add_action( 'wpcf7_after_create', 'nt_wpcf7sn_create_form', 10, 1 );
 add_action( 'delete_post', 'nt_wpcf7sn_delete_form', 10, 2 );
 add_action( 'nt_wpcf7sn_check_reset_count', 'nt_wpcf7sn_check_reset_count', 10, 0 );
+
+/**
+ * フィルターフック設定
+ */
+add_filter( 'wpcf7_refill_response', 'nt_wpcf7sn_feedback_response', 10, 1 );
+add_filter( 'wpcf7_feedback_response', 'nt_wpcf7sn_feedback_response', 10, 1 );
 
 
 class NT_WPCF7SN {
@@ -73,19 +78,6 @@ class NT_WPCF7SN {
 		update_option( NT_WPCF7SN_PREFIX['_'], $option );
 	}
 
-}
-
-
-/**
- * プラグインの初期化処理を行う。
- * 
- * タイムゾーンを設定する。
- * 
- * @return void
- */
-function nt_wpcf7sn_init() {
-	// タイムゾーン設定
-	nt_wpcf7sn_set_timezone();
 }
 
 
@@ -176,9 +168,11 @@ function nt_wpcf7sn_delete_form( $post_id, $post_data ) {
  * @return void
  */
 function nt_wpcf7sn_check_reset_count() {
-	$now_time = new DateTime();
+	$time_zone = new DateTimeZone( get_option( 'timezone_string', 'UTC' ) );
 
-	$timestamp = new DateTime( NT_WPCF7SN::get_option( 'last_reset', '0000-01-01' ) );
+	$now_time = new DateTime( '', $time_zone );
+
+	$timestamp = new DateTime( NT_WPCF7SN::get_option( 'last_reset', '0000-01-01' ), $time_zone );
 
 	// DateTimeオブジェクト失敗時(フォーマット不整合など)は現在時刻で再初期化
 	if ( false === $timestamp ) {
@@ -193,6 +187,7 @@ function nt_wpcf7sn_check_reset_count() {
 			, $timestamp->format('Y-m-d')
 			, '00:00:00'
 		)
+		, $time_zone
 	);
 
 	$diff = $last_reset_time->diff( $now_time );
@@ -202,4 +197,36 @@ function nt_wpcf7sn_check_reset_count() {
 		NT_WPCF7SN_Form_Options::reset_daily_count();
 		NT_WPCF7SN::update_option( 'last_reset', $now_time->format('Y-m-d H:i:s') );
 	}
+}
+
+
+/**
+ * カスタムDOMイベントのAPIレスポンスを設定する。
+ *
+ * @param mixed[] $items APIレスポンス情報
+ * @return mixed[] APIレスポンス情報を返す。
+ */
+function nt_wpcf7sn_feedback_response( $items ) {
+	if ( ! is_array( $items ) ) {
+		return $items;
+	}
+	
+	$form_id = intval( $items['contact_form_id'] );
+	
+	if ( class_exists( 'WPCF7_Submission' ) ) {
+		$submission = WPCF7_Submission::get_instance();
+		if ( ! $submission ) {
+			return $items;
+		}
+	
+		$contact_form = $submission->get_contact_form();
+	
+		// POSTデータからシリアル番号を取得
+		if ( $form_id == intval( $contact_form->id ) ) {
+			$serial_num = $submission->get_posted_data( NT_WPCF7SN_POST_FIELD );
+			$items['serial_number'] = rawurlencode( $serial_num );
+		}
+	}
+	
+	return $items;
 }
