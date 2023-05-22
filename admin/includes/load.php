@@ -22,3 +22,5 @@ define( __NAMESPACE__ . '\_ADMIN_FUNCTION_DIR', _ADMIN_DIR . '/functions' );
 // ------------------------------------
 
 require_once( _ADMIN_INCLUDE_DIR . '/define.php' );
+
+require_once( _ADMIN_FUNCTION_DIR . '/menu/admin-menu.php' );
