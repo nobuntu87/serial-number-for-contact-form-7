@@ -50,6 +50,60 @@ define( __NAMESPACE__ . '\_PLUGIN_BASENAME', plugin_basename( _PLUGIN ) );
 define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' ) );
 
 // ------------------------------------
+// オプション設定
+// ------------------------------------
+
+define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number' );
+
+define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
+	'type'      => array(
+		'key'     => 'type',
+		'default' => 0,
+		'pattern' => '^[0-4]$'
+	),
+	'prefix'    => array(
+		'key'     => 'prefix',
+		'default' => '',
+		'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'
+	),
+	'digits'    => array(
+		'key'     => 'digits',
+		'default' => 1,
+		'pattern' => '^[1-9]$'
+	),
+	'separator' => array(
+		'key'     => 'separator',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	'year2dig'  => array(
+		'key'     => 'year2dig',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	'nocount'   => array(
+		'key'     => 'nocount',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	'dayreset'  => array(
+		'key'     => 'dayreset',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	'count'     => array(
+		'key'     => 'count',
+		'default' => 0,
+		'pattern' => '^[0-9]{1,5}$'
+	),
+	'daycount'  => array(
+		'key'     => 'daycount',
+		'default' => 0,
+		'pattern' => '^[0-9]{1,5}$'
+	),
+) );
+
+// ------------------------------------
 // ライブラリ設定
 // ------------------------------------
 
