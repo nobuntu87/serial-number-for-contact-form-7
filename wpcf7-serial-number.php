@@ -12,4 +12,11 @@ License: GPL2+ (GNU General Public License v2 or later)
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
+namespace _Nt\WpPlg\WPCF7SN;
 if ( !defined( 'ABSPATH' ) ) exit;
+
+// ========================================================
+// ファイル読み込み
+// ========================================================
+
+require_once( __DIR__ . '/functions.php' );
