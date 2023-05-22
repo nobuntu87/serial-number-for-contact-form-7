@@ -48,3 +48,21 @@ define( __NAMESPACE__ . '\_PLUGIN_URL', untrailingslashit( plugins_url( '', __DI
 define( __NAMESPACE__ . '\_PLUGIN', _PLUGIN_DIR . '\\' . _MAIN_FILE );
 define( __NAMESPACE__ . '\_PLUGIN_BASENAME', plugin_basename( _PLUGIN ) );
 define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' ) );
+
+// ------------------------------------
+// ライブラリ設定
+// ------------------------------------
+
+// WordPress Library「Admin Menu」
+
+define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_0_2' );
+
+class_alias(
+	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Admin_Menu_Base',
+	__NAMESPACE__ . '\Admin_Menu_Base'
+);
+
+class_alias(
+	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Library_Utility',
+	__NAMESPACE__ . '\Admin_Menu_Util'
+);
