@@ -40,13 +40,44 @@ class Admin_Menu extends Admin_Menu_Base {
 			// ページ設定
 			'header_title' => __( 'Serial Number for Contact Form 7', _TEXT_DOMAIN ),
 			'header_icon'  => 'fa-solid fa-barcode',
-			'description'  => __( 'Copy and paste the mail-tag anywhere in the mail template.', _TEXT_DOMAIN ),
-			'page_file'    => __DIR__ . '/menu-page.php',
-			// フォーム設定
-			'form_title'   => __( 'Serial Number Settings', _TEXT_DOMAIN ),
-			'form_icon'    => 'fa-solid fa-barcode',
-			'form_file'    => SELF::_SETTING_FORM_FILE,
 		) );
+
+	  // --------------------------------------
+	  // [TOP:WPCF7] > [SUB:設定] > [TAB:フォーム設定]
+	  // --------------------------------------
+
+		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
+
+			$tab_slug = sprintf( 'post-%s'
+				, strval( $wpcf7_post->ID )
+			);
+
+			$tab_title = sprintf( '%s'
+				, strval( $wpcf7_post->post_title )
+			);
+
+			$form_title = sprintf( '%s ( %s ) [ CF7-ID : %s ]'
+				, __( 'Serial Number Settings', _TEXT_DOMAIN )
+				, strval( $wpcf7_post->post_title )
+				, strval( $wpcf7_post->ID )
+			);
+
+			$this->add_menu_tab( array(
+				// タブ設定
+				'parent_slug'  => _PREFIX['-'],
+				'tab_slug'     => esc_attr( $tab_slug ),
+				'tab_title'    => esc_attr( $tab_title ),
+				'tab_icon'     => 'fa-brands fa-wpforms',
+				// ページ設定
+				'description'  => __( 'Copy and paste the mail-tag anywhere in the mail template.', _TEXT_DOMAIN ),
+				'page_file'    => __DIR__ . '/menu-page.php',
+				// フォーム設定
+				'form_title'   => esc_attr( $form_title ),
+				'form_icon'    => 'fa-solid fa-barcode',
+				'form_file'    => SELF::_SETTING_FORM_FILE,
+			) );
+
+		}
 	}
 
   // ========================================================
