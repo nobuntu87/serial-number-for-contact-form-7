@@ -16,6 +16,8 @@ class Admin_Menu extends Admin_Menu_Base {
 
 	private const _SETTING_FORM_FILE = __DIR__ . '/form-setting.php';
 
+	private const _TAB_PREFIX = 'wpcf7-form';
+
   // ========================================================
   // メニュー設定
   // ========================================================
@@ -48,7 +50,8 @@ class Admin_Menu extends Admin_Menu_Base {
 
 		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
 
-			$tab_slug = sprintf( 'post-%s'
+			$tab_slug = sprintf( '%s-%s'
+				, SELF::_TAB_PREFIX
 				, strval( $wpcf7_post->ID )
 			);
 
@@ -94,6 +97,23 @@ class Admin_Menu extends Admin_Menu_Base {
 	protected function sanitize_options( $options, $page_slug )
 	{
 		return $options;
+	}
+
+  // ========================================================
+  // ユーティリティ
+  // ========================================================
+
+	/**
+	 * コンタクトフォームIDを取得する。
+	 *
+	 * @return string コンタクトフォームIDを返す。
+	 */
+	protected final function get_form_id()
+	{
+		$pattern = '/' . SELF::_TAB_PREFIX . '-(?P<form_id>\d+)$/';
+		preg_match( $pattern, $this->m_page['tab']['slug'], $matches );
+
+		return $matches['form_id'];
 	}
 
   // ========================================================
