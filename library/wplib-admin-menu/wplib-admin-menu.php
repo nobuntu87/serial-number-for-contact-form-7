@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_0_2;
+namespace _Nt\WpLib\AdminMenu\v2_0_3;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -100,7 +100,7 @@ abstract class Admin_Menu_Base {
   // ========================================================
 
 	// クラス設定
-	private $m_class = array(
+	protected $m_class = array(
 		'lib' => array(
 			'slug'    => '',			// ライブラリスラッグ : {lib-slug}
 			'version' => '',			// ライブラリバージョン : {lib-ver}
@@ -112,13 +112,13 @@ abstract class Admin_Menu_Base {
 	);
 
 	// メニュー設定
-	private $m_menu = array(
+	protected $m_menu = array(
 		'top' => array(),				// トップメニュー
 		'sub' => array(),				// サブメニュー
 	);
 
 	// ページ設定
-	private $m_page = array(
+	protected $m_page = array(
 		'slug'   => '',					// ページスラッグ : {menu-slug}_{tab-slug}
 		// メニュー設定
 		'menu'   => array(
@@ -142,10 +142,10 @@ abstract class Admin_Menu_Base {
 	);
 
 	// オプション設定
-	private $m_option = array();
+	protected $m_option = array();
 
 	// 表示許可HTML設定
-	private $m_kses_allowed_html = array();
+	protected $m_kses_allowed_html = array();
 
   // ========================================================
 
@@ -393,10 +393,9 @@ abstract class Admin_Menu_Base {
 		// 追加設定
 		// ------------------------------------
 
-		$allowed_html = array_merge(
-			$allowed_html,
-			$this->add_allowed_html()
-		);
+		foreach ( $this->add_allowed_html() as $tag => $attrs ) {
+			$allowed_html[$tag] = array_merge( $allowed_html[$tag], $attrs );
+		}
 
 		// ------------------------------------
 		// 変数設定
