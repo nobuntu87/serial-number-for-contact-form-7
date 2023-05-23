@@ -110,7 +110,7 @@ class NT_WPCF7SN_Admin {
 			);
 
 			// 管理画面に通知
-			$notice_slug = _PREFIX['-'] . '-dependent-wpcf7-error';
+			$notice_slug = _PREFIX['-'] . '-dependent-plugin-error-wpcf7';
 			Utility::notice_admin_message(
 				$notice_slug, '', $message, 'error'
 			);
