@@ -45,6 +45,40 @@ class NT_WPCF7SN_Admin {
 	}
 
 	/**
+	 * プラグインの動作環境チェックを行う。
+	 *
+	 * @return void
+	 */
+	public static function check_system_requirements()
+	{
+		// ------------------------------------
+		// 動作環境チェック：WordPress 要求バージョン
+		// ------------------------------------
+
+		$now_version = get_bloginfo( 'version' );
+		$req_version = _REQUIRED_WP_VERSION;
+
+		// バージョン比較 [ now < req ]
+		if ( version_compare( $now_version, $req_version, '<' ) ) {
+
+			$message = sprintf( __( ''
+				. 'Serial Number for Contact Form 7 %1$s requires WordPress %2$s or higher.'
+				. ' Please <a href="%3$s">update WordPress</a> first.'
+				, _TEXT_DOMAIN )
+				, _VERSION
+				, _REQUIRED_WP_VERSION
+				, esc_url( admin_url( 'update-core.php' ) )
+			);
+
+			// 管理画面に通知
+			$notice_slug = _PREFIX['-'] . '-required-wp-version-error';
+			Utility::notice_admin_message(
+				$notice_slug, '', $message, 'error'
+			);
+		}
+	}
+
+	/**
 	 * プラグインの依存関係チェックを行う。
 	 *
 	 * @return void
