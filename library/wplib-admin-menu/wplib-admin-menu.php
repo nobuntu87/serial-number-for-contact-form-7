@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_1_2;
+namespace _Nt\WpLib\AdminMenu\v2_2_0;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -894,9 +894,6 @@ abstract class Admin_Menu_Base {
 		}
 
 		$this->view_html( '</div>' );
-
-		// Settings API：設定エラー表示
-		settings_errors();
 	}
 
 	/**
@@ -1045,11 +1042,10 @@ abstract class Admin_Menu_Base {
 			// オプション更新
 			$this->update_page_option( $sanitize_option );
 			
-			// Settings API：設定エラー登録
-			$this->add_settings_error(
-				'update-success',
-				__( 'Settings saved.' ),
-				'success'
+			// 管理画面に通知
+			$notice_slug = $this->m_class['app']['slug'] . '-update-success';
+			Library_Utility::notice_admin_message(
+				$notice_slug, '', __( 'Settings saved.' ), 'success'
 			);
 
 		}
@@ -1060,63 +1056,13 @@ abstract class Admin_Menu_Base {
 
 		else {
 
-			// Settings API：設定エラー登録
-			$this->add_settings_error(
-				'update-failed',
-				__( 'Settings save failed.' ),
-				'error'
+			// 管理画面に通知
+			$notice_slug = $this->m_class['app']['slug'] . '-update-failed';
+			Library_Utility::notice_admin_message(
+				$notice_slug, '', __( 'Settings save failed.' ), 'error'
 			);
 
 		}
-	}
-
-   // ------------------------------------
-   // WordPress「Settings API」
-   // ------------------------------------
-
-	/**
-	 * 設定エラーが登録されているかチェックする。
-	 *
-	 * @return bool チェック結果を返す。(true:登録有り/false:登録無し)
-	 */
-	private function settings_error_exists()
-	{
-		foreach( get_settings_errors() as $index => $settings_error ) {
-			if ( 'error' == $settings_error['type'] ) { return true; }
-		}
-
-		return false;
-	}
-
-	/**
-	 * 設定エラーを登録する。
-	 *
-	 * @param string $code エラーコードのスラッグ名 (id属性)
-	 * @param string $message メッセージ
-	 * @param string $type メッセージ種別 (error/success/warning/info) [error]
-	 * @return void
-	 */
-	private function add_settings_error( $code, $message, $type = 'error' )
-	{
-		// Settings API：設定エラー登録
-		add_settings_error(
-			$this->m_page['slug'],
-			$code,
-			$message,
-			$type
-		);
-	}
-
-	/**
-	 * オプションの設定エラーを登録する。
-	 *
-	 * @param string $key キー
-	 * @param string $message メッセージ
-	 * @return void
-	 */
-	private function add_settings_option_error( $key, $message )
-	{
-		$this->add_settings_error( $key, $message, 'error' );
 	}
 
   // ========================================================
@@ -2408,6 +2354,26 @@ class Library_Utility {
 		$string = htmlspecialchars_decode( $string, ENT_QUOTES );
 
 		return $string;
+	}
+
+	/**
+	 * 管理画面にメッセージを通知する。
+	 *
+	 * @param string $slug スラッグ名
+	 * @param string $code 識別コード名 (HTMLのid属性)
+	 * @param string $message メッセージ
+	 * @param string $type メッセージ種別 (error/success/warning/info) [error]
+	 * @return void
+	 */
+	public static function notice_admin_message( $slug, $code, $message, $type = 'error' )
+	{
+		if ( !in_array( $type, [ 'error', 'success', 'warning', 'info' ] ) ) { return; }
+
+		// メッセージ設定
+		add_settings_error( $slug, $code, $message, $type );
+	
+		// メッセージ表示
+		settings_errors( $slug );
 	}
 
 } endif;
