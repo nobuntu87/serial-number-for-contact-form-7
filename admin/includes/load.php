@@ -12,6 +12,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 define( __NAMESPACE__ . '\_ADMIN_INCLUDE_DIR',  _ADMIN_DIR . '/includes' );
 define( __NAMESPACE__ . '\_ADMIN_FUNCTION_DIR', _ADMIN_DIR . '/functions' );
+define( __NAMESPACE__ . '\_ADMIN_CSS_DIR',      _ADMIN_DIR . '/css' );
 
 // ========================================================
 // ファイル読み込み
