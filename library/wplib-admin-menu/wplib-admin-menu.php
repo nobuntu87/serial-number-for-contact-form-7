@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_1_0;
+namespace _Nt\WpLib\AdminMenu\v2_1_1;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -2045,7 +2045,7 @@ abstract class Admin_Menu_Base {
 	 * @param string $default デフォルト値
 	 * @return void
 	 */
-	protected function hide( $key, $default = '' )
+	protected function hidden( $key, $default = '' )
 	{
 		// ------------------------------------
 		// オプション設定 取得
@@ -2082,10 +2082,10 @@ abstract class Admin_Menu_Base {
 		// ------------------------------------
 
 		$this->view_html( sprintf( ''
-			. '<span class="%s-form-option-wrap hide">'
+			. '<span class="%s-form-option-wrap hidden">'
 			. '  <span class="%s-form-option-input %s">'
 			. '    <span class="input-group">'
-			. '      <input type="hide" id="%s" name="%s" value="%s">'
+			. '      <input type="hidden" id="%s" name="%s" value="%s">'
 			. '    </span>'
 			. '    <span class="input-error">%s</span>'
 			. '  </span>'
