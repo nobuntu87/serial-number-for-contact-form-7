@@ -55,7 +55,7 @@ define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' 
 
 // WordPress Library「Admin Menu」
 
-define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_1_0' );
+define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_1_1' );
 
 class_alias(
 	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Admin_Menu_Base',
