@@ -9,6 +9,34 @@ if ( !defined( 'ABSPATH' ) ) exit;
 class NT_WPCF7SN_Admin {
 
 	/**
+	 * プラグインの初期化を行う。
+	 *
+	 * @return void
+	 */
+	public static function init_plugin()
+	{
+		// バージョン比較
+		SELF::compare_plugin_version();
+
+		// 動作環境チェック
+		SELF::check_system_requirements();
+
+		// 依存関係チェック
+		SELF::check_dependent_plugin();
+	}
+	
+	/**
+	 * プラグインのインストール処理を行う。
+	 *
+	 * @return void
+	 */
+	public static function installed_plugin()
+	{
+		// オプション初期化
+		NT_WPCF7SN::update_plugin_option( [] );
+	}
+
+	/**
 	* プラグインのバージョン比較処理を行う。
 	*
 	* @return void
