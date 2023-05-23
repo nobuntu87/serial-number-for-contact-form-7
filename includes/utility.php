@@ -125,4 +125,19 @@ class Utility {
 		return $string;
 	}
 
+	/**
+	 * ディレクトリのURIを取得する。
+	 *
+	 * @param string $path ディレクトリパス (絶対パス)
+	 * @return string ディレクトリのURIを返す。
+	 */
+	public static function get_uri( $path )
+	{
+		return preg_replace(
+			array( '/^.+[\/\\\]wp-content[\/\\\]/', '/[\/\\\]/' ),
+			array( content_url() . '/', '/' ),
+			$path
+		);
+	}
+
 }
