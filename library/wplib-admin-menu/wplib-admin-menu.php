@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_1_1;
+namespace _Nt\WpLib\AdminMenu\v2_1_2;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -89,7 +89,7 @@ abstract class Admin_Menu_Base {
 	protected const _ALLOWED_HTML_ATTR = array(
 		'method', 'action',
 		'checked', 'selected',
-		'readonly', 'disable',
+		'readonly', 'disabled',
 		'minlength', 'maxlength',
 		'placeholder', 'pattern',
 		'size', 'min', 'max',
@@ -2085,7 +2085,7 @@ abstract class Admin_Menu_Base {
 			. '<span class="%s-form-option-wrap hidden">'
 			. '  <span class="%s-form-option-input %s">'
 			. '    <span class="input-group">'
-			. '      <input type="hidden" id="%s" name="%s" value="%s">'
+			. '      <input type="hidden" id="%s" name="%s" value="%s" readonly>'
 			. '    </span>'
 			. '    <span class="input-error">%s</span>'
 			. '  </span>'
