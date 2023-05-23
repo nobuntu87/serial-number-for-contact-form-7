@@ -62,14 +62,18 @@ class NT_WPCF7SN_Admin {
 		// プラグイン設定ページ登録
 		// ------------------------------------
 
-		$action_link = sprintf( ''
-			. '<a href="%s">%s</a>'
-			, esc_url( menu_page_url( _PREFIX['-'], false ) )
-			, esc_html( __( 'Settings', _TEXT_DOMAIN ) )
-		);
+		// [ContactForm7] 有効化の場合
+		if ( NT_WPCF7SN::is_active_wpcf7() ) {
 
-		// 先頭に登録
-		array_unshift( $actions, wp_kses_post( $action_link ) );
+			$action_link = sprintf( ''
+				. '<a href="%s">%s</a>'
+				, esc_url( menu_page_url( _PREFIX['-'], false ) )
+				, esc_html( __( 'Settings', _TEXT_DOMAIN ) )
+			);
+
+			// 先頭に登録
+			array_unshift( $actions, wp_kses_post( $action_link ) );
+		}
 
 		// ------------------------------------
 
