@@ -53,7 +53,7 @@ class NT_WPCF7SN_Admin {
 	 * @param string $plugin_file プラグイン名 : {plugin-name}\{main-file.php}
 	 * @return void アクションリンクを返す。
 	 */
-	function set_plugin_action_links( $actions, $plugin_file )
+	public static function set_plugin_action_links( $actions, $plugin_file )
 	{
 		// 自プラグイン判別
 		if ( _PLUGIN_BASENAME != $plugin_file ) { return $actions; }
