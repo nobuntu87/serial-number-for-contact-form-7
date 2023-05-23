@@ -29,7 +29,8 @@ require_once( _LIBRARY_DIR . '/wplib-admin-menu/wplib-admin-menu.php' );
 // ------------------------------------
 
 require_once( _INCLUDE_DIR . '/define.php' );
-require_once( _INCLUDE_DIR . '/utilities.php' );
+require_once( _INCLUDE_DIR . '/utility.php' );
+require_once( _INCLUDE_DIR . '/plugin.php' );
 
 // ------------------------------------
 // 管理ファイル
