@@ -185,14 +185,14 @@ class NT_WPCF7SN_Admin {
 			);
 
 			$message = sprintf( __( ''
-				. '<strong>Required the %s plugin to work.</strong>'
+				. 'This plugin requires %s to work.'
 				. ' Please install and activate the plugin first.'
 				, _TEXT_DOMAIN )
 				, $plugin_link
 			);
 
 			$meta_info = sprintf( ''
-				. '<div class="%s"><p>%s</p></div>'
+				. '<div class="%s"><p><strong>%s</strong></p></div>'
 				, esc_attr( 'notice notice-warning notice-alt inline' )
 				, $message
 			);
