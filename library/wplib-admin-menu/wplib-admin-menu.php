@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_0_3;
+namespace _Nt\WpLib\AdminMenu\v2_1_0;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -23,11 +23,11 @@ abstract class Admin_Menu_Base {
   // ========================================================
 
 	// 表示用ファイル定義
-	private const _VIEW_PAGE_FILE = __DIR__ . '\view\menu-page.php';
-	private const _VIEW_FORM_FILE = __DIR__ . '\view\menu-form.php';
+	protected const _VIEW_PAGE_FILE = __DIR__ . '\view\menu-page.php';
+	protected const _VIEW_FORM_FILE = __DIR__ . '\view\menu-form.php';
 
 	// メニューフォーマット定義 (トップメニュー)
-	private const _MENU_TOP_FORMAT = array(
+	protected const _MENU_TOP_FORMAT = array(
 		// メニュー設定
 		'menu_slug'   => '',						// 必須 : スラッグ名 : {menu-slug}
 		'page_title'  => '',						//      : タイトル (ページ)
@@ -40,13 +40,13 @@ abstract class Admin_Menu_Base {
 	);
 
 	// メニューフォーマット定義 (サブメニュー)
-	private const _MENU_SUB_FORMAT = array(
+	protected const _MENU_SUB_FORMAT = array(
 		// メニュー設定
 		'parent_slug' => '',						// 必須 : スラッグ名 (親ページ) : {menu-slug}
 	) + SELF::_MENU_TOP_FORMAT;
 
 	// ページフォーマット定義
-	private const _PAGE_FORMAT = array(
+	protected const _PAGE_FORMAT = array(
 		// ページ設定
 		'header_title' => '',						//      : タイトル (ヘッダー)
 		'header_icon'  => '',						//      : アイコン (Font Awesome Icon v6)
@@ -59,7 +59,7 @@ abstract class Admin_Menu_Base {
 	);
 
 	// タブフォーマット定義
-	private const _TAB_FORMAT = array(
+	protected const _TAB_FORMAT = array(
 		// タブ設定
 		'parent_slug' => '',						// 必須 : スラッグ名 (親ページ) : {menu-slug}
 		'tab_slug'    => '',						// 必須 : スラッグ名 : {tab-slug}
@@ -68,31 +68,32 @@ abstract class Admin_Menu_Base {
 	);
 
 	// オプションフォーマット定義 (KEY:オプションキー : {opt-key})
-	private const _OPTION_FORMAT = array(
+	protected const _OPTION_FORMAT = array(
 		'value' => '',							// オプション値
 		'error' => '',							// エラーメッセージ
 	);
 
 	// スクリプト定義 (FontAwesome)
-	private const _SCRIPT_FONTAWESOME = array(
+	protected const _SCRIPT_FONTAWESOME = array(
 		'url'     => 'https://use.fontawesome.com/releases/v6.2.0/css/all.css',
 		'version' => '6.2.0',
 		'slug'    => 'fontawesome-all',
 	);
 
 	// 表示許可HTMLタグ定義
-	private const _ALLOWED_HTML_TAGS = array(
+	protected const _ALLOWED_HTML_TAGS = array(
 		'form', 'input', 'select', 'option',
 	);
 
 	// 表示許可HTML属性定義
-	private const _ALLOWED_HTML_ATTR = array(
+	protected const _ALLOWED_HTML_ATTR = array(
 		'method', 'action',
 		'checked', 'selected',
 		'readonly', 'disable',
 		'minlength', 'maxlength',
 		'placeholder', 'pattern',
-		'size',
+		'size', 'min', 'max',
+		'onfocus',
 	);
 
   // ========================================================
@@ -1128,7 +1129,7 @@ abstract class Admin_Menu_Base {
 	 * @param string $key キー
 	 * @return string オプションキーを返す。
 	 */
-	private function get_option_key( $key )
+	protected final function get_option_key( $key )
 	{
 		return sprintf( '%s[%s]'
 			, $this->m_page['option']['name']
@@ -1194,7 +1195,7 @@ abstract class Admin_Menu_Base {
 	 *
 	 * @return bool チェック結果を返す。(true:エラー有り/false:エラー無し)
 	 */
-	private function option_error_exists()
+	protected final function option_error_exists()
 	{
 		foreach( $this->m_option as $key => $option ) {
 			// 設定チェック (NG：未定義/空/NULL)
@@ -1211,7 +1212,7 @@ abstract class Admin_Menu_Base {
 	 * @param string $message メッセージ
 	 * @return void
 	 */
-	protected function add_option_error( $key, $message )
+	protected final function add_option_error( $key, $message )
 	{
 		$this->m_option[$key]['error'] = $message;
 	}
@@ -2032,6 +2033,71 @@ abstract class Admin_Menu_Base {
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
 			, $select_list
+
+			, esc_html( $option['error'] )
+		) );
+	}
+
+	/**
+	 * 非表示フィールドを表示する。
+	 *
+	 * @param string $key キー
+	 * @param string $default デフォルト値
+	 * @return void
+	 */
+	protected function hide( $key, $default = '' )
+	{
+		// ------------------------------------
+		// オプション設定 取得
+		// ------------------------------------
+
+		$option = SELF::_OPTION_FORMAT;
+
+		// 保存値チェック
+		if ( array_key_exists( $key, $this->m_option ) ) {
+			$option = $this->m_option[$key];
+		}
+
+		// ------------------------------------
+		// オプション値 取得
+		// ------------------------------------
+
+		$option_key = $this->get_option_key( $key );
+		$option_id = $key;
+		$option_value = strval( $default );
+
+		// 保存値チェック
+		if ( array_key_exists( $key, $this->m_option ) ) {
+			$option_value = strval( $option['value'] );
+		}
+
+		// ------------------------------------
+		// エラー判定
+		// ------------------------------------
+
+		$error = ( !empty( $option['error'] ) ) ? 'invalid' : '';
+
+		// ------------------------------------
+		// HTML表示
+		// ------------------------------------
+
+		$this->view_html( sprintf( ''
+			. '<span class="%s-form-option-wrap hide">'
+			. '  <span class="%s-form-option-input %s">'
+			. '    <span class="input-group">'
+			. '      <input type="hide" id="%s" name="%s" value="%s">'
+			. '    </span>'
+			. '    <span class="input-error">%s</span>'
+			. '  </span>'
+			. '</span>'
+
+			, esc_attr( $this->m_class['lib']['slug'] )
+
+			, esc_attr( $this->m_class['lib']['slug'] )
+			, esc_attr( $error )
+
+			, esc_attr( $option_id ), esc_attr( $option_key )
+			, esc_html( $option_value )
 
 			, esc_html( $option['error'] )
 		) );
