@@ -30,6 +30,13 @@ add_action(
 	10, 0
 );
 
+// スクリプト設定
+add_action(
+	'admin_enqueue_scripts',
+	__NAMESPACE__ . '\NT_WPCF7SN_Admin::enqueue_admin_scripts',
+	10, 1
+);
+
 // ------------------------------------
 // フィルターフック
 // ------------------------------------

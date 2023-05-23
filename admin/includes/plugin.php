@@ -234,4 +234,30 @@ class NT_WPCF7SN_Admin {
 		return $plugin_meta;
 	}
 
+	/**
+	 * 管理画面のスクリプトを読み込む。
+	 *
+	 * @param string $hook_suffix 管理画面の接尾辞
+	 * @return void
+	 */
+	public static function enqueue_admin_scripts( $hook_suffix )
+	{
+		// ------------------------------------
+		// プラグイン設定画面
+		// ------------------------------------
+
+		$pattern = '/_page_' . _PREFIX['-'] . '$/';
+		if ( 1 === preg_match( $pattern, $hook_suffix ) ) {
+
+			// メニューページ用CSS
+			wp_enqueue_style(
+				_PREFIX['-'] . '-admin',
+				Utility::get_uri( _ADMIN_CSS_DIR ) . '/style.css',
+				array(),
+				_VERSION, 'all'
+			);
+
+		}
+	}
+
 }
