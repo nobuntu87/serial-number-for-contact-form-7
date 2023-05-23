@@ -47,6 +47,26 @@ class Utility {
 	}
 
 	/**
+	 * プラグインページの埋め込みURLを取得する。
+	 *
+	 * @param string $plugin_slug プラグインスラッグ名
+	 * @return void
+	 */
+	public static function get_plugin_iframe_url( $plugin_slug )
+	{
+		return esc_url( add_query_arg(
+			array(
+				'tab'       => 'plugin-information',
+				'plugin'    => $plugin_slug,
+				'TB_iframe' => 'true',
+				'width'     => '600',
+				'height'    => '550',
+			),
+			admin_url( 'plugin-install.php' )
+		) );
+	}
+
+	/**
 	 * 文字列のエスケープ/エンコード処理を行う。
 	 *
 	 * @param string $string 文字列
