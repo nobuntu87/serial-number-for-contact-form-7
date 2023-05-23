@@ -7,6 +7,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // ========================================================
 
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+include_once( ABSPATH . 'wp-admin/includes/template.php' );
 
 // ============================================================================
 // プラグイン用ユーティリティクラス：Utility
@@ -64,6 +65,26 @@ class Utility {
 			),
 			admin_url( 'plugin-install.php' )
 		) );
+	}
+
+	/**
+	 * 管理画面にメッセージを通知する。
+	 *
+	 * @param string $slug スラッグ名
+	 * @param string $code 識別コード名 (HTMLのid属性)
+	 * @param string $message メッセージ
+	 * @param string $type メッセージ種別 (error/success/warning/info) [error]
+	 * @return void
+	 */
+	public static function notice_admin_message( $slug, $code, $message, $type = 'error' )
+	{
+		if ( !in_array( $type, [ 'error', 'success', 'warning', 'info' ] ) ) { return; }
+
+		// メッセージ設定
+		add_settings_error( $slug, $code, $message, $type );
+
+		// メッセージ表示
+		settings_errors( $slug );
 	}
 
 	/**
