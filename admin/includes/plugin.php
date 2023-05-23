@@ -16,7 +16,7 @@ class NT_WPCF7SN_Admin {
 	public static function compare_plugin_version()
 	{
 		$new_version = _VERSION;
-		$old_version = SELF::get_option( 'version', '0.0.0' );
+		$old_version = NT_WPCF7SN::get_option( 'version', '0.0.0' );
 
 		// バージョン比較
 		switch ( version_compare( $new_version, $old_version ) ) {
@@ -41,7 +41,7 @@ class NT_WPCF7SN_Admin {
 		}
 
 		// バージョン更新
-		SELF::update_option( 'version', $new_version );
+		NT_WPCF7SN::update_option( 'version', $new_version );
 	}
 
 	/**
