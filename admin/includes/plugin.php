@@ -45,6 +45,45 @@ class NT_WPCF7SN_Admin {
 	}
 
 	/**
+	 * プラグインの依存関係チェックを行う。
+	 *
+	 * @return void
+	 */
+	public static function check_dependent_plugin()
+	{
+		// ------------------------------------
+		// 依存関係チェック：Contact Form 7 プラグイン
+		// ------------------------------------
+
+		// [ContactForm7] 無効化の場合
+		if ( !NT_WPCF7SN::is_active_wpcf7() ) {
+
+			$iframe_url = Utility::get_plugin_iframe_url( _EXTERNAL_PLUGIN['wpcf7']['slug'] );
+
+			$plugin_link = sprintf( ''
+				. '<a href="%s" class="%s" data-title="%s">%s</a>'
+				, esc_url( $iframe_url )
+				, esc_attr( 'thickbox open-plugin-details-modal' )
+				, esc_attr( _EXTERNAL_PLUGIN['wpcf7']['name'] )
+				, esc_attr( _EXTERNAL_PLUGIN['wpcf7']['name'] )
+			);
+
+			$message = sprintf( __( ''
+				. 'Serial Number for Contact Form 7 requires %s to work.'
+				. ' Please install and activate the plugin first.'
+				, _TEXT_DOMAIN )
+				, $plugin_link
+			);
+
+			// 管理画面に通知
+			$notice_slug = _PREFIX['-'] . '-dependent-wpcf7-error';
+			Utility::notice_admin_message(
+				$notice_slug, '', $message, 'error'
+			);
+		}
+	}
+
+	/**
 	 * プラグインのアクションリンクを設定する。
 	 * 
 	 * [Filter Hook] plugin_action_links
