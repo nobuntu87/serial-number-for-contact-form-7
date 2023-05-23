@@ -2,6 +2,8 @@
 namespace _Nt\WpPlg\WPCF7SN;
 if ( !defined( 'ABSPATH' ) ) exit;
 
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 class Utility {
 
 	/**
@@ -19,6 +21,21 @@ class Utility {
 			'posts_per_page' => -1,
 			'offset'         => 0,
 		) );
+	}
+
+	/**
+	 * プラグインが有効化されているか確認する。
+	 *
+	 * @param string $basename プラグイン名 : {plugin-name}\{main-file.php}
+	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
+	 */
+	public static function is_active_plugin( $basename )
+	{
+		if ( function_exists( 'is_plugin_active' ) ) {
+			return is_plugin_active( $basename );
+		} else {
+			return false;
+		}
 	}
 
 	/**
