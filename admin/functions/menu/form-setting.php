@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpTme\Tsnc;
+namespace _Nt\WpPlg\WPCF7SN;
 if ( !defined( 'ABSPATH' ) ) exit;
 
 // HTML表示 ================================================================ ?>
