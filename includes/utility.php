@@ -6,6 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // ファイル読み込み
 // ========================================================
 
+include_once( ABSPATH . 'wp-load.php' );
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 include_once( ABSPATH . 'wp-admin/includes/template.php' );
 
@@ -30,6 +31,25 @@ class Utility {
 			'posts_per_page' => -1,
 			'offset'         => 0,
 		) );
+	}
+
+	/**
+	 * WordPress データベースのオプション情報を取得する。
+	 *
+	 * @param string $pattern オプション名の検索パターン
+	 * @return mixed[] WordPress データベースのオプション情報を返す。
+	 */
+	public static function get_wpdb_options( $pattern )
+	{
+		global $wpdb;
+
+		return $wpdb->get_results( sprintf( ''
+			. 'SELECT * FROM %s'
+			. '  WHERE 1 = 1 AND option_name like \'%s\''
+			. '  ORDER BY option_name'
+			, $wpdb->options
+			, $pattern
+		), ARRAY_A );
 	}
 
 	/**
