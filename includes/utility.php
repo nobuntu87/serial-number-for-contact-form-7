@@ -160,4 +160,26 @@ class Utility {
 		);
 	}
 
+	/**
+	 * 配列要素を更新する。
+	 * 
+	 * 元配列に存在するデータのみ更新(上書き)を行う。
+	 *
+	 * @param mixed[] $dst コピー先の配列
+	 * @param mixed[] $src コピー元の配列
+	 * @return mixed[] 更新した配列を返す。
+	 */
+	public static function array_update( $dst, $src )
+	{
+		if ( !is_array( $dst ) || !is_array( $src ) ) { return $dst; }
+
+		foreach( $dst as $key => $value ) {
+			if ( array_key_exists( $key, $src ) ) {
+				$dst[$key] = $src[$key];
+			}
+		}
+
+		return $dst;
+	}
+
 }
