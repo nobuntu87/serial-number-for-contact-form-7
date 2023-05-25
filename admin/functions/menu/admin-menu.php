@@ -12,11 +12,7 @@ class Admin_Menu extends Admin_Menu_Base {
   // 定数定義
   // ========================================================
 
-	private const _ADMIN_MENU_SLUG = 'wpcf7';
-
 	private const _SETTING_FORM_FILE = __DIR__ . '/form-setting.php';
-
-	private const _TAB_PREFIX = 'wpcf7-form';
 
   // ========================================================
   // メニュー設定
@@ -35,8 +31,8 @@ class Admin_Menu extends Admin_Menu_Base {
 
 		$this->add_sub_menu( array(
 			// メニュー設定
-			'parent_slug'  => SELF::_ADMIN_MENU_SLUG,
-			'menu_slug'    => _PREFIX['-'],
+			'parent_slug'  => _EXTERNAL_PLUGIN['wpcf7']['menu_slug'],
+			'menu_slug'    => _ADMIN_MENU_SLUG,
 			'page_title'   => __( 'Serial Number for Contact Form 7', _TEXT_DOMAIN ),
 			'menu_title'   => __( 'Serial Number Settings', _TEXT_DOMAIN ),
 			// ページ設定
@@ -50,24 +46,22 @@ class Admin_Menu extends Admin_Menu_Base {
 
 		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
 
-			$tab_slug = sprintf( '%s-%s'
-				, SELF::_TAB_PREFIX
-				, strval( $wpcf7_post->ID )
+			$form_id = strval( $wpcf7_post->ID );
+
+			$tab_slug = sprintf( '%s%s'
+				, _ADMIN_MENU_TAB_PREFIX , $form_id
 			);
 
-			$tab_title = sprintf( '%s'
-				, strval( $wpcf7_post->post_title )
-			);
+			$tab_title = strval( $wpcf7_post->post_title );
 
 			$form_title = sprintf( '%s ( %s ) [ CF7-ID : %s ]'
 				, __( 'Serial Number Settings', _TEXT_DOMAIN )
-				, strval( $wpcf7_post->post_title )
-				, strval( $wpcf7_post->ID )
+				, $tab_title , $form_id
 			);
 
 			$this->add_menu_tab( array(
 				// タブ設定
-				'parent_slug'  => _PREFIX['-'],
+				'parent_slug'  => _ADMIN_MENU_SLUG,
 				'tab_slug'     => esc_attr( $tab_slug ),
 				'tab_title'    => esc_attr( $tab_title ),
 				'tab_icon'     => 'fa-brands fa-wpforms',
@@ -110,10 +104,10 @@ class Admin_Menu extends Admin_Menu_Base {
 	 */
 	protected final function get_form_id()
 	{
-		$pattern = '/' . SELF::_TAB_PREFIX . '-(?P<form_id>\d+)$/';
+		$pattern = '/^' . _ADMIN_MENU_TAB_PREFIX . '(?P<form_id>\d+)$/';
 		preg_match( $pattern, $this->m_page['tab']['slug'], $matches );
 
-		return $matches['form_id'];
+		return strval( $matches['form_id'] );
 	}
 
   // ========================================================
