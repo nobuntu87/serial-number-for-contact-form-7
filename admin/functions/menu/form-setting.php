@@ -13,7 +13,7 @@ $attr_mail_tag = array(
 	'onfocus' => 'this.select();',
 );
 
-$mail_tag = sprintf( '[%s_%s]'
+$mail_tag = sprintf( '[%s%s]'
 	, _MAIL_TAG_PREFIX
 	, strval( $form_id )
 );

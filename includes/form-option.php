@@ -84,6 +84,10 @@ class Form_Option {
 
 		$default_value['form_id'] = strval( $form_id );
 
+		$default_value['mail_tag'] = sprintf( '[%s%s]'
+			, _MAIL_TAG_PREFIX , strval( $form_id )
+		);
+
 		return $default_value;
 	}
 

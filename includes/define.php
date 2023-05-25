@@ -53,9 +53,19 @@ define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' 
 // オプション設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number' );
+define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number_' );
 
 define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
+	'id'        => array(
+		'key'     => 'form_id',
+		'default' => '',
+		'pattern' => '^\d+$'
+	),
+	'tag'       => array(
+		'key'     => 'mail_tag',
+		'default' => '',
+		'pattern' => '^\[' . _MAIL_TAG_PREFIX . '\d+\]$'
+	),
 	'type'      => array(
 		'key'     => 'type',
 		'default' => 0,
