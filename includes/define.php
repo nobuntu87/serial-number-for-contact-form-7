@@ -133,3 +133,9 @@ class_alias(
 
 define( __NAMESPACE__ . '\_ADMIN_MENU_SLUG', _PREFIX['-'] );
 define( __NAMESPACE__ . '\_ADMIN_MENU_TAB_PREFIX', 'wpcf7-form-' );
+
+// ========================================================
+// グローバルオプション定義
+// ========================================================
+
+$_NT_WPCF7SN = [];
