@@ -146,6 +146,38 @@ class NT_WPCF7SN_Admin {
 	}
 
 	/**
+	 * オプション更新後の処理を行う。
+	 * 
+	 * [Action Hook] updated_option
+	 *
+	 * @param string $option_name オプション名
+	 * @param mixed[] $old_value オプション値 (更新前)
+	 * @param mixed[] $new_value オプション値 (更新後)
+	 * @return void
+	 */
+	public static function updated_option( $option_name, $old_value, $new_value )
+	{
+		// ------------------------------------
+		// オプション判別
+		// ------------------------------------
+
+		$pattern = sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
+			, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
+		);
+
+		if ( 1 !== preg_match( $pattern, $option_name, $matches ) ) {
+			return;
+		}
+
+		// ------------------------------------
+		// 更新後処理
+		// ------------------------------------
+
+		// グローバルオプション初期化
+		Form_Option::init_global_option( strval( $matches['form_id'] ) );
+	}
+
+	/**
 	 * プラグインのアクションリンクを設定する。
 	 * 
 	 * [Filter Hook] plugin_action_links

@@ -25,9 +25,10 @@ define( __NAMESPACE__ . '\_PREFIX', array(
 
 define( __NAMESPACE__ . '\_EXTERNAL_PLUGIN', array(
 	'wpcf7' => array(
-		'name'     => 'Contact Form 7',
-		'slug'     => 'contact-form-7',
-		'basename' => 'contact-form-7/wp-contact-form-7.php',
+		'name'      => 'Contact Form 7',
+		'slug'      => 'contact-form-7',
+		'basename'  => 'contact-form-7/wp-contact-form-7.php',
+		'menu_slug' => 'wpcf7'
 	),
 ) );
 
