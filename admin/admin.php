@@ -25,7 +25,7 @@ add_action(
 
 // プラグイン初期化
 add_action(
-	'init',
+	'admin_init',
 	__NAMESPACE__ . '\NT_WPCF7SN_Admin::init_plugin',
 	10, 0
 );
