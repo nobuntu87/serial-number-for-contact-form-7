@@ -3,6 +3,12 @@ namespace _Nt\WpPlg\WPCF7SN;
 if ( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
+// グローバルオプション定義
+// ============================================================================
+
+$_NT_WPCF7SN['form'] = [];
+
+// ============================================================================
 // コンタクトフォーム設定操作クラス：Form_Option
 // ============================================================================
 
@@ -33,6 +39,43 @@ class Form_Option {
 			if ( $form_option !== $option_value ) {
 				SELF::update_option( $form_id, $option_value );
 			}
+
+		}
+	}
+
+	/**
+	 * グローバルオプションの初期化を行う。
+	 *
+	 * @return void
+	 */
+	public static function init_global_options()
+	{
+		// ------------------------------------
+		// グローバルオプション初期化
+		// ------------------------------------
+
+		$GLOBALS['_NT_WPCF7SN']['form'] = [];
+
+		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
+
+			$form_id = strval( $wpcf7_post->ID );
+			
+			$GLOBALS['_NT_WPCF7SN']['form'] += array(
+				$form_id => SELF::get_default_value( $form_id )
+			);
+
+		}
+
+		// ------------------------------------
+		// グローバルオプション更新
+		// ------------------------------------
+
+		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
+
+			// グローバルオプション更新
+			$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = Utility::array_update(
+				$GLOBALS['_NT_WPCF7SN']['form'][$form_id], $form_option
+			);
 
 		}
 	}
