@@ -120,3 +120,6 @@ class_alias(
 	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Library_Utility',
 	__NAMESPACE__ . '\Admin_Menu_Util'
 );
+
+define( __NAMESPACE__ . '\_ADMIN_MENU_SLUG', _PREFIX['-'] );
+define( __NAMESPACE__ . '\_ADMIN_MENU_TAB_PREFIX', 'wpcf7-form-' );
