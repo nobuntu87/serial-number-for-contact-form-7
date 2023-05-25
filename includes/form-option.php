@@ -328,4 +328,50 @@ class Form_Option {
 		);
 	}
 
+	/**
+	 * メールカウントを増加する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return void
+	 */
+	public static function increment_mail_count( $form_id )
+	{
+		$form_id = strval( $form_id );
+
+		// コンタクトフォーム設定取得
+		$form_option = SELF::get_option( $form_id );
+
+		// カウント増加
+		$form_option['count'] = strval( intval( $form_option['count'] ) + 1 );
+		$form_option['daycount'] = strval( intval( $form_option['daycount'] ) + 1 );
+
+		// コンタクトフォーム設定更新
+		SELF::update_option( $form_id, $form_option );
+
+		// グローバルオプション更新
+		SELF::init_global_option( $form_id );
+	}
+
+	/**
+	 * デイリーメールカウントをリセットする。
+	 *
+	 * @return void
+	 */
+	public static function reset_daily_mail_count()
+	{
+		// コンタクトフォーム設定取得
+		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
+
+			// カウント初期化
+			$form_option['daycount'] = strval( _FORM_OPTIONS['daycount']['default'] );
+
+			// コンタクトフォーム設定更新
+			SELF::update_option( $form_id, $form_option );
+
+		}
+
+		// グローバルオプション更新
+		SELF::init_global_options();
+	}
+
 }
