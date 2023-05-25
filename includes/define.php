@@ -53,9 +53,19 @@ define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' 
 // オプション設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number' );
+define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number_' );
 
 define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
+	'id'        => array(
+		'key'     => 'form_id',
+		'default' => '',
+		'pattern' => '^\d+$'
+	),
+	'tag'       => array(
+		'key'     => 'mail_tag',
+		'default' => '',
+		'pattern' => '^\[' . _MAIL_TAG_PREFIX . '\d+\]$'
+	),
 	'type'      => array(
 		'key'     => 'type',
 		'default' => 0,
@@ -120,3 +130,12 @@ class_alias(
 	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Library_Utility',
 	__NAMESPACE__ . '\Admin_Menu_Util'
 );
+
+define( __NAMESPACE__ . '\_ADMIN_MENU_SLUG', _PREFIX['-'] );
+define( __NAMESPACE__ . '\_ADMIN_MENU_TAB_PREFIX', 'wpcf7-form-' );
+
+// ========================================================
+// グローバルオプション定義
+// ========================================================
+
+$_NT_WPCF7SN = [];

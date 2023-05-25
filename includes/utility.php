@@ -6,6 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // ファイル読み込み
 // ========================================================
 
+include_once( ABSPATH . 'wp-load.php' );
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 include_once( ABSPATH . 'wp-admin/includes/template.php' );
 
@@ -30,6 +31,25 @@ class Utility {
 			'posts_per_page' => -1,
 			'offset'         => 0,
 		) );
+	}
+
+	/**
+	 * WordPress データベースのオプション情報を取得する。
+	 *
+	 * @param string $pattern オプション名の検索パターン
+	 * @return mixed[] WordPress データベースのオプション情報を返す。
+	 */
+	public static function get_wpdb_options( $pattern )
+	{
+		global $wpdb;
+
+		return $wpdb->get_results( sprintf( ''
+			. 'SELECT * FROM %s'
+			. '  WHERE 1 = 1 AND option_name like \'%s\''
+			. '  ORDER BY option_name'
+			, $wpdb->options
+			, $pattern
+		), ARRAY_A );
 	}
 
 	/**
@@ -88,6 +108,20 @@ class Utility {
 	}
 
 	/**
+	 * オプションを削除する。
+	 *
+	 * @param string $option_name オプション名
+	 * @return boolean 削除結果を返す。(true:成功or該当なし/false:失敗)
+	 */
+	public static function delete_option( $option_name )
+	{
+		if ( false !== get_option( $option_name ) ) {
+			return delete_option( $option_name );
+		}
+		return true;
+	}
+
+	/**
 	 * 文字列のエスケープ/エンコード処理を行う。
 	 *
 	 * @param string $string 文字列
@@ -138,6 +172,28 @@ class Utility {
 			array( content_url() . '/', '/' ),
 			$path
 		);
+	}
+
+	/**
+	 * 配列要素を更新する。
+	 * 
+	 * 元配列に存在するデータのみ更新(上書き)を行う。
+	 *
+	 * @param mixed[] $dst コピー先の配列
+	 * @param mixed[] $src コピー元の配列
+	 * @return mixed[] 更新した配列を返す。
+	 */
+	public static function array_update( $dst, $src )
+	{
+		if ( !is_array( $dst ) || !is_array( $src ) ) { return $dst; }
+
+		foreach( $dst as $key => $value ) {
+			if ( array_key_exists( $key, $src ) ) {
+				$dst[$key] = $src[$key];
+			}
+		}
+
+		return $dst;
 	}
 
 }
