@@ -9,6 +9,35 @@ if ( !defined( 'ABSPATH' ) ) exit;
 class Form_Option {
 
 	/**
+	 * コンタクトフォーム設定の初期化を行う。
+	 *
+	 * @return void
+	 */
+	public static function init_options()
+	{
+		// ------------------------------------
+		// コンタクトフォーム設定の整合性チェック
+		// ------------------------------------
+
+		SELF::check_options_integrity();
+
+		// ------------------------------------
+		// コンタクトフォーム設定値の整合性チェック
+		// ------------------------------------
+
+		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
+
+			$option_value = SELF::check_option_value_integrity( $form_option );
+
+			// 変更がある場合は更新
+			if ( $form_option !== $option_value ) {
+				SELF::update_option( $form_id, $option_value );
+			}
+
+		}
+	}
+
+	/**
 	 * コンタクトフォーム設定の整合性チェックを行う。(全数)
 	 *
 	 * @return void
