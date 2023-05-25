@@ -9,6 +9,28 @@ if ( !defined( 'ABSPATH' ) ) exit;
 class Form_Option {
 
 	/**
+	 * コンタクトフォーム設定の既定値を取得する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return void mixed[] コンタクトフォーム設定値を返す。
+	 */
+	public static function get_default_value( $form_id )
+	{
+		$default_value = [];
+
+		// 定義から既定値を生成
+		foreach ( _FORM_OPTIONS as $item => $option ) {
+			$default_value += array(
+				$option['key'] => strval( $option['default'] )
+			);
+		}
+
+		$default_value['form_id'] = strval( $form_id );
+
+		return $default_value;
+	}
+
+	/**
 	 * コンタクトフォーム設定の設定値を取得する。
 	 *
 	 * @param int|string $form_id コンタクトフォームID
