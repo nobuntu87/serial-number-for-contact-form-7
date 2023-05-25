@@ -56,34 +56,26 @@ class Form_Option {
 	 */
 	public static function init_global_options()
 	{
-		// ------------------------------------
-		// グローバルオプション初期化
-		// ------------------------------------
-
 		$GLOBALS['_NT_WPCF7SN']['form'] = [];
-
 		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
-
-			$form_id = strval( $wpcf7_post->ID );
-			
-			$GLOBALS['_NT_WPCF7SN']['form'] += array(
-				$form_id => SELF::get_default_value( $form_id )
-			);
-
+			SELF::init_global_option( strval( $wpcf7_post->ID ) );
 		}
+	}
 
-		// ------------------------------------
-		// グローバルオプション更新
-		// ------------------------------------
+	/**
+	 * グローバルオプションの初期化を行う。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return void
+	 */
+	public static function init_global_option( $form_id )
+	{
+		$form_id = strval( $form_id );
 
-		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
-
-			// グローバルオプション更新
-			$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = Utility::array_update(
-				$GLOBALS['_NT_WPCF7SN']['form'][$form_id], $form_option
-			);
-
-		}
+		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = Utility::array_update(
+			SELF::get_default_value( $form_id ),
+			SELF::get_option( $form_id )
+		);
 	}
 
 	/**
