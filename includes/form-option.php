@@ -9,6 +9,120 @@ if ( !defined( 'ABSPATH' ) ) exit;
 class Form_Option {
 
 	/**
+	 * コンタクトフォーム設定の整合性チェックを行う。(全数)
+	 *
+	 * @return void
+	 */
+	public static function check_options_integrity()
+	{
+		// ------------------------------------
+		// コンタクトフォームID取得
+		// ------------------------------------
+		
+		// [ContactForm7] コンタクトフォームID取得
+		$wpcf7_form_ids = [];
+		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
+			$wpcf7_form_ids[] = strval( $wpcf7_post->ID );
+		}
+
+		// [SerialNumber] コンタクトフォームID取得
+		$wpcf7sn_form_ids = [];
+		foreach ( SELF::get_all_options() as $form_option ) {
+			$wpcf7sn_form_ids[] = strval( $form_option['form_id'] );
+		}
+
+		// ------------------------------------
+		// 不要オプション削除
+		// - - - - - - - - - - - - - - - - - -
+		//   [CF7:無] / [CF7SN:有]
+		// ------------------------------------
+
+		foreach ( $wpcf7sn_form_ids as $wpcf7sn_form_id ) {
+			if ( !in_array( $wpcf7sn_form_id, $wpcf7_form_ids ) ) {
+
+				// 不要オプション削除
+				SELF::delete_option( $wpcf7sn_form_id );
+
+			}
+		}
+
+		// ------------------------------------
+		// 不足オプション追加
+		// - - - - - - - - - - - - - - - - - -
+		//   [CF7:有] / [CF7SN:無]
+		// ------------------------------------
+
+		foreach ( $wpcf7_form_ids as $wpcf7_form_id ) {
+			if ( !in_array( $wpcf7_form_id, $wpcf7sn_form_ids ) ) {
+
+				// 不足オプション追加 (既定値で初期化)
+				SELF::update_option(
+					$wpcf7_form_id,
+					SELF::get_default_value( $wpcf7_form_id )
+				);
+
+			}
+		}
+	}
+
+	/**
+	 * コンタクトフォーム設定値の整合性チェックを行う。
+	 *
+	 * @param mixed[] $option_value オプション値
+	 * @return void mixed[] コンタクトフォーム設定値を返す。
+	 */
+	public static function check_option_value_integrity( $option_value )
+	{
+		if ( !is_array( $option_value ) ) { return []; }
+
+		// ------------------------------------
+		// オプションキー取得
+		// ------------------------------------
+		
+		// [ContactForm7] オプション定義キー取得
+		$define_keys = [];
+		foreach ( _FORM_OPTIONS as $item => $option ) {
+			$define_keys[] = strval( $option['key'] );
+		}
+
+		// ------------------------------------
+		// 不要オプション値削除
+		// - - - - - - - - - - - - - - - - - -
+		//   [定義:無] / [設定値:有]
+		// ------------------------------------
+
+		foreach ( $option_value as $key => $value ) {
+			if ( !in_array( $key, $define_keys ) ) {
+
+				// 不要オプション値削除
+				unset( $option_value[$key] );
+
+			}
+		}
+
+		// ------------------------------------
+		// 不足オプション値追加
+		// - - - - - - - - - - - - - - - - - -
+		//   [定義:有] / [設定値:無]
+		// ------------------------------------
+
+		foreach ( _FORM_OPTIONS as $item => $option ) {
+			if ( !array_key_exists( $option['key'], $option_value ) ) {
+
+				// 不足オプション値追加 (既定値で初期化)
+				$option_value += array(
+					$option['key'] => strval( $option['default'] )
+				);
+
+			}
+		}
+
+		// ------------------------------------
+
+		return $option_value;
+	}
+
+	/**
 	 * コンタクトフォーム設定を取得する。(全数)
 	 *
 	 * @return void mixed[] コンタクトフォーム設定を返す。
