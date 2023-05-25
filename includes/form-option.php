@@ -9,6 +9,63 @@ if ( !defined( 'ABSPATH' ) ) exit;
 class Form_Option {
 
 	/**
+	 * コンタクトフォーム設定を取得する。(全数)
+	 *
+	 * @return void mixed[] コンタクトフォーム設定を返す。
+	 */
+	public static function get_all_options()
+	{
+		$form_options = [];
+
+		// ------------------------------------
+		// データベース全数取得
+		// ------------------------------------
+
+		$wpdb_options = Utility::get_wpdb_options( sprintf( '%s_%s_%s%%'
+			, _PREFIX['_']
+			, _ADMIN_MENU_SLUG
+			, _ADMIN_MENU_TAB_PREFIX
+		) );
+
+		if ( !is_array( $wpdb_options ) ) { return []; }
+
+		// ------------------------------------
+		// コンタクトフォーム設定変換
+		// ------------------------------------
+
+		foreach( $wpdb_options as $wpdb_option ) {
+
+			$option_value = $wpdb_option['option_value'];
+
+			// ------------------------------------
+			// デコード処理
+			// ------------------------------------
+
+			// JSON形式の文字列をデコード
+			$option_value = @json_decode( $option_value, true );
+
+			// アンエスケープ・デコード
+			if ( is_array( $option_value ) ) {
+				$option_value = array_map(
+					array( __NAMESPACE__ . '\Utility', 'unesc_decode' ),
+					$option_value
+				);
+			}
+
+			// ------------------------------------
+
+			$form_options += array(
+				$option_value['form_id'] => $option_value
+			);
+
+		}
+
+		// ------------------------------------
+
+		return $form_options;
+	}
+
+	/**
 	 * コンタクトフォーム設定の既定値を取得する。
 	 *
 	 * @param int|string $form_id コンタクトフォームID
