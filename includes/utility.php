@@ -108,6 +108,20 @@ class Utility {
 	}
 
 	/**
+	 * オプションを削除する。
+	 *
+	 * @param string $option_name オプション名
+	 * @return boolean 削除結果を返す。(true:成功or該当なし/false:失敗)
+	 */
+	public static function delete_option( $option_name )
+	{
+		if ( false !== get_option( $option_name ) ) {
+			return delete_option( $option_name );
+		}
+		return true;
+	}
+
+	/**
 	 * 文字列のエスケープ/エンコード処理を行う。
 	 *
 	 * @param string $string 文字列
