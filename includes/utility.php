@@ -24,7 +24,7 @@ class Utility {
 	public static function get_wpcf7_posts()
 	{
 		return get_posts( array(
-			'post_type'      => 'wpcf7_contact_form',
+			'post_type'      => _EXTERNAL_PLUGIN['wpcf7']['post_type'],
 			'post_status'    => 'publish',
 			'orderby'        => 'ID',
 			'order'          => 'ASC',

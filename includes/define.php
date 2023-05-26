@@ -29,6 +29,7 @@ define( __NAMESPACE__ . '\_EXTERNAL_PLUGIN', array(
 		'slug'      => 'contact-form-7',
 		'basename'  => 'contact-form-7/wp-contact-form-7.php',
 		'menu_slug' => 'wpcf7',
+		'post_type' => 'wpcf7_contact_form',
 	),
 ) );
 
