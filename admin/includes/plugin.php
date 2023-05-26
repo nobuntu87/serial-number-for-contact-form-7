@@ -159,8 +159,7 @@ class NT_WPCF7SN_Admin {
 		// プラグイン設定画面
 		// ------------------------------------
 
-		$pattern = '/_page_' . _PREFIX['-'] . '$/';
-		if ( 1 === preg_match( $pattern, $hook_suffix ) ) {
+		if ( 1 === preg_match( _ADMIN_MENU_REGEX['page_suffix'], $hook_suffix ) ) {
 
 			// メニューページ用CSS
 			wp_enqueue_style(
@@ -185,21 +184,10 @@ class NT_WPCF7SN_Admin {
 	 */
 	public static function updated_option( $option_name, $old_value, $new_value )
 	{
-		// ------------------------------------
-		// オプション判別
-		// ------------------------------------
-
-		$pattern = sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
-			, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
-		);
-
-		if ( 1 !== preg_match( $pattern, $option_name, $matches ) ) {
+		// オプション名判別
+		if ( 1 !== preg_match( _ADMIN_MENU_REGEX['option_name'], $option_name, $matches ) ) {
 			return;
 		}
-
-		// ------------------------------------
-		// 更新後処理
-		// ------------------------------------
 
 		// グローバルオプション初期化
 		Form_Option::init_global_option( strval( $matches['form_id'] ) );

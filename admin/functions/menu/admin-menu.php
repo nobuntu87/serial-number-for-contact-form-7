@@ -102,8 +102,7 @@ class Admin_Menu extends Admin_Menu_Base {
 	 */
 	protected final function get_form_id()
 	{
-		$pattern = '/^' . _ADMIN_MENU_TAB_PREFIX . '(?P<form_id>\d+)$/';
-		preg_match( $pattern, $this->m_page['tab']['slug'], $matches );
+		preg_match( _ADMIN_MENU_REGEX['tab_slug'], $this->m_page['tab']['slug'], $matches );
 
 		return strval( $matches['form_id'] );
 	}
