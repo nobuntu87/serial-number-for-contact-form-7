@@ -48,9 +48,7 @@ class Admin_Menu extends Admin_Menu_Base {
 
 			$form_id = strval( $wpcf7_post->ID );
 
-			$tab_slug = sprintf( '%s%s'
-				, _ADMIN_MENU_TAB_PREFIX , $form_id
-			);
+			$tab_slug = sprintf( '%s%s', _ADMIN_MENU_TAB_PREFIX , $form_id );
 
 			$tab_title = strval( $wpcf7_post->post_title );
 
