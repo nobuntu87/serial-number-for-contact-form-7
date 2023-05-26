@@ -124,4 +124,26 @@ class NT_WPCF7SN {
 		update_option( $option_name, $option_value );
 	}
 
+	/**
+	 * デイリーリセット機能が動作可能か確認する。
+	 *
+	 * @return boolean 動作対応結果を返す。(true:対応/false:未対応)
+	 */
+	public static function is_working_dayreset()
+	{
+		// ------------------------------------
+		// 依存関係チェック：クラス
+		// ------------------------------------
+
+		// DateTime (PHP >= 5.2.0)
+		if ( !class_exists( 'DateTime' ) ) { return false; }
+
+		// DateTimeZone (PHP >= 5.2.0)
+		if ( !class_exists( 'DateTimeZone' ) ) { return false; }
+
+		// ------------------------------------
+
+		return true;
+	}
+
 }
