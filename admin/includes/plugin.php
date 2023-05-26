@@ -146,6 +146,33 @@ class NT_WPCF7SN_Admin {
 	}
 
 	/**
+	 * 管理画面のスクリプトを読み込む。
+	 * 
+	 * [Action Hook] admin_enqueue_scripts
+	 *
+	 * @param string $hook_suffix 管理画面の接尾辞
+	 * @return void
+	 */
+	public static function enqueue_admin_scripts( $hook_suffix )
+	{
+		// ------------------------------------
+		// プラグイン設定画面
+		// ------------------------------------
+
+		if ( 1 === preg_match( _ADMIN_MENU_REGEX['page_suffix'], $hook_suffix ) ) {
+
+			// メニューページ用CSS
+			wp_enqueue_style(
+				_PREFIX['-'] . '-admin',
+				Utility::get_uri( _ADMIN_CSS_DIR ) . '/style.css',
+				array(),
+				_VERSION, 'all'
+			);
+
+		}
+	}
+
+	/**
 	 * オプション更新後の処理を行う。
 	 * 
 	 * [Action Hook] updated_option
@@ -157,21 +184,10 @@ class NT_WPCF7SN_Admin {
 	 */
 	public static function updated_option( $option_name, $old_value, $new_value )
 	{
-		// ------------------------------------
-		// オプション判別
-		// ------------------------------------
-
-		$pattern = sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
-			, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
-		);
-
-		if ( 1 !== preg_match( $pattern, $option_name, $matches ) ) {
+		// オプション名判別
+		if ( 1 !== preg_match( _ADMIN_MENU_REGEX['option_name'], $option_name, $matches ) ) {
 			return;
 		}
-
-		// ------------------------------------
-		// 更新後処理
-		// ------------------------------------
 
 		// グローバルオプション初期化
 		Form_Option::init_global_option( strval( $matches['form_id'] ) );
@@ -264,32 +280,6 @@ class NT_WPCF7SN_Admin {
 		// ------------------------------------
 
 		return $plugin_meta;
-	}
-
-	/**
-	 * 管理画面のスクリプトを読み込む。
-	 *
-	 * @param string $hook_suffix 管理画面の接尾辞
-	 * @return void
-	 */
-	public static function enqueue_admin_scripts( $hook_suffix )
-	{
-		// ------------------------------------
-		// プラグイン設定画面
-		// ------------------------------------
-
-		$pattern = '/_page_' . _PREFIX['-'] . '$/';
-		if ( 1 === preg_match( $pattern, $hook_suffix ) ) {
-
-			// メニューページ用CSS
-			wp_enqueue_style(
-				_PREFIX['-'] . '-admin',
-				Utility::get_uri( _ADMIN_CSS_DIR ) . '/style.css',
-				array(),
-				_VERSION, 'all'
-			);
-
-		}
 	}
 
 }

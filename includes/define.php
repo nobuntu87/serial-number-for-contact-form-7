@@ -28,7 +28,8 @@ define( __NAMESPACE__ . '\_EXTERNAL_PLUGIN', array(
 		'name'      => 'Contact Form 7',
 		'slug'      => 'contact-form-7',
 		'basename'  => 'contact-form-7/wp-contact-form-7.php',
-		'menu_slug' => 'wpcf7'
+		'menu_slug' => 'wpcf7',
+		'post_type' => 'wpcf7_contact_form',
 	),
 ) );
 
@@ -134,6 +135,19 @@ class_alias(
 
 define( __NAMESPACE__ . '\_ADMIN_MENU_SLUG', _PREFIX['-'] );
 define( __NAMESPACE__ . '\_ADMIN_MENU_TAB_PREFIX', 'wpcf7-form-' );
+
+define(
+	__NAMESPACE__ . '\_ADMIN_MENU_REGEX', array(
+		'page_suffix' => sprintf( '/_page_%s$/'
+			, _ADMIN_MENU_SLUG
+		),
+		'option_name' => sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
+			, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
+		),
+		'tab_slug'    => sprintf( '/^%s(?P<form_id>\d+)$/'
+			, _ADMIN_MENU_TAB_PREFIX
+		),
+) );
 
 // ========================================================
 // グローバルオプション定義

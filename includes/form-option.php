@@ -171,7 +171,7 @@ class Form_Option {
 		}
 
 		// ------------------------------------
-		// 不足オプション値追加
+		// 不足オプション値追加 (既定値)
 		// - - - - - - - - - - - - - - - - - -
 		//   [定義:有] / [設定値:無]
 		// ------------------------------------
@@ -257,19 +257,21 @@ class Form_Option {
 	 */
 	public static function get_default_value( $form_id )
 	{
+		$form_id = strval( $form_id );
+
 		$default_value = [];
 
 		// 定義から既定値を生成
 		foreach ( _FORM_OPTIONS as $item => $option ) {
 			$default_value += array(
-				$option['key'] => strval( $option['default'] )
+				strval( $option['key'] ) => strval( $option['default'] )
 			);
 		}
 
-		$default_value['form_id'] = strval( $form_id );
+		$default_value['form_id'] = $form_id;
 
 		$default_value['mail_tag'] = sprintf( '[%s%s]'
-			, _MAIL_TAG_PREFIX , strval( $form_id )
+			, _MAIL_TAG_PREFIX , $form_id
 		);
 
 		return $default_value;
@@ -361,6 +363,8 @@ class Form_Option {
 	{
 		// コンタクトフォーム設定取得
 		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
+
+			$form_id = strval( $form_id );
 
 			// カウント初期化
 			$form_option['daycount'] = strval( _FORM_OPTIONS['daycount']['default'] );

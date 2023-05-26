@@ -2,7 +2,7 @@
 namespace _Nt\WpPlg\WPCF7SN;
 if ( !defined( 'ABSPATH' ) ) exit;
 
-$form_id = $this->get_form_id();
+$form_id = strval( $this->get_form_id() );
 
 // ========================================================
 // メールタグ表示設定
@@ -13,10 +13,7 @@ $attr_mail_tag = array(
 	'onfocus' => 'this.select();',
 );
 
-$mail_tag = sprintf( '[%s%s]'
-	, _MAIL_TAG_PREFIX
-	, strval( $form_id )
-);
+$mail_tag = sprintf( '[%s%s]' , _MAIL_TAG_PREFIX , $form_id );
 
 // ========================================================
 // カウント表示設定

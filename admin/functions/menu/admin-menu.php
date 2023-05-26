@@ -48,9 +48,7 @@ class Admin_Menu extends Admin_Menu_Base {
 
 			$form_id = strval( $wpcf7_post->ID );
 
-			$tab_slug = sprintf( '%s%s'
-				, _ADMIN_MENU_TAB_PREFIX , $form_id
-			);
+			$tab_slug = sprintf( '%s%s', _ADMIN_MENU_TAB_PREFIX , $form_id );
 
 			$tab_title = strval( $wpcf7_post->post_title );
 
@@ -104,8 +102,7 @@ class Admin_Menu extends Admin_Menu_Base {
 	 */
 	protected final function get_form_id()
 	{
-		$pattern = '/^' . _ADMIN_MENU_TAB_PREFIX . '(?P<form_id>\d+)$/';
-		preg_match( $pattern, $this->m_page['tab']['slug'], $matches );
+		preg_match( _ADMIN_MENU_REGEX['tab_slug'], $this->m_page['tab']['slug'], $matches );
 
 		return strval( $matches['form_id'] );
 	}
