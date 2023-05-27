@@ -47,11 +47,11 @@ class NT_WPCF7SN_Admin {
 		switch ( version_compare( $new_version, $old_version ) ) {
 			// ダウングレード [ new < old ]
 			case -1:
-				// 処理なし
+				SELF::downgrade_plugin();
 				break;
 			// アップグレード [ new > old ]
 			case 1:
-				// 処理なし
+				SELF::upgrade_plugin();
 				break;
 			// 同一バージョン [ new = old ]
 			default:
@@ -138,6 +138,26 @@ class NT_WPCF7SN_Admin {
 				$notice_slug, '', $message, 'error'
 			);
 		}
+	}
+
+	/**
+	 * プラグインのアップグレード処理を行う。
+	 *
+	 * @return void
+	 */
+	private function upgrade_plugin()
+	{
+		// 処理なし
+	}
+
+	/**
+	 * プラグインのダウングレード処理を行う。
+	 *
+	 * @return void
+	 */
+	private function downgrade_plugin()
+	{
+		// 処理なし
 	}
 
   // ========================================================
