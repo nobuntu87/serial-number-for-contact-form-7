@@ -20,6 +20,10 @@ class NT_WPCF7SN {
 		);
 	}
 
+  // ========================================================
+  // プラグインオプション
+  // ========================================================
+
 	/**
 	* プラグインのオプション値を取得する。
 	*
@@ -65,7 +69,7 @@ class NT_WPCF7SN {
 	*
 	* @return mixed[] オプション値を返す。
 	*/
-	public static function get_plugin_option()
+	private function get_plugin_option()
 	{
 		$option_name = sprintf( "%s_conf" , _PREFIX['_'] );
 
@@ -99,7 +103,7 @@ class NT_WPCF7SN {
 	* @param mixed[] $option_value オプション値
 	* @return void
 	*/
-	public static function update_plugin_option( $option_value )
+	private function update_plugin_option( $option_value )
 	{
 		$option_name = sprintf( "%s_conf" , _PREFIX['_'] );
 
@@ -123,6 +127,10 @@ class NT_WPCF7SN {
 		// WordPressデータベース更新
 		update_option( $option_name, $option_value );
 	}
+
+  // ========================================================
+  // デイリーリセット
+  // ========================================================
 
 	/**
 	 * デイリーリセット機能が動作可能か確認する。
