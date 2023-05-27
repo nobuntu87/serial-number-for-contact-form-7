@@ -42,7 +42,7 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 
 $is_daycount = false;
 if ( NT_WPCF7SN::is_working_dayreset() ) {
-	if ( 'yes' == $_NT_WPCF7SN['form'][$form_id]['daycount'] ) {
+	if ( 'yes' === $GLOBALS['_NT_WPCF7SN']['form'][$form_id]['dayreset'] ) {
 		$is_daycount = true;
 	}
 }
