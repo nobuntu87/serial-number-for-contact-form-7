@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_3_0;
+namespace _Nt\WpLib\AdminMenu\v2_3_1;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -588,6 +588,9 @@ abstract class Admin_Menu_Base {
 		// ページタブ初期化
 		if ( !$this->init_page_tab() ) { return; }
 
+		// ページオプション初期化
+		$this->init_page_option();
+
 		// ページ表示初期化
 		$this->init_page_view();
 	}
@@ -681,6 +684,48 @@ abstract class Admin_Menu_Base {
 		$this->m_page['tab']['options'] = $tab_options;
 
 		return true;
+	}
+
+	/**
+	 * ページオプションの初期化を行う。
+	 *
+	 * @return void
+	 */
+	private function init_page_option()
+	{
+		$option_group = '';
+		$option_name = '';
+
+		// ------------------------------------
+		// オプショングループ名取得
+		// - - - - - - - - - - - - - - - - - -
+		//   {app-slug}_{page-slug}_group
+		// ------------------------------------
+
+		$option_group = Library_Utility::get_option_group(
+			$this->m_class['app']['slug'],
+			$this->m_page['menu']['slug'],
+			$this->m_page['tab']['slug']
+		);
+
+		// ------------------------------------
+		// オプション名取得
+		// - - - - - - - - - - - - - - - - - -
+		//   {app-slug}_{page-slug}_{opt-suffix}
+		// ------------------------------------
+
+		$option_name = Library_Utility::get_option_name(
+			$this->m_class['app']['slug'],
+			$this->m_page['menu']['slug'],
+			$this->m_page['tab']['slug']
+		);
+
+		// ------------------------------------
+		// 変数設定
+		// ------------------------------------
+
+		$this->m_page['option']['group'] = $option_group;
+		$this->m_page['option']['name'] = $option_name;
 	}
 
 	/**
@@ -779,53 +824,18 @@ abstract class Admin_Menu_Base {
 	 */
 	private function init_option()
 	{
-		// ページオプション初期化
-		$this->init_page_option();
-
-		// オプション取得
-		$this->get_page_option();
+		add_action( 'admin_init', array( $this, 'init_option_callback' ), 11, 0 );
 	}
 
 	/**
-	 * ページオプションの初期化を行う。
+	 * オプション設定の初期化を行う。
 	 *
 	 * @return void
 	 */
-	private function init_page_option()
+	public final function init_option_callback()
 	{
-		$option_group = '';
-		$option_name = '';
-
-		// ------------------------------------
-		// オプショングループ名取得
-		// - - - - - - - - - - - - - - - - - -
-		//   {app-slug}_{page-slug}_group
-		// ------------------------------------
-
-		$option_group = Library_Utility::get_option_group(
-			$this->m_class['app']['slug'],
-			$this->m_page['menu']['slug'],
-			$this->m_page['tab']['slug']
-		);
-
-		// ------------------------------------
-		// オプション名取得
-		// - - - - - - - - - - - - - - - - - -
-		//   {app-slug}_{page-slug}_{opt-suffix}
-		// ------------------------------------
-
-		$option_name = Library_Utility::get_option_name(
-			$this->m_class['app']['slug'],
-			$this->m_page['menu']['slug'],
-			$this->m_page['tab']['slug']
-		);
-
-		// ------------------------------------
-		// 変数設定
-		// ------------------------------------
-
-		$this->m_page['option']['group'] = $option_group;
-		$this->m_page['option']['name'] = $option_name;
+		// オプション取得
+		$this->get_page_option();
 	}
 
   // ========================================================
