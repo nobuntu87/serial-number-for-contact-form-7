@@ -154,7 +154,7 @@ $attr_digits = array(
 	<?php $this->checkbox(
 		_FORM_OPTIONS['separator']['key'],
 		__( 'Display the delimiter "-".', _TEXT_DOMAIN ),
-		_FORM_OPTIONS['separator']['default']
+		[], _FORM_OPTIONS['separator']['default']
 	); ?>
 </p>
 
@@ -162,7 +162,7 @@ $attr_digits = array(
 	<?php $this->checkbox(
 		_FORM_OPTIONS['year2dig']['key'],
 		__( 'Omit the number of years to 2 digits.', _TEXT_DOMAIN ),
-		_FORM_OPTIONS['year2dig']['default']
+		[], _FORM_OPTIONS['year2dig']['default']
 	); ?>
 </p>
 
@@ -170,7 +170,7 @@ $attr_digits = array(
 	<?php $this->checkbox(
 		_FORM_OPTIONS['nocount']['key'],
 		__( 'Don\'t display count with unique ID.', _TEXT_DOMAIN ),
-		_FORM_OPTIONS['nocount']['default']
+		[], _FORM_OPTIONS['nocount']['default']
 	); ?>
 </p>
 
@@ -178,7 +178,7 @@ $attr_digits = array(
 	<?php $this->checkbox(
 		_FORM_OPTIONS['dayreset']['key'],
 		__( 'Use the daily reset counter.', _TEXT_DOMAIN ),
-		_FORM_OPTIONS['dayreset']['default']
+		[], _FORM_OPTIONS['dayreset']['default']
 	); ?>
 </p>
 

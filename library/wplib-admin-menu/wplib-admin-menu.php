@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_2_0;
+namespace _Nt\WpLib\AdminMenu\v2_3_0;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -1323,10 +1323,11 @@ abstract class Admin_Menu_Base {
 	 *
 	 * @param string $key キー
 	 * @param string|null $label 表示ラベル
+	 * @param mixed[] $attributes 属性設定
 	 * @param string|null $default デフォルト値
 	 * @return void
 	 */
-	protected function checkbox( $key, $label = '', $default = '' )
+	protected function checkbox( $key, $label = '', $attributes = [], $default = '' )
 	{
 		// ------------------------------------
 		// オプション設定 取得
@@ -1353,10 +1354,29 @@ abstract class Admin_Menu_Base {
 		}
 
 		// ------------------------------------
+		// 属性設定
+		// ------------------------------------
+
+		$attr = '';
+
+		// 引数チェック (NG：未定義/空/NULL)
+		if ( !empty( $attributes ) && is_array( $attributes ) ) {
+			foreach( $attributes as $attr_name => $attr_val ) {
+				$attr .= sprintf( '%s=%s '
+					, esc_attr( $attr_name )
+					, esc_attr( $attr_val )
+				);
+			}
+		}
+
+		// ------------------------------------
 		// チェック判定
 		// ------------------------------------
 
 		$check = ( 'yes' === $option_value ) ? ' checked' : '';
+
+		// 無効設定時は強制的にチェック解除
+		if ( array_key_exists( 'disabled', $attributes ) ) { $check = ''; }
 
 		// ------------------------------------
 		// エラー判定
@@ -1373,7 +1393,7 @@ abstract class Admin_Menu_Base {
 			. '  <span class="%s-form-option-input %s">'
 			. '    <span class="input-group">'
 			. '      <input type="hidden" name="%s" value="no">'
-			. '      <input type="checkbox" id="%s" name="%s" value="yes" %s>'
+			. '      <input type="checkbox" id="%s" name="%s" value="yes" %s %s>'
 			. '      <label for="%s" class="title">%s</label>'
 			. '    </span>'
 			. '    <span class="input-error">%s</span>'
@@ -1388,7 +1408,7 @@ abstract class Admin_Menu_Base {
 			, esc_attr( $option_key )
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
-			, esc_attr( $check )
+			, esc_attr( $attr ), esc_attr( $check )
 
 			, esc_attr( $option_id ), esc_html( $label )
 
@@ -1401,10 +1421,11 @@ abstract class Admin_Menu_Base {
 	 *
 	 * @param string $key キー
 	 * @param string|null $label 表示ラベル
+	 * @param mixed[] $attributes 属性設定
 	 * @param string|null $default デフォルト値
 	 * @return void
 	 */
-	protected function switch( $key, $label = '', $default = '' )
+	protected function switch( $key, $label = '', $attributes = [], $default = '' )
 	{
 		// ------------------------------------
 		// オプション設定 取得
@@ -1431,10 +1452,29 @@ abstract class Admin_Menu_Base {
 		}
 
 		// ------------------------------------
+		// 属性設定
+		// ------------------------------------
+
+		$attr = '';
+
+		// 引数チェック (NG：未定義/空/NULL)
+		if ( !empty( $attributes ) && is_array( $attributes ) ) {
+			foreach( $attributes as $attr_name => $attr_val ) {
+				$attr .= sprintf( '%s=%s '
+					, esc_attr( $attr_name )
+					, esc_attr( $attr_val )
+				);
+			}
+		}
+
+		// ------------------------------------
 		// チェック判定
 		// ------------------------------------
 
 		$check = ( 'yes' === $option_value ) ? ' checked' : '';
+
+		// 無効設定時は強制的にチェック解除
+		if ( array_key_exists( 'disabled', $attributes ) ) { $check = ''; }
 
 		// ------------------------------------
 		// エラー判定
@@ -1451,7 +1491,7 @@ abstract class Admin_Menu_Base {
 			. '  <span class="%s-form-option-input %s">'
 			. '    <span class="input-group">'
 			. '      <input type="hidden" name="%s" value="no">'
-			. '      <input type="checkbox" id="%s" name="%s" value="yes" %s>'
+			. '      <input type="checkbox" id="%s" name="%s" value="yes" %s %s>'
 			. '      <label for="%s" class="switchbox">'
 			. '        <span class="switchbox-label"></span>'
 			. '        <span class="switchbox-circle"></span>'
@@ -1470,7 +1510,7 @@ abstract class Admin_Menu_Base {
 			, esc_attr( $option_key )
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
-			, esc_attr( $check )
+			, esc_attr( $attr ), esc_attr( $check )
 
 			, esc_attr( $option_id )
 
