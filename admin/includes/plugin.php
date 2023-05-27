@@ -8,6 +8,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 class NT_WPCF7SN_Admin {
 
+  // ========================================================
+  // 初期化
+  // ========================================================
+
 	/**
 	 * プラグインの初期化を行う。
 	 *
@@ -24,45 +28,32 @@ class NT_WPCF7SN_Admin {
 		// 依存関係チェック
 		SELF::check_dependent_plugin();
 	}
-	
-	/**
-	 * プラグインのインストール処理を行う。
-	 *
-	 * @return void
-	 */
-	public static function installed_plugin()
-	{
-		// オプション初期化
-		NT_WPCF7SN::update_plugin_option( [] );
-	}
+
+   // ------------------------------------
+   // バージョン比較
+   // ------------------------------------
 
 	/**
 	* プラグインのバージョン比較処理を行う。
 	*
 	* @return void
 	*/
-	public static function compare_plugin_version()
+	private function compare_plugin_version()
 	{
 		$new_version = _VERSION;
 		$old_version = NT_WPCF7SN::get_option( 'version', '0.0.0' );
 
 		// バージョン比較
 		switch ( version_compare( $new_version, $old_version ) ) {
-			// ------------------------------------
 			// ダウングレード [ new < old ]
-			// ------------------------------------
 			case -1:
 				// 処理なし
 				break;
-			// ------------------------------------
 			// アップグレード [ new > old ]
-			// ------------------------------------
 			case 1:
 				// 処理なし
 				break;
-			// ------------------------------------
 			// 同一バージョン [ new = old ]
-			// ------------------------------------
 			default:
 				// 処理なし
 				return;
@@ -72,12 +63,16 @@ class NT_WPCF7SN_Admin {
 		NT_WPCF7SN::update_option( 'version', $new_version );
 	}
 
+   // ------------------------------------
+   // 環境チェック
+   // ------------------------------------
+
 	/**
 	 * プラグインの動作環境チェックを行う。
 	 *
 	 * @return void
 	 */
-	public static function check_system_requirements()
+	private function check_system_requirements()
 	{
 		// ------------------------------------
 		// 動作環境チェック：WordPress 要求バージョン
@@ -111,7 +106,7 @@ class NT_WPCF7SN_Admin {
 	 *
 	 * @return void
 	 */
-	public static function check_dependent_plugin()
+	private function check_dependent_plugin()
 	{
 		// ------------------------------------
 		// 依存関係チェック：Contact Form 7 プラグイン
@@ -143,6 +138,27 @@ class NT_WPCF7SN_Admin {
 				$notice_slug, '', $message, 'error'
 			);
 		}
+	}
+
+  // ========================================================
+  // WordPressフック
+  // ========================================================
+
+   // ------------------------------------
+   // アクションフック
+   // ------------------------------------
+
+	/**
+	 * プラグインのインストール処理を行う。
+	 * 
+	 * [Action Hook] activate_{$plugin}
+	 *
+	 * @return void
+	 */
+	public static function installed_plugin()
+	{
+		// オプション初期化
+		NT_WPCF7SN::update_plugin_option( [] );
 	}
 
 	/**
@@ -192,6 +208,10 @@ class NT_WPCF7SN_Admin {
 		// グローバルオプション初期化
 		Form_Option::init_global_option( strval( $matches['form_id'] ) );
 	}
+
+   // ------------------------------------
+   // フィルターフック
+   // ------------------------------------
 
 	/**
 	 * プラグインのアクションリンクを設定する。
@@ -281,5 +301,7 @@ class NT_WPCF7SN_Admin {
 
 		return $plugin_meta;
 	}
+
+  // ========================================================
 
 }
