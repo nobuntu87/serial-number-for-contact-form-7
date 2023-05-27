@@ -188,6 +188,18 @@ class Form_Option {
 		}
 
 		// ------------------------------------
+		// リセット機能チェック
+		// ------------------------------------
+
+		// リセット機能が未対応の場合
+		if ( !NT_WPCF7SN::is_working_dayreset() ) {
+
+			$option_value['daycount'] = strval( _FORM_OPTIONS['daycount']['default'] );
+			$option_value['dayreset'] = strval( _FORM_OPTIONS['dayreset']['default'] );
+
+		}
+
+		// ------------------------------------
 
 		return $option_value;
 	}

@@ -34,6 +34,18 @@ $attr_daycount = array(
 	'min' => 0,
 	'max' => 99999,
 );
+if ( !NT_WPCF7SN::is_working_dayreset() ) {
+	$attr_daycount += array(
+		'readonly' => 'readonly',
+	);
+}
+
+$is_daycount = false;
+if ( NT_WPCF7SN::is_working_dayreset() ) {
+	if ( 'yes' == $_NT_WPCF7SN['form'][$form_id]['daycount'] ) {
+		$is_daycount = true;
+	}
+}
 
 // ========================================================
 // オプション表示設定
@@ -61,6 +73,13 @@ $attr_digits = array(
 	'max' => 9,
 );
 
+$attr_dayreset = [];
+if ( !NT_WPCF7SN::is_working_dayreset() ) {
+	$attr_dayreset += array(
+		'disabled' => 'disabled',
+	);
+}
+
 // HTML表示 ================================================================ ?>
 
 <p><?php $this->hidden( 'form_id', $form_id ); ?></p>
@@ -81,7 +100,7 @@ $attr_digits = array(
 
 <h3><i class="fa-solid fa-stopwatch-20 fa-fw"></i><?php _e( 'Count', _TEXT_DOMAIN ); ?></h3>
 
-<p>
+<p class="<?php if ( $is_daycount ) { ?> hidden <?php } ?>">
 	<?php _e( 'Current Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
@@ -93,7 +112,7 @@ $attr_digits = array(
 	( <?php _e( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ); ?> )
 </p>
 
-<p>
+<p class="<?php if ( !$is_daycount ) { ?> hidden <?php } ?>">
 	<?php _e( 'Daily Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
@@ -178,8 +197,13 @@ $attr_digits = array(
 	<?php $this->checkbox(
 		_FORM_OPTIONS['dayreset']['key'],
 		__( 'Use the daily reset counter.', _TEXT_DOMAIN ),
-		[], _FORM_OPTIONS['dayreset']['default']
+		$attr_dayreset, _FORM_OPTIONS['dayreset']['default']
 	); ?>
+	<?php if ( !NT_WPCF7SN::is_working_dayreset() ) { ?><br/>
+	<span style="color:#fa514b;">
+		<?php _e( '* This feature does not work with your PHP version. ( PHP >= 5.2.0 )', _TEXT_DOMAIN ); ?>
+	</span>
+	<?php } ?>
 </p>
 
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
