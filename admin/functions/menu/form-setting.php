@@ -35,6 +35,13 @@ $attr_daycount = array(
 	'max' => 99999,
 );
 
+$is_daycount = false;
+if ( NT_WPCF7SN::is_working_dayreset() ) {
+	if ( 'yes' == $_NT_WPCF7SN['form'][$form_id]['daycount'] ) {
+		$is_daycount = true;
+	}
+}
+
 // ========================================================
 // オプション表示設定
 // ========================================================
@@ -81,7 +88,7 @@ $attr_digits = array(
 
 <h3><i class="fa-solid fa-stopwatch-20 fa-fw"></i><?php _e( 'Count', _TEXT_DOMAIN ); ?></h3>
 
-<p>
+<p class="<?php if ( $is_daycount ) { ?> hidden <?php } ?>">
 	<?php _e( 'Current Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
@@ -93,7 +100,7 @@ $attr_digits = array(
 	( <?php _e( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ); ?> )
 </p>
 
-<p>
+<p class="<?php if ( !$is_daycount ) { ?> hidden <?php } ?>">
 	<?php _e( 'Daily Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
