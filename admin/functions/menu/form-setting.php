@@ -34,6 +34,11 @@ $attr_daycount = array(
 	'min' => 0,
 	'max' => 99999,
 );
+if ( !NT_WPCF7SN::is_working_dayreset() ) {
+	$attr_daycount += array(
+		'readonly' => 'readonly',
+	);
+}
 
 $is_daycount = false;
 if ( NT_WPCF7SN::is_working_dayreset() ) {
@@ -67,6 +72,13 @@ $attr_digits = array(
 	'min' => 1,
 	'max' => 9,
 );
+
+$attr_dayreset = [];
+if ( !NT_WPCF7SN::is_working_dayreset() ) {
+	$attr_dayreset += array(
+		'disabled' => 'disabled',
+	);
+}
 
 // HTML表示 ================================================================ ?>
 
@@ -185,8 +197,13 @@ $attr_digits = array(
 	<?php $this->checkbox(
 		_FORM_OPTIONS['dayreset']['key'],
 		__( 'Use the daily reset counter.', _TEXT_DOMAIN ),
-		[], _FORM_OPTIONS['dayreset']['default']
+		$attr_dayreset, _FORM_OPTIONS['dayreset']['default']
 	); ?>
+	<?php if ( !NT_WPCF7SN::is_working_dayreset() ) { ?><br/>
+	<span style="color:#fa514b;">
+		<?php _e( '* This feature does not work with your PHP version. ( PHP >= 5.2.0 )', _TEXT_DOMAIN ); ?>
+	</span>
+	<?php } ?>
 </p>
 
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
