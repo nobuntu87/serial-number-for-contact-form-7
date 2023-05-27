@@ -369,6 +369,17 @@ ul.menu-tab-list li.menu-tab-item.now a {
 	user-select: none;
 }
 
+/* ===== デザイン ===== */
+
+.nt-wplib-admin-menu-form-option-wrap.checkbox
+.input-group input[type="checkbox"]:disabled {
+	background: #cccccc;
+}
+.nt-wplib-admin-menu-form-option-wrap.checkbox
+.input-group input[type="checkbox"]:disabled ~ .title {
+	color: #969696;
+}
+
 /* ------------------------------------
  * スイッチ
  * --------------------------------- */
@@ -469,6 +480,15 @@ ul.menu-tab-list li.menu-tab-item.now a {
 .nt-wplib-admin-menu-form-option-wrap.switch
 .input-group input[type="checkbox"]:checked + .switchbox .switchbox-label:after {
 	color: #59b300;
+}
+
+.nt-wplib-admin-menu-form-option-wrap.switch
+.input-group input[type="checkbox"]:disabled ~ .switchbox {
+	background: #cccccc;
+}
+.nt-wplib-admin-menu-form-option-wrap.switch
+.input-group input[type="checkbox"]:disabled ~ .title {
+	color: #969696;
 }
 
 /* ------------------------------------
