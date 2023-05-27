@@ -124,4 +124,86 @@ class NT_WPCF7SN {
 		update_option( $option_name, $option_value );
 	}
 
+	/**
+	 * デイリーリセット機能が動作可能か確認する。
+	 *
+	 * @return boolean 動作対応結果を返す。(true:対応/false:未対応)
+	 */
+	public static function is_working_dayreset()
+	{
+		// ------------------------------------
+		// 依存関係チェック：クラス
+		// ------------------------------------
+
+		// DateTime (PHP >= 5.2.0)
+		if ( !class_exists( 'DateTime' ) ) { return false; }
+
+		// DateTimeZone (PHP >= 5.2.0)
+		if ( !class_exists( 'DateTimeZone' ) ) { return false; }
+
+		// ------------------------------------
+
+		return true;
+	}
+
+	/**
+	 * デイリーリセットの実行チェックを行う。
+	 *
+	 * @return void
+	 */
+	public static function check_reset_count()
+	{
+		// リセット機能の動作確認
+		if ( !SELF::is_working_dayreset() ) { return; }
+
+		// ------------------------------------
+
+		$timezone = new \DateTimeZone( 'UTC' );
+
+		$datetime_format = 'Y-m-d H:i:s P';
+
+		// ------------------------------------
+		// 現在時刻 取得
+		// ------------------------------------
+
+		$now_time = new \DateTime( '', $timezone );
+
+		// ------------------------------------
+		// 最終リセット時刻 取得/判定
+		// ------------------------------------
+
+		$reset_timestamp = NT_WPCF7SN::get_option(
+			'last_dayreset_time',
+			$now_time->format( $datetime_format )
+		);
+
+		// ------------------------------------
+		// リセット基準時刻 設定
+		// ------------------------------------
+
+		$reset_basetime = new \DateTime( $reset_timestamp );
+
+		// リセット基準時刻を補正
+		$reset_basetime->setTimeZone( $timezone );
+		$reset_basetime->setTime( 0, 0 );
+
+		// ------------------------------------
+		// リセット実行 判定
+		// ------------------------------------
+
+		$reset_diff = $reset_basetime->diff( $now_time );
+
+		// 1日以上経過でリセット実行
+		if ( 1 <= intval( $reset_diff->format( '%a' ) ) ) {
+
+			Form_Option::reset_daily_mail_count();
+
+			NT_WPCF7SN::update_option(
+				'last_dayreset_time',
+				$now_time->format( $datetime_format )
+			);
+
+		}
+	}
+
 }
