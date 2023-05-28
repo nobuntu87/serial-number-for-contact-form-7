@@ -69,7 +69,7 @@ class NT_WPCF7SN {
 	*
 	* @return mixed[] オプション値を返す。
 	*/
-	private function get_plugin_option()
+	public static function get_plugin_option()
 	{
 		$option_name = sprintf( "%s_conf" , _PREFIX['_'] );
 
@@ -103,7 +103,7 @@ class NT_WPCF7SN {
 	* @param mixed[] $option_value オプション値
 	* @return void
 	*/
-	private function update_plugin_option( $option_value )
+	public static function update_plugin_option( $option_value )
 	{
 		$option_name = sprintf( "%s_conf" , _PREFIX['_'] );
 

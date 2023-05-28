@@ -225,7 +225,7 @@ class NT_WPCF7SN_Admin {
 			return;
 		}
 
-		// グローバルオプション初期化
+		// オプション初期化
 		Form_Option::init_option( strval( $matches['form_id'] ) );
 	}
 
