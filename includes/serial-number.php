@@ -12,6 +12,57 @@ class Serial_Number {
   // シリアル番号
   // ========================================================
 
+	/**
+	 * シリアル番号を取得する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @param int|string $count メールカウント
+	 * @return void
+	 */
+	public static function get_serial_number( $form_id, $count = '' )
+	{
+		$form_id = strval( $form_id );
+		$count = strval( $count );
+
+		// ------------------------------------
+		// コンタクトフォーム設定取得
+		// ------------------------------------
+
+		$form_option = Form_Option::get_option( $form_id );
+
+		// ------------------------------------
+		// メールカウント設定
+		// ------------------------------------
+
+		if ( empty( $count ) || !is_numeric( $count ) ) {
+			if ( 'yes' === $form_option['dayreset'] ) {
+				$count = strval( $form_option['daycount'] );
+			}
+			else {
+				$count = strval( $form_option['count'] );
+			}
+		}
+
+		// ------------------------------------
+		// シリアル番号生成
+		// ------------------------------------
+
+		switch( strval( $form_option['type'] ) ) {
+			case '0': // 通し番号
+				return SELF::create_snum_number( $count, $form_option );
+			case '1': // タイムスタンプ (UNIX時間)
+				return SELF::create_snum_unixtime( $count, $form_option );
+			case '2': // タイムスタンプ (年月日)
+				return SELF::create_snum_date( $count, $form_option );
+			case '3': // タイムスタンプ (年月日+時分秒)
+				return SELF::create_snum_datetime( $count, $form_option );
+			case '4': // ユニークID (英数字)
+				return SELF::create_snum_unique( $count, $form_option );
+			default:
+				return '';
+		}
+	}
+
    // ------------------------------------
    // シリアル番号生成
    // ------------------------------------
