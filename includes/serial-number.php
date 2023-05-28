@@ -53,4 +53,15 @@ class Serial_Number {
 		}
 	}
 
+	/**
+	 * タイムスタンプを取得する。
+	 *
+	 * @param string $format 表示フォーマット
+	 * @return string タイムスタンプを返す。
+	 */
+	private function get_timestamp( $format )
+	{
+		return date_i18n( $format );
+	}
+
 }
