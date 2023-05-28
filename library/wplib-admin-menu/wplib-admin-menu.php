@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_3_1;
+namespace _Nt\WpLib\AdminMenu\v2_4_0;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -183,13 +183,13 @@ abstract class Admin_Menu_Base {
 	abstract protected function add_menu();
 
 	/**
-	 * オプション値のサニタイズ処理を行う。
+	 * オプション値のバリテーション処理を行う。
 	 *
 	 * @param mixed[] $options オプション値
 	 * @param string $page_slug ページスラッグ : {menu-slug}_{tab-slug}
 	 * @return mixed[] オプション値を返す。
 	 */
-	protected function sanitize_options( $options, $page_slug )
+	protected function validate_options( $options, $page_slug )
 	{
 		return $options;
 	}
@@ -1036,12 +1036,12 @@ abstract class Admin_Menu_Base {
 		$this->set_page_option( $post_option );
 
 		// ------------------------------------
-		// サニタイズ処理
+		// バリテーション処理
 		// ------------------------------------
 
-		// サニタイズ処理 (ユーザー定義)
+		// バリテーション処理 (ユーザー定義)
 		$page_slug = $this->m_page['slug'];
-		$sanitize_option = $this->sanitize_options( $post_option, $page_slug );
+		$validate_option = $this->validate_options( $post_option, $page_slug );
 
 		// ------------------------------------
 		// オプション更新：更新実行
@@ -1050,7 +1050,7 @@ abstract class Admin_Menu_Base {
 		if ( !$this->option_error_exists() ) {
 
 			// オプション更新
-			$this->update_page_option( $sanitize_option );
+			$this->update_page_option( $validate_option );
 			
 			// 管理画面に通知
 			$notice_slug = $this->m_class['app']['slug'] . '-update-success';
