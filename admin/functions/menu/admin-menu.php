@@ -88,6 +88,56 @@ class Admin_Menu extends Admin_Menu_Base {
 	 */
 	protected function validate_options( $options, $page_slug )
 	{
+		// ------------------------------------
+		// 有効オプションキー取得
+		// ------------------------------------
+
+		$define_keys = [];
+
+		// オプション定義のキー取得
+		foreach ( _FORM_OPTIONS as $item => $option ) {
+			$define_keys[] = strval( $option['key'] );
+		}
+
+		// ------------------------------------
+		// コンタクトフォーム設定
+		// ------------------------------------
+
+		$form_id = strval( $this->get_form_id() );
+
+		$options['form_id'] = $form_id;
+
+		$options['mail_tag'] = sprintf( '[%s%s]'
+			, _MAIL_TAG_PREFIX , $form_id
+		);
+
+		// ------------------------------------
+		// オプション値検証
+		// ------------------------------------
+
+		foreach( $options as $key => $value ) {
+			// ------------------------------------
+			// 有効オプション
+			// ------------------------------------
+			if ( in_array( $key, $define_keys ) ) {
+				// オプション値を検証
+				$message = '';
+				if ( !Form_Validate::validate_option( $key, $value, $message ) ) {
+					// エラーメッセージ登録
+					$this->add_option_error( $key, $message );
+				}
+			}
+			// ------------------------------------
+			// 無効オプション
+			// ------------------------------------
+			else {
+				// 未定義の設定項目を削除
+				unset( $options[$key] );
+			}
+		}
+
+		// ------------------------------------
+
 		return $options;
 	}
 
