@@ -129,6 +129,12 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 
 <p><?php $this->submit( __( 'Change', _TEXT_DOMAIN ) ); ?></p>
 
+<p>
+	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
+		, Serial_Number::get_serial_number( $form_id )
+	) ); ?>
+</p>
+
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
 <h3><i class="fa-solid fa-sliders fa-fw"></i><?php _e( 'Setting', _TEXT_DOMAIN ); ?></h3>
@@ -209,5 +215,11 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
 <p><?php $this->submit( __( 'Settings', _TEXT_DOMAIN ) ); ?></p>
+
+<p>
+	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
+		, Serial_Number::get_serial_number( $form_id )
+	) ); ?>
+</p>
 
 <?php // ======================================================================
