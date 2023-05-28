@@ -437,4 +437,95 @@ class Form_Option {
 
 class Form_Validate {
 
+  // ========================================================
+  // オプション値検証
+  // ========================================================
+
+	/**
+	 * オプション値の検証を行う。
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @param string|null $message エラーメッセージ
+	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
+	 */
+	public static function validate_option( $key, $value, &$message = null )
+	{
+		$validity = true;
+
+		// ------------------------------------
+		// 入力パターン検証
+		// ------------------------------------
+
+		if ( !SELF::is_match_pattern( strval( $key ), $value ) ) {
+			$validity = false;
+		}
+
+		// ------------------------------------
+		// エラーメッセージ登録
+		// ------------------------------------
+
+		if ( !$validity ) {
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+			);
+		}
+
+		// ------------------------------------
+		// 個別オプション値検証
+		// ------------------------------------
+
+		$valid_func = sprintf( '%s\Form_Validate::validate_%s'
+			, __NAMESPACE__ , strval( $key )
+		);
+
+		if ( Utility::function_exists( $valid_func ) ) {
+			if ( !$valid_func( $value, $message ) ) {
+				$validity = false;
+			}
+		}
+
+		// ------------------------------------
+
+		return $validity;
+	}
+
+  // ========================================================
+
+	/**
+	 * 正規表現パターンと一致するかチェックする。
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @return boolean チェック結果を返す。(true:一致/false:不一致)
+	 */
+	private function is_match_pattern( $key, $value )
+	{
+		$pattern = '';
+
+		// ------------------------------------
+		// 正規表現パターン取得
+		// ------------------------------------
+
+		foreach ( _FORM_OPTIONS as $item => $option ) {
+			if ( $option['key'] === strval( $key ) ) {
+				$pattern = '/' . $option['pattern'] . '/';
+			}
+		}
+
+		if ( empty( $pattern ) ) { return false; }
+
+		// ------------------------------------
+		// 正規表現マッチング
+		// ------------------------------------
+
+		if ( 1 === preg_match( $pattern, $value ) ) {
+			return true;
+		}
+
+		// ------------------------------------
+
+		return false;
+	}
+
 }
