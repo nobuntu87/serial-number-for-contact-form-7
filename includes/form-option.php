@@ -46,6 +46,22 @@ class Form_Option {
 		}
 
 		// ------------------------------------
+		// コンタクトフォーム設定のバリテーション
+		// ------------------------------------
+
+		foreach ( SELF::get_options() as $form_id => $form_option ) {
+
+			$form_id = strval( $form_id );
+			$option_value = SELF::check_option_validity( $form_id, $form_option );
+
+			// 変更がある場合は更新
+			if ( $form_option !== $option_value ) {
+				SELF::update_option( $form_id, $option_value );
+			}
+
+		}
+
+		// ------------------------------------
 		// グローバルオプション設定
 		// ------------------------------------
 
@@ -62,6 +78,12 @@ class Form_Option {
 	{
 		// ------------------------------------
 		// コンタクトフォーム設定の整合性チェック
+		// ------------------------------------
+
+		// 処理不要
+
+		// ------------------------------------
+		// コンタクトフォーム設定のバリテーション
 		// ------------------------------------
 
 		// 処理不要
@@ -196,6 +218,47 @@ class Form_Option {
 			$option_value['daycount'] = strval( _FORM_OPTIONS['daycount']['default'] );
 			$option_value['dayreset'] = strval( _FORM_OPTIONS['dayreset']['default'] );
 
+		}
+
+		// ------------------------------------
+
+		return $option_value;
+	}
+
+
+   // ------------------------------------
+   // バリテーション
+   // ------------------------------------
+
+	/**
+	 * コンタクトフォーム設定値の妥当性チェックを行う。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @param mixed[] $option_value オプション値
+	 * @return void mixed[] コンタクトフォーム設定値を返す。
+	 */
+	private function check_option_validity( $form_id, $option_value )
+	{
+		$form_id = strval( $form_id );
+
+		$default_value = SELF::get_default_value( $form_id );
+
+		// ------------------------------------
+		// コンタクトフォーム設定
+		// ------------------------------------
+
+		$option_value['form_id'] = $default_value['form_id'];
+
+		$option_value['mail_tag'] = $default_value['mail_tag'];
+
+		// ------------------------------------
+		// オプション値検証
+		// ------------------------------------
+
+		foreach ( $option_value as $key => $value ) {
+			if ( !Form_Validate::validate_option( $key, $value ) ) {
+				$option_value[$key] = $default_value[$key];
+			}
 		}
 
 		// ------------------------------------
