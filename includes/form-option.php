@@ -14,8 +14,12 @@ $_NT_WPCF7SN['form'] = [];
 
 class Form_Option {
 
+  // ========================================================
+  // 初期化
+  // ========================================================
+
 	/**
-	 * コンタクトフォーム設定の初期化を行う。
+	 * コンタクトフォーム設定の初期化を行う。(全数)
 	 *
 	 * @return void
 	 */
@@ -25,15 +29,14 @@ class Form_Option {
 		// コンタクトフォーム設定の整合性チェック
 		// ------------------------------------
 
+		// 全体の設定チェック
 		SELF::check_options_integrity();
 
-		// ------------------------------------
-		// コンタクトフォーム設定値の整合性チェック
-		// ------------------------------------
+		// 個別の設定チェック
+		foreach ( SELF::get_options() as $form_id => $form_option ) {
 
-		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
-
-			$option_value = SELF::check_option_value_integrity( $form_option );
+			$form_id = strval( $form_id );
+			$option_value = SELF::check_option_integrity( $form_option );
 
 			// 変更がある場合は更新
 			if ( $form_option !== $option_value ) {
@@ -50,40 +53,36 @@ class Form_Option {
 	}
 
 	/**
-	 * グローバルオプションの初期化を行う。
-	 *
-	 * @return void
-	 */
-	public static function init_global_options()
-	{
-		$GLOBALS['_NT_WPCF7SN']['form'] = [];
-		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
-			SELF::init_global_option( strval( $wpcf7_post->ID ) );
-		}
-	}
-
-	/**
-	 * グローバルオプションの初期化を行う。
+	 * コンタクトフォーム設定の初期化を行う。
 	 *
 	 * @param int|string $form_id コンタクトフォームID
 	 * @return void
 	 */
-	public static function init_global_option( $form_id )
+	public static function init_option( $form_id )
 	{
-		$form_id = strval( $form_id );
+		// ------------------------------------
+		// コンタクトフォーム設定の整合性チェック
+		// ------------------------------------
 
-		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = Utility::array_update(
-			SELF::get_default_value( $form_id ),
-			SELF::get_option( $form_id )
-		);
+		// 処理不要
+
+		// ------------------------------------
+		// グローバルオプション設定
+		// ------------------------------------
+
+		SELF::init_global_option( strval( $form_id ) );
 	}
+
+   // ------------------------------------
+   // 整合性チェック
+   // ------------------------------------
 
 	/**
 	 * コンタクトフォーム設定の整合性チェックを行う。(全数)
 	 *
 	 * @return void
 	 */
-	public static function check_options_integrity()
+	private function check_options_integrity()
 	{
 		// ------------------------------------
 		// コンタクトフォームID取得
@@ -97,7 +96,7 @@ class Form_Option {
 
 		// [SerialNumber] コンタクトフォームID取得
 		$wpcf7sn_form_ids = [];
-		foreach ( SELF::get_all_options() as $form_option ) {
+		foreach ( SELF::get_options() as $form_option ) {
 			$wpcf7sn_form_ids[] = strval( $form_option['form_id'] );
 		}
 
@@ -141,7 +140,7 @@ class Form_Option {
 	 * @param mixed[] $option_value オプション値
 	 * @return void mixed[] コンタクトフォーム設定値を返す。
 	 */
-	public static function check_option_value_integrity( $option_value )
+	private function check_option_integrity( $option_value )
 	{
 		if ( !is_array( $option_value ) ) { return []; }
 
@@ -204,12 +203,50 @@ class Form_Option {
 		return $option_value;
 	}
 
+   // ------------------------------------
+   // グローバルオプション
+   // ------------------------------------
+
+	/**
+	 * グローバルオプションの初期化を行う。(全数)
+	 *
+	 * @return void
+	 */
+	private function init_global_options()
+	{
+		$GLOBALS['_NT_WPCF7SN']['form'] = [];
+		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
+			SELF::init_global_option( strval( $wpcf7_post->ID ) );
+		}
+	}
+
+	/**
+	 * グローバルオプションの初期化を行う。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return void
+	 */
+	private function init_global_option( $form_id )
+	{
+		$form_id = strval( $form_id );
+
+		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = [];
+		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = Utility::array_update(
+			SELF::get_default_value( $form_id ),
+			SELF::get_option( $form_id )
+		);
+	}
+
+  // ========================================================
+  // コンタクトフォーム設定
+  // ========================================================
+
 	/**
 	 * コンタクトフォーム設定を取得する。(全数)
 	 *
 	 * @return void mixed[] コンタクトフォーム設定を返す。
 	 */
-	public static function get_all_options()
+	public static function get_options()
 	{
 		$form_options = [];
 
@@ -259,34 +296,6 @@ class Form_Option {
 		// ------------------------------------
 
 		return $form_options;
-	}
-
-	/**
-	 * コンタクトフォーム設定の既定値を取得する。
-	 *
-	 * @param int|string $form_id コンタクトフォームID
-	 * @return void mixed[] コンタクトフォーム設定値を返す。
-	 */
-	public static function get_default_value( $form_id )
-	{
-		$form_id = strval( $form_id );
-
-		$default_value = [];
-
-		// 定義から既定値を生成
-		foreach ( _FORM_OPTIONS as $item => $option ) {
-			$default_value += array(
-				strval( $option['key'] ) => strval( $option['default'] )
-			);
-		}
-
-		$default_value['form_id'] = $form_id;
-
-		$default_value['mail_tag'] = sprintf( '[%s%s]'
-			, _MAIL_TAG_PREFIX , $form_id
-		);
-
-		return $default_value;
 	}
 
 	/**
@@ -342,6 +351,40 @@ class Form_Option {
 		);
 	}
 
+   // ------------------------------------
+
+	/**
+	 * コンタクトフォーム設定の既定値を取得する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return void mixed[] コンタクトフォーム設定値を返す。
+	 */
+	private function get_default_value( $form_id )
+	{
+		$form_id = strval( $form_id );
+
+		$default_value = [];
+
+		// 定義から既定値を生成
+		foreach ( _FORM_OPTIONS as $item => $option ) {
+			$default_value += array(
+				strval( $option['key'] ) => strval( $option['default'] )
+			);
+		}
+
+		$default_value['form_id'] = $form_id;
+
+		$default_value['mail_tag'] = sprintf( '[%s%s]'
+			, _MAIL_TAG_PREFIX , $form_id
+		);
+
+		return $default_value;
+	}
+
+  // ========================================================
+  // メールカウント
+  // ========================================================
+
 	/**
 	 * メールカウントを増加する。
 	 *
@@ -361,9 +404,6 @@ class Form_Option {
 
 		// コンタクトフォーム設定更新
 		SELF::update_option( $form_id, $form_option );
-
-		// グローバルオプション更新
-		SELF::init_global_option( $form_id );
 	}
 
 	/**
@@ -385,9 +425,8 @@ class Form_Option {
 			SELF::update_option( $form_id, $form_option );
 
 		}
-
-		// グローバルオプション更新
-		SELF::init_global_options();
 	}
+
+  // ========================================================
 
 }
