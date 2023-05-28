@@ -37,4 +37,20 @@ class Serial_Number {
 		return strval( $unique_id );
 	}
 
+	/**
+	 * 数値の表示桁数を変換する。
+	 *
+	 * @param int|string $number 数値
+	 * @param int|string $digits 表示桁数
+	 * @return string 数値の文字列を返す。
+	 */
+	private function convert_num_digits( $number, $digits )
+	{
+		if ( intval( $digits ) > 0 ) {
+			return sprintf( '%0' . strval( $digits ) . 'd', intval( $number ) );
+		} else {
+			return sprintf( '%d', intval( $number ) );
+		}
+	}
+
 }
