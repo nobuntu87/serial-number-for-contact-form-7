@@ -196,4 +196,35 @@ class Utility {
 		return $dst;
 	}
 
+	/**
+	 * 関数が存在するかチェックする。
+	 *
+	 * @param string $function 関数名の文字列 : {function} / {class}::{function}
+	 * @return boolean チェック結果を返す。(true:有り/false:無し)
+	 */
+	public static function function_exists( $function )
+	{
+		// ------------------------------------
+		// function_exists
+		// ------------------------------------
+
+		$pattern = '/^(?P<function>[^:\/\\\]+)$/';
+		if ( 1 === preg_match( $pattern, $function, $matches ) ) {
+			return function_exists( $matches['function'] );
+		}
+
+		// ------------------------------------
+		// method_exists
+		// ------------------------------------
+		
+		$pattern = '/^(?P<class>.+)::(?P<function>.+)$/';
+		if ( 1 === preg_match( $pattern, $function, $matches ) ) {
+			return method_exists( $matches['class'], $matches['function'] );
+		}
+
+		// ------------------------------------
+
+		return false;
+	}
+
 }

@@ -46,6 +46,22 @@ class Form_Option {
 		}
 
 		// ------------------------------------
+		// コンタクトフォーム設定のバリテーション
+		// ------------------------------------
+
+		foreach ( SELF::get_options() as $form_id => $form_option ) {
+
+			$form_id = strval( $form_id );
+			$option_value = SELF::check_option_validity( $form_id, $form_option );
+
+			// 変更がある場合は更新
+			if ( $form_option !== $option_value ) {
+				SELF::update_option( $form_id, $option_value );
+			}
+
+		}
+
+		// ------------------------------------
 		// グローバルオプション設定
 		// ------------------------------------
 
@@ -62,6 +78,12 @@ class Form_Option {
 	{
 		// ------------------------------------
 		// コンタクトフォーム設定の整合性チェック
+		// ------------------------------------
+
+		// 処理不要
+
+		// ------------------------------------
+		// コンタクトフォーム設定のバリテーション
 		// ------------------------------------
 
 		// 処理不要
@@ -196,6 +218,47 @@ class Form_Option {
 			$option_value['daycount'] = strval( _FORM_OPTIONS['daycount']['default'] );
 			$option_value['dayreset'] = strval( _FORM_OPTIONS['dayreset']['default'] );
 
+		}
+
+		// ------------------------------------
+
+		return $option_value;
+	}
+
+
+   // ------------------------------------
+   // バリテーション
+   // ------------------------------------
+
+	/**
+	 * コンタクトフォーム設定値の妥当性チェックを行う。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @param mixed[] $option_value オプション値
+	 * @return void mixed[] コンタクトフォーム設定値を返す。
+	 */
+	private function check_option_validity( $form_id, $option_value )
+	{
+		$form_id = strval( $form_id );
+
+		$default_value = SELF::get_default_value( $form_id );
+
+		// ------------------------------------
+		// コンタクトフォーム設定
+		// ------------------------------------
+
+		$option_value['form_id'] = $default_value['form_id'];
+
+		$option_value['mail_tag'] = $default_value['mail_tag'];
+
+		// ------------------------------------
+		// オプション値検証
+		// ------------------------------------
+
+		foreach ( $option_value as $key => $value ) {
+			if ( !Form_Validate::validate_option( $key, $value ) ) {
+				$option_value[$key] = $default_value[$key];
+			}
 		}
 
 		// ------------------------------------
@@ -425,6 +488,262 @@ class Form_Option {
 			SELF::update_option( $form_id, $form_option );
 
 		}
+	}
+
+  // ========================================================
+
+}
+
+// ============================================================================
+// コンタクトフォーム設定検証クラス：Form_Validate
+// ============================================================================
+
+class Form_Validate {
+
+  // ========================================================
+  // オプション値検証
+  // ========================================================
+
+	/**
+	 * オプション値の検証を行う。
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @param string|null $message エラーメッセージ
+	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
+	 */
+	public static function validate_option( $key, $value, &$message = null )
+	{
+		$validity = true;
+
+		// ------------------------------------
+		// 入力パターン検証
+		// ------------------------------------
+
+		if ( !SELF::is_match_pattern( strval( $key ), $value ) ) {
+			$validity = false;
+		}
+
+		// ------------------------------------
+		// エラーメッセージ登録
+		// ------------------------------------
+
+		if ( !$validity ) {
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+			);
+		}
+
+		// ------------------------------------
+		// 個別オプション値検証
+		// ------------------------------------
+
+		$valid_func = sprintf( '%s\Form_Validate::validate_%s'
+			, __NAMESPACE__ , strval( $key )
+		);
+
+		if ( Utility::function_exists( $valid_func ) ) {
+			if ( !$valid_func( $value, $message ) ) {
+				$validity = false;
+			}
+		}
+
+		// ------------------------------------
+
+		return $validity;
+	}
+
+   // ------------------------------------
+   // 個別オプション検証
+   // ------------------------------------
+
+	/**
+	 * オプション値の検証を行う。(プレフィックス)
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @param string|null $message エラーメッセージ
+	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
+	 */
+	public static function validate_prefix( $value, &$message = null )
+	{
+		$validity = empty( $message ) ? true : false ;
+
+		// ------------------------------------
+		// 入力パターン検証
+		// ------------------------------------
+
+		if ( $validity ) {
+			if ( !SELF::is_match_pattern( 'prefix', $value ) ) {
+				$validity = false;
+			}
+		}
+
+		// ------------------------------------
+		// エラーメッセージ登録
+		// ------------------------------------
+
+		if ( !$validity ) {
+			$message = sprintf( ''
+				. __( 'Contains invalid characters or Too many characters.', _TEXT_DOMAIN )
+			);
+		}
+
+		// ------------------------------------
+
+		return $validity;
+	}
+
+	/**
+	 * オプション値の検証を行う。(表示桁数)
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @param string|null $message エラーメッセージ
+	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
+	 */
+	public static function validate_digits( $value, &$message = null )
+	{
+		$validity = empty( $message ) ? true : false ;
+
+		// ------------------------------------
+		// 入力パターン検証
+		// ------------------------------------
+
+		if ( $validity ) {
+			if ( !SELF::is_match_pattern( 'digits', $value ) ) {
+				$validity = false;
+			}
+		}
+
+		// ------------------------------------
+		// エラーメッセージ登録
+		// ------------------------------------
+
+		if ( !$validity ) {
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ( ' . __( '1 digit integer. 1~9', _TEXT_DOMAIN ) . ' )'
+			);
+		}
+
+		// ------------------------------------
+
+		return $validity;
+	}
+
+	/**
+	 * オプション値の検証を行う。(メールカウント)
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @param string|null $message エラーメッセージ
+	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
+	 */
+	public static function validate_count( $value, &$message = null )
+	{
+		$validity = empty( $message ) ? true : false ;
+
+		// ------------------------------------
+		// 入力パターン検証
+		// ------------------------------------
+
+		if ( $validity ) {
+			if ( !SELF::is_match_pattern( 'count', $value ) ) {
+				$validity = false;
+			}
+		}
+
+		// ------------------------------------
+		// エラーメッセージ登録
+		// ------------------------------------
+
+		if ( !$validity ) {
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ( ' . __( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ) . ' )'
+			);
+		}
+
+		// ------------------------------------
+
+		return $validity;
+	}
+
+	/**
+	 * オプション値の検証を行う。(デイリーカウント)
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @param string|null $message エラーメッセージ
+	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
+	 */
+	public static function validate_daycount( $value, &$message = null )
+	{
+		$validity = empty( $message ) ? true : false ;
+
+		// ------------------------------------
+		// 入力パターン検証
+		// ------------------------------------
+
+		if ( $validity ) {
+			if ( !SELF::is_match_pattern( 'daycount', $value ) ) {
+				$validity = false;
+			}
+		}
+
+		// ------------------------------------
+		// エラーメッセージ登録
+		// ------------------------------------
+
+		if ( !$validity ) {
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ( ' . __( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ) . ' )'
+			);
+		}
+
+		// ------------------------------------
+
+		return $validity;
+	}
+
+  // ========================================================
+
+	/**
+	 * 正規表現パターンと一致するかチェックする。
+	 *
+	 * @param string $key オプションキー
+	 * @param mixed $value オプション値
+	 * @return boolean チェック結果を返す。(true:一致/false:不一致)
+	 */
+	private function is_match_pattern( $key, $value )
+	{
+		$pattern = '';
+
+		// ------------------------------------
+		// 正規表現パターン取得
+		// ------------------------------------
+
+		foreach ( _FORM_OPTIONS as $item => $option ) {
+			if ( $option['key'] === strval( $key ) ) {
+				$pattern = '/' . $option['pattern'] . '/';
+			}
+		}
+
+		if ( empty( $pattern ) ) { return false; }
+
+		// ------------------------------------
+		// 正規表現マッチング
+		// ------------------------------------
+
+		if ( 1 === preg_match( $pattern, $value ) ) {
+			return true;
+		}
+
+		// ------------------------------------
+
+		return false;
 	}
 
   // ========================================================
