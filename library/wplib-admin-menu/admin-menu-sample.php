@@ -12,7 +12,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 // (2) 管理メニュークラスを作成
 //    (2-A) 必須：メニュー/タブの追加 [add_menu()]
 //        ・詳細は関数サンプルコードを参照
-//    (2-B) 推奨：サニタイズ処理の実装 [sanitize_options()]
+//    (2-B) 推奨：バリテーション処理の実装 [validate_options()]
 //        ・詳細は関数サンプルコードを参照
 //    (3-B) 任意：表示許可HTMLの追加 [add_allowed_html()]
 //        ・詳細は関数サンプルコードを参照
@@ -287,18 +287,18 @@ class App_Prefix_Admin_Menu extends Nt_WpLib_Admin_Menu {
 	}
 
 	/**
-	 * オプション値のサニタイズ処理を行う。
+	 * オプション値のバリテーション処理を行う。
 	 *
 	 * @param mixed[] $options オプション値
 	 * @param string $page_slug ページスラッグ : {menu-slug}_{tab-slug}
 	 * @return mixed[] オプション値を返す。
 	 */
-	protected function sanitize_options( $options, $page_slug )
+	protected function validate_options( $options, $page_slug )
 	{
 		// ========================================================
-		// サニタイズ処理の使用方法
+		// バリテーション処理の使用方法
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		// (1) オプション項目毎にサニタイズ処理を行う
+		// (1) オプション項目毎にバリテーション処理を行う
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// (2) オプションエラーの登録を行う [add_option_error()]
 		// ========================================================
@@ -308,10 +308,10 @@ class App_Prefix_Admin_Menu extends Nt_WpLib_Admin_Menu {
 				case 'checkbox_1' :
 					// オプションエラー登録
 					$this->add_option_error( $key, 'ERROR MESSAGE !!' );
-					// サニタイズ処理
+					// バリテーション処理
 					break;
 				case 'number_1' :
-					// サニタイズ処理
+					// バリテーション処理
 					break;
 				default:
 					// 未定義の設定項目を削除

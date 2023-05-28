@@ -76,17 +76,17 @@ class Admin_Menu extends Admin_Menu_Base {
 	}
 
   // ========================================================
-  // サニタイズ設定
+  // バリテーション設定
   // ========================================================
 
 	/**
-	 * オプション値のサニタイズ処理を行う。
+	 * オプション値のバリテーション処理を行う。
 	 *
 	 * @param mixed[] $options オプション値
 	 * @param string $page_slug ページスラッグ : {menu-slug}_{tab-slug}
 	 * @return mixed[] オプション値を返す。
 	 */
-	protected function sanitize_options( $options, $page_slug )
+	protected function validate_options( $options, $page_slug )
 	{
 		return $options;
 	}
