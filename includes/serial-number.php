@@ -8,6 +8,119 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 class Serial_Number {
 
+  // ========================================================
+  // シリアル番号
+  // ========================================================
+
+   // ------------------------------------
+   // シリアル番号生成
+   // ------------------------------------
+
+	/**
+	 * シリアル番号を生成する。(通し番号)
+	 *
+	 * @param int|string $count メールカウント
+	 * @param mixed[] $option_value オプション値
+	 * @return string シリアル番号を返す。
+	 */
+	private function create_snum_number( $count, $option_value )
+	{
+		$digits = $option_value['digits'];
+
+		return sprintf( '%s'
+			, SELF::convert_num_digits( $count, $digits )
+		);
+	}
+
+	/**
+	 * シリアル番号を生成する。(UNIX時間)
+	 *
+	 * @param int|string $count メールカウント
+	 * @param mixed[] $option_value オプション値
+	 * @return string シリアル番号を返す。
+	 */
+	private function create_snum_unixtime( $count, $option_value )
+	{
+		$separator = $option_value['separator'] === 'yes' ? '-' : '';
+		$digits = $option_value['digits'];
+
+		return sprintf( '%s%s%s'
+			, SELF::get_timestamp( 'U' )
+			, $separator
+			, SELF::convert_num_digits( $count, $digits )
+		);
+	}
+
+	/**
+	 * シリアル番号を生成する。(年月日)
+	 *
+	 * @param int|string $count メールカウント
+	 * @param mixed[] $option_value オプション値
+	 * @return string シリアル番号を返す。
+	 */
+	private function create_snum_date( $count, $option_value )
+	{
+		$separator = $option_value['separator'] === 'yes' ? '-' : '';
+		$digits = $option_value['digits'];
+		$format = $option_value['year2dig'] === 'yes' ? 'ymd' : 'Ymd';
+
+		return sprintf( '%s%s%s'
+			, SELF::get_timestamp( $format )
+			, $separator
+			, SELF::convert_num_digits( $count, $digits )
+		);
+	}
+
+	/**
+	 * シリアル番号を生成する。(年月日+時分秒)
+	 *
+	 * @param int|string $count メールカウント
+	 * @param mixed[] $option_value オプション値
+	 * @return string シリアル番号を返す。
+	 */
+	private function create_snum_datetime( $count, $option_value )
+	{
+		$separator = $option_value['separator'] === 'yes' ? '-' : '';
+		$digits = $option_value['digits'];
+		$format = $option_value['year2dig'] === 'yes' ? 'ymd' : 'Ymd';
+
+		return sprintf( '%s%s%s%s%s'
+			, SELF::get_timestamp( $format )
+			, $separator
+			, SELF::get_timestamp( 'His' )
+			, $separator
+			, SELF::convert_num_digits( $count, $digits )
+		);
+	}
+
+	/**
+	 * シリアル番号を生成する。(ユニークID)
+	 *
+	 * @param int|string $count メールカウント
+	 * @param mixed[] $option_value オプション値
+	 * @return string シリアル番号を返す。
+	 */
+	private function create_snum_unique( $count, $option_value )
+	{
+		$separator = $option_value['separator'] === 'yes' ? '-' : '';
+		$digits = $option_value['digits'];
+
+		if ( $option_value['nocount'] === 'yes' ) {
+			return sprintf( '%s'
+				, SELF::create_unique_id( $count )
+			);
+		}
+		else {
+			return sprintf( '%s%s%s'
+				, SELF::create_unique_id( $count )
+				, $separator
+				, SELF::convert_num_digits( $count, $digits )
+			);
+		}
+	}
+
+  // ========================================================
+
 	/**
 	 * ユニークIDを生成する。
 	 *
@@ -63,5 +176,7 @@ class Serial_Number {
 	{
 		return date_i18n( $format );
 	}
+
+  // ========================================================
 
 }
