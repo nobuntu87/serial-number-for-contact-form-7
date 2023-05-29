@@ -74,3 +74,15 @@ add_filter(
 	__NAMESPACE__ . '\Mail_Tag::convert_mail_tags',
 	11, 2
 );
+
+// [ContactForm7] REST API
+add_filter(
+	'wpcf7_refill_response',
+	__NAMESPACE__ . '\DOM_Api::set_dom_api_response',
+	11, 1
+);
+add_filter(
+	'wpcf7_feedback_response',
+	__NAMESPACE__ . '\DOM_Api::set_dom_api_response',
+	11, 1
+);
