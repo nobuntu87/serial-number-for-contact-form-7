@@ -449,6 +449,29 @@ class Form_Option {
   // ========================================================
 
 	/**
+	 * メールカウントを取得する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return string メールカウント数を返す。
+	 */
+	public static function get_mail_count( $form_id )
+	{
+		$form_id = strval( $form_id );
+
+		// コンタクトフォーム設定取得
+		$form_option = SELF::get_option( $form_id );
+
+		// デイリーカウント取得
+		if ( 'yes' === $form_option['dayreset'] ) {
+			return strval( $form_option['daycount'] );
+		}
+		// メールカウント取得
+		else {
+			return strval( $form_option['count'] );
+		}
+	}
+
+	/**
 	 * メールカウントを増加する。
 	 *
 	 * @param int|string $form_id コンタクトフォームID
