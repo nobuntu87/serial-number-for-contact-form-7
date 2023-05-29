@@ -35,12 +35,7 @@ class Serial_Number {
 		// ------------------------------------
 
 		if ( empty( $count ) || !is_numeric( $count ) ) {
-			if ( 'yes' === $form_option['dayreset'] ) {
-				$count = strval( $form_option['daycount'] );
-			}
-			else {
-				$count = strval( $form_option['count'] );
-			}
+			$count = strval( Form_Option::get_mail_count( $form_id ) );
 		}
 
 		// ------------------------------------

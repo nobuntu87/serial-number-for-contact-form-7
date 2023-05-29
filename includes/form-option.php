@@ -170,7 +170,7 @@ class Form_Option {
 		// オプションキー取得
 		// ------------------------------------
 		
-		// [ContactForm7] オプション定義キー取得
+		// オプション定義のキー取得
 		$define_keys = [];
 		foreach ( _FORM_OPTIONS as $item => $option ) {
 			$define_keys[] = strval( $option['key'] );
@@ -500,7 +500,7 @@ class Form_Option {
 	public static function reset_daily_mail_count()
 	{
 		// コンタクトフォーム設定取得
-		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
+		foreach ( SELF::get_options() as $form_id => $form_option ) {
 
 			$form_id = strval( $form_id );
 
