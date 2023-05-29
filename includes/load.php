@@ -37,7 +37,7 @@ require_once( _INCLUDE_DIR . '/form-option.php' );
 require_once( _FUNCTION_DIR . '/serial-number.php' );
 require_once( _FUNCTION_DIR . '/submission.php' );
 require_once( _FUNCTION_DIR . '/mail-tag.php' );
-require_once( _FUNCTION_DIR . '/dom-api.php' );
+require_once( _FUNCTION_DIR . '/rest-api.php' );
 
 // ------------------------------------
 // 管理ファイル

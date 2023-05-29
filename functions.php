@@ -78,11 +78,11 @@ add_filter(
 // [ContactForm7] REST API
 add_filter(
 	'wpcf7_refill_response',
-	__NAMESPACE__ . '\DOM_Api::set_dom_api_response',
+	__NAMESPACE__ . '\REST_Controller::set_dom_api_response',
 	11, 1
 );
 add_filter(
 	'wpcf7_feedback_response',
-	__NAMESPACE__ . '\DOM_Api::set_dom_api_response',
+	__NAMESPACE__ . '\REST_Controller::set_dom_api_response',
 	11, 1
 );
