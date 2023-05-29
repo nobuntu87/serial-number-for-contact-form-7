@@ -1,38 +1,24 @@
 <?php
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
+if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
-/**
- * プラグインの削除を行う。
- * 
- * プラグイン関連のオプションを削除する。
- *
- * @return void
- */
-function nt_wpcf7sn_delete_plugin() {
-	global $wpdb;
+$prefix = 'nt_wpcf7sn';
 
-	// プラグインのオプションを削除
-	delete_option( 'nt_wpcf7sn' );
+// ------------------------------------
+// 関連データベース削除
+// ------------------------------------
 
-	// コンタクトフォームのオプションを削除
-	$options = $wpdb->get_results( "
-		SELECT *
-		  FROM $wpdb->options
-		WHERE 1 = 1
-		  option_name like 'nt_wpcf7sn_%'
-		ORDER BY option_name
-	" );
+global $wpdb;
 
-	if ( empty( $options ) ) {
-		return;
+$wpdb_options = $wpdb->get_results( sprintf( ''
+	. 'SELECT * FROM %s'
+	. '  WHERE 1 = 1 AND option_name like \'%s_%%\''
+	. '  ORDER BY option_name'
+	, $wpdb->options
+	, $prefix
+), ARRAY_A );
+
+if ( is_array( $wpdb_options ) ) {
+	foreach( $wpdb_options as $wpdb_option ) {
+		delete_option( $wpdb_option['option_name'] );
 	}
-
-	foreach ( $options as $option ) {
-		delete_option( $option->option_name );
-	}
-}
-
-
-if ( ! defined( 'NT_WPCF7SN_VERSION' ) ) {
-	nt_wpcf7sn_delete_plugin();
 }
