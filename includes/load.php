@@ -34,6 +34,7 @@ require_once( _INCLUDE_DIR . '/plugin.php' );
 require_once( _INCLUDE_DIR . '/form-option.php' );
 require_once( _INCLUDE_DIR . '/serial-number.php' );
 require_once( _INCLUDE_DIR . '/submission.php' );
+require_once( _INCLUDE_DIR . '/mail-tag.php' );
 
 // ------------------------------------
 // 管理ファイル

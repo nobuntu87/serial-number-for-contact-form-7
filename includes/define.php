@@ -57,6 +57,8 @@ define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' 
 
 define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number_' );
 
+define( __NAMESPACE__ . '\_MAIL_TAG_REGEX', '/^' . _MAIL_TAG_PREFIX . '(?P<form_id>\d+)$/' );
+
 define( __NAMESPACE__ . '\_POST_FIELD', 'serial-number' );
 
 define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
