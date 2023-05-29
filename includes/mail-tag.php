@@ -8,6 +8,19 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 class Mail_Tag {
 
+	/**
+	 * シリアル番号のメールタグを取得する
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return string
+	 */
+	public static function get_sn_mail_tag( $form_id )
+	{
+		return sprintf( '[%s%s]'
+			, _MAIL_TAG_PREFIX , strval( $form_id )
+		);
+	}
+
   // ========================================================
   // Contact Form 7 プラグインフック設定
   // ========================================================
