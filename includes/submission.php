@@ -107,7 +107,8 @@ class Submission {
 			// ------------------------------------
 
 			$message .= sprintf( '' 
-				.'( 受付番号 : %s )', $serial_num
+				. '( ' . __( 'Receipt No', _TEXT_DOMAIN ) . ' : %s )'
+				, strval( $serial_num )
 			);
 
 		}
