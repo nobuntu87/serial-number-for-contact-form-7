@@ -99,8 +99,8 @@ class Submission {
 			if ( !$submission ) { return $message; }
 
 			// コンタクトフォーム設定取得 (シリアル番号)
-			$serial_num = $submission->get_posted_data( _POST_FIELD );
-			if ( empty( $serial_num ) ) { return $message; }
+			$serial_num = strval( $submission->get_posted_data( _POST_FIELD ) );
+			if ( empty( $serial_num ) ) { return $output; }
 
 			// ------------------------------------
 			// 表示メッセージ設定
@@ -108,7 +108,7 @@ class Submission {
 
 			$message .= sprintf( '' 
 				. '( ' . __( 'Receipt No', _TEXT_DOMAIN ) . ' : %s )'
-				, strval( $serial_num )
+				, $serial_num
 			);
 
 		}
