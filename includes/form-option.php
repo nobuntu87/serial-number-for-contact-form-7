@@ -500,7 +500,7 @@ class Form_Option {
 	public static function reset_daily_mail_count()
 	{
 		// コンタクトフォーム設定取得
-		foreach ( SELF::get_all_options() as $form_id => $form_option ) {
+		foreach ( SELF::get_options() as $form_id => $form_option ) {
 
 			$form_id = strval( $form_id );
 
