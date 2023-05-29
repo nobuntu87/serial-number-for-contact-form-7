@@ -7,7 +7,7 @@ Author: Nobuntu
 Author URI: https://profiles.wordpress.org/nobuntu87/
 Text Domain: serial-number-for-contact-form-7
 Domain Path: /languages/
-Version: 1.1.0
+Version: 2.0.0
 License: GPL2+ (GNU General Public License v2 or later)
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
