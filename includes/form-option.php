@@ -170,7 +170,7 @@ class Form_Option {
 		// オプションキー取得
 		// ------------------------------------
 		
-		// [ContactForm7] オプション定義キー取得
+		// オプション定義のキー取得
 		$define_keys = [];
 		foreach ( _FORM_OPTIONS as $item => $option ) {
 			$define_keys[] = strval( $option['key'] );
