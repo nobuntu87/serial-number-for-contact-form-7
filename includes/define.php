@@ -10,9 +10,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // プラグイン設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_VERSION', '1.1.0' );
+define( __NAMESPACE__ . '\_VERSION', '2.0.0' );
 
-define( __NAMESPACE__ . '\_REQUIRED_WP_VERSION', '5.9' );
+define( __NAMESPACE__ . '\_REQUIRED_WP_VERSION', '6.0' );
 
 define( __NAMESPACE__ . '\_TEXT_DOMAIN', 'serial-number-for-contact-form-7' );
 
