@@ -30,6 +30,47 @@ class Submission {
 		Form_Option::increment_mail_count( strval( $contact_form->id ) );
 	}
 
+   // ------------------------------------
+   // フィルターフック
+   // ------------------------------------
+
+	/**
+	 * 送信メールのPOSTデータを編集する。
+	 * 
+	 * [Filter Hook] wpcf7_posted_data
+	 *
+	 * @param mixed[] $posted_data POSTデータ
+	 * @return void POSTデータを返す。
+	 */
+	public static function edit_wpcf7_post_data( $posted_data )
+	{
+		if ( class_exists( 'WPCF7_Submission' ) ) {
+			// ------------------------------------
+			// コンタクトフォーム取得
+			// ------------------------------------
+
+			// インスタンス取得
+			$submission = \WPCF7_Submission::get_instance();
+			if ( ! $submission ) { return $posted_data; }
+			
+			// コンタクトフォーム設定取得
+			$contact_form = $submission->get_contact_form();
+			$form_id = strval( $contact_form->id );
+
+			// ------------------------------------
+			// シリアル番号設定
+			// ------------------------------------
+
+			// シリアル番号を新規フィールドに追加
+			$posted_data[_POST_FIELD] = Serial_Number::get_serial_number(
+				$form_id,
+				intval( Form_Option::get_mail_count( $form_id ) ) + 1
+			);
+		}
+
+		return $posted_data;
+	}
+
   // ========================================================
 
 }
