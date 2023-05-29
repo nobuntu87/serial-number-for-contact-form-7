@@ -71,6 +71,50 @@ class Submission {
 		return $posted_data;
 	}
 
+	/**
+	 * 送信結果メッセージを編集する。
+	 *
+	 * @param string $message 表示メッセージ
+	 * @param string $status 送信結果ステータス
+	 * @return string 表示メッセージを返す。
+	 */
+	public static function edit_wpcf7_display_message( $message, $status )
+	{
+		// ------------------------------------
+		// メール送信 成功
+		// ------------------------------------
+
+		if ( 'mail_sent_ok' === strval( $status ) ) {
+
+			// ------------------------------------
+			// コンタクトフォーム取得
+			// ------------------------------------
+
+			if ( !class_exists( 'WPCF7_Submission' ) ) { return $message; }
+
+			// インスタンス取得
+			$submission = \WPCF7_Submission::get_instance();
+			if ( !$submission ) { return $message; }
+
+			// コンタクトフォーム設定取得 (シリアル番号)
+			$serial_num = $submission->get_posted_data( _POST_FIELD );
+			if ( empty( $serial_num ) ) { return $message; }
+
+			// ------------------------------------
+			// 表示メッセージ設定
+			// ------------------------------------
+
+			$message .= sprintf( '' 
+				.'( 受付番号 : %s )', $serial_num
+			);
+
+		}
+
+		// ------------------------------------
+
+		return $message;
+	}
+
   // ========================================================
 
 }
