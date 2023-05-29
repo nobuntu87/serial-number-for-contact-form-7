@@ -67,3 +67,10 @@ add_filter(
 	__NAMESPACE__ . '\Submission::edit_wpcf7_display_message',
 	11, 2
 );
+
+// [ContactForm7] メールタグの変換
+add_filter(
+	'wpcf7_special_mail_tags',
+	__NAMESPACE__ . '\Mail_Tag::convert_mail_tags',
+	11, 2
+);
