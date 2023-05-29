@@ -34,3 +34,36 @@ add_action(
 	__NAMESPACE__ . '\NT_WPCF7SN::check_reset_count',
 	10, 0
 );
+
+// ========================================================
+// Contact Form 7 プラグインフック設定
+// ========================================================
+
+// ------------------------------------
+// アクションフック
+// ------------------------------------
+
+// [ContactForm7] メール送信成功
+add_action(
+	'wpcf7_mail_sent',
+	__NAMESPACE__ . '\Submission::sent_mail_success',
+	11, 1
+);
+
+// ------------------------------------
+// フィルターフック
+// ------------------------------------
+
+// [ContactForm7] フォーム入力データ編集
+add_filter(
+	'wpcf7_posted_data',
+	__NAMESPACE__ . '\Submission::edit_wpcf7_post_data',
+	11, 1
+);
+
+// [ContactForm7] 送信結果メッセージ編集
+add_filter(
+	'wpcf7_display_message',
+	__NAMESPACE__ . '\Submission::edit_wpcf7_display_message',
+	11, 2
+);
