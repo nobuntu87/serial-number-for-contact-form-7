@@ -13,7 +13,7 @@ $attr_mail_tag = array(
 	'onfocus' => 'this.select();',
 );
 
-$mail_tag = sprintf( '[%s%s]' , _MAIL_TAG_PREFIX , $form_id );
+$mail_tag = Mail_Tag::get_sn_mail_tag( $form_id );
 
 // ========================================================
 // カウント表示設定

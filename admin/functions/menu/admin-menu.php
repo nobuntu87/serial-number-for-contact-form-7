@@ -107,9 +107,7 @@ class Admin_Menu extends Admin_Menu_Base {
 
 		$options['form_id'] = $form_id;
 
-		$options['mail_tag'] = sprintf( '[%s%s]'
-			, _MAIL_TAG_PREFIX , $form_id
-		);
+		$options['mail_tag'] = Mail_Tag::get_sn_mail_tag( $form_id );
 
 		// ------------------------------------
 		// オプション値検証

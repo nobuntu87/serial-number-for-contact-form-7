@@ -437,9 +437,7 @@ class Form_Option {
 
 		$default_value['form_id'] = $form_id;
 
-		$default_value['mail_tag'] = sprintf( '[%s%s]'
-			, _MAIL_TAG_PREFIX , $form_id
-		);
+		$default_value['mail_tag'] = Mail_Tag::get_sn_mail_tag( $form_id );
 
 		return $default_value;
 	}
