@@ -69,7 +69,7 @@ class Serial_Number {
 	 * @param mixed[] $option_value オプション値
 	 * @return string シリアル番号を返す。
 	 */
-	private function create_snum_number( $count, $option_value )
+	private static function create_snum_number( $count, $option_value )
 	{
 		$digits = $option_value['digits'];
 
@@ -85,7 +85,7 @@ class Serial_Number {
 	 * @param mixed[] $option_value オプション値
 	 * @return string シリアル番号を返す。
 	 */
-	private function create_snum_unixtime( $count, $option_value )
+	private static function create_snum_unixtime( $count, $option_value )
 	{
 		$separator = $option_value['separator'] === 'yes' ? '-' : '';
 		$digits = $option_value['digits'];
@@ -104,7 +104,7 @@ class Serial_Number {
 	 * @param mixed[] $option_value オプション値
 	 * @return string シリアル番号を返す。
 	 */
-	private function create_snum_date( $count, $option_value )
+	private static function create_snum_date( $count, $option_value )
 	{
 		$separator = $option_value['separator'] === 'yes' ? '-' : '';
 		$digits = $option_value['digits'];
@@ -124,7 +124,7 @@ class Serial_Number {
 	 * @param mixed[] $option_value オプション値
 	 * @return string シリアル番号を返す。
 	 */
-	private function create_snum_datetime( $count, $option_value )
+	private static function create_snum_datetime( $count, $option_value )
 	{
 		$separator = $option_value['separator'] === 'yes' ? '-' : '';
 		$digits = $option_value['digits'];
@@ -146,7 +146,7 @@ class Serial_Number {
 	 * @param mixed[] $option_value オプション値
 	 * @return string シリアル番号を返す。
 	 */
-	private function create_snum_unique( $count, $option_value )
+	private static function create_snum_unique( $count, $option_value )
 	{
 		$separator = $option_value['separator'] === 'yes' ? '-' : '';
 		$digits = $option_value['digits'];
@@ -173,7 +173,7 @@ class Serial_Number {
 	 * @param int|string $count メールカウント
 	 * @return string ユニークIDを返す。
 	 */
-	private function create_unique_id( $count )
+	private static function create_unique_id( $count )
 	{
 		$unique_id = '';
 
@@ -203,7 +203,7 @@ class Serial_Number {
 	 * @param int|string $digits 表示桁数
 	 * @return string 数値の文字列を返す。
 	 */
-	private function convert_num_digits( $number, $digits )
+	private static function convert_num_digits( $number, $digits )
 	{
 		if ( intval( $digits ) > 0 ) {
 			return sprintf( '%0' . strval( $digits ) . 'd', intval( $number ) );
@@ -218,7 +218,7 @@ class Serial_Number {
 	 * @param string $format 表示フォーマット
 	 * @return string タイムスタンプを返す。
 	 */
-	private function get_timestamp( $format )
+	private static function get_timestamp( $format )
 	{
 		return date_i18n( $format );
 	}
