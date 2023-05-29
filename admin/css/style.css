@@ -1,1 +1,90 @@
 @charset "UTF-8";
+
+/* ========================================================
+ * ヘッダー
+ * ===================================================== */
+
+/* ------------------------------------
+ * [H4] オプションタイトル
+ * --------------------------------- */
+
+/* ===== レイアウト ===== */
+
+.nt-wplib-admin-menu-wrap
+.nt-wplib-admin-menu-form
+h4 {
+	margin: 0 10px 0;
+	padding: 5px 10px;
+}
+
+/* ===== デザイン ===== */
+
+.nt-wplib-admin-menu-wrap
+.nt-wplib-admin-menu-form
+h4 {
+	background: #e4e4e4;
+	color: #3c434a;
+	border: 1px solid #dadada;
+	border-left: 5px solid #0085ba;
+}
+
+/* ========================================================
+ * フォーム
+ * ===================================================== */
+
+/* ------------------------------------
+ * メールタグ：テキストフィールド
+ * --------------------------------- */
+
+/* ===== レイアウト ===== */
+
+.nt-wplib-admin-menu-form-option-input input[type="text"]#mail_tag {
+	padding: 8px;
+}
+
+/* ===== デザイン ===== */
+
+.nt-wplib-admin-menu-form-option-input input[type="text"]#mail_tag {
+	text-align: center;
+	background: transparent;
+	border: solid 1px #dddddd;
+}
+
+/* ------------------------------------
+ * 表示形式：ラジオボタン
+ * --------------------------------- */
+
+/* ===== レイアウト ===== */
+
+.nt-wplib-admin-menu-form-option-wrap.radio {
+	padding: 10px 5px 10px 15px;
+}
+
+/* ===== デザイン ===== */
+
+.nt-wplib-admin-menu-form-option-wrap.radio {
+	border: 1px solid #dddddd;
+}
+
+/* ------------------------------------
+ * 表示例
+ * --------------------------------- */
+
+/* ===== レイアウト ===== */
+
+.nt-wplib-admin-menu-wrap
+.nt-wplib-admin-menu-form
+.example {
+	display: inline-block;
+	margin: 0;
+	padding: 3px 6px;
+}
+
+/* ===== デザイン ===== */
+
+.nt-wplib-admin-menu-wrap
+.nt-wplib-admin-menu-form
+.example {
+	background: #f5f5f5;
+	border: solid 1px #dddddd;
+}
