@@ -16,6 +16,8 @@ include_once( ABSPATH . 'wp-admin/includes/template.php' );
 
 class Utility {
 
+  // ========================================================
+
 	/**
 	 * Contact Form 7 プラグインの投稿情報を取得する。
 	 *
@@ -226,5 +228,7 @@ class Utility {
 
 		return false;
 	}
+
+  // ========================================================
 
 }

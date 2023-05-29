@@ -75,6 +75,8 @@ class Submission {
 
 	/**
 	 * 送信結果メッセージを編集する。
+	 * 
+	 * [Filter Hook] wpcf7_display_message
 	 *
 	 * @param string $message 表示メッセージ
 	 * @param string $status 送信結果ステータス

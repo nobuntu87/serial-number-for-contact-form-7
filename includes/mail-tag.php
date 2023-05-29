@@ -8,6 +8,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 class Mail_Tag {
 
+  // ========================================================
+
 	/**
 	 * シリアル番号のメールタグを取得する
 	 *
@@ -31,6 +33,8 @@ class Mail_Tag {
 
 	/**
 	 * メールタグを出力値に変換する。
+	 * 
+	 * [Filter Hook] wpcf7_special_mail_tags
 	 *
 	 * @param string $output メールタグの出力値
 	 * @param string $mail_tag メールタグ
@@ -75,5 +79,7 @@ class Mail_Tag {
 
 		return $output;
 	}
+
+  // ========================================================
 
 }
