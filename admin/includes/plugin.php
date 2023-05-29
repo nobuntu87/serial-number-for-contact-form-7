@@ -38,7 +38,7 @@ class NT_WPCF7SN_Admin {
 	*
 	* @return void
 	*/
-	private function compare_plugin_version()
+	private static function compare_plugin_version()
 	{
 		$new_version = _VERSION;
 		$old_version = NT_WPCF7SN::get_option( 'version', '0.0.0' );
@@ -72,7 +72,7 @@ class NT_WPCF7SN_Admin {
 	 *
 	 * @return void
 	 */
-	private function check_system_requirements()
+	private static function check_system_requirements()
 	{
 		// ------------------------------------
 		// 動作環境チェック：WordPress 要求バージョン
@@ -106,7 +106,7 @@ class NT_WPCF7SN_Admin {
 	 *
 	 * @return void
 	 */
-	private function check_dependent_plugin()
+	private static function check_dependent_plugin()
 	{
 		// ------------------------------------
 		// 依存関係チェック：Contact Form 7 プラグイン
@@ -145,7 +145,7 @@ class NT_WPCF7SN_Admin {
 	 *
 	 * @return void
 	 */
-	private function upgrade_plugin()
+	private static function upgrade_plugin()
 	{
 		// 処理なし
 	}
@@ -155,7 +155,7 @@ class NT_WPCF7SN_Admin {
 	 *
 	 * @return void
 	 */
-	private function downgrade_plugin()
+	private static function downgrade_plugin()
 	{
 		// 処理なし
 	}

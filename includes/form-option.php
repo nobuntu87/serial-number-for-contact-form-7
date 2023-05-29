@@ -104,7 +104,7 @@ class Form_Option {
 	 *
 	 * @return void
 	 */
-	private function check_options_integrity()
+	private static function check_options_integrity()
 	{
 		// ------------------------------------
 		// コンタクトフォームID取得
@@ -162,7 +162,7 @@ class Form_Option {
 	 * @param mixed[] $option_value オプション値
 	 * @return void mixed[] コンタクトフォーム設定値を返す。
 	 */
-	private function check_option_integrity( $option_value )
+	private static function check_option_integrity( $option_value )
 	{
 		if ( !is_array( $option_value ) ) { return []; }
 
@@ -237,7 +237,7 @@ class Form_Option {
 	 * @param mixed[] $option_value オプション値
 	 * @return void mixed[] コンタクトフォーム設定値を返す。
 	 */
-	private function check_option_validity( $form_id, $option_value )
+	private static function check_option_validity( $form_id, $option_value )
 	{
 		$form_id = strval( $form_id );
 
@@ -275,7 +275,7 @@ class Form_Option {
 	 *
 	 * @return void
 	 */
-	private function init_global_options()
+	private static function init_global_options()
 	{
 		$GLOBALS['_NT_WPCF7SN']['form'] = [];
 		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
@@ -289,7 +289,7 @@ class Form_Option {
 	 * @param int|string $form_id コンタクトフォームID
 	 * @return void
 	 */
-	private function init_global_option( $form_id )
+	private static function init_global_option( $form_id )
 	{
 		$form_id = strval( $form_id );
 
@@ -422,7 +422,7 @@ class Form_Option {
 	 * @param int|string $form_id コンタクトフォームID
 	 * @return void mixed[] コンタクトフォーム設定値を返す。
 	 */
-	private function get_default_value( $form_id )
+	private static function get_default_value( $form_id )
 	{
 		$form_id = strval( $form_id );
 
@@ -738,7 +738,7 @@ class Form_Validate {
 	 * @param mixed $value オプション値
 	 * @return boolean チェック結果を返す。(true:一致/false:不一致)
 	 */
-	private function is_match_pattern( $key, $value )
+	private static function is_match_pattern( $key, $value )
 	{
 		$pattern = '';
 
