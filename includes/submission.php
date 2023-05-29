@@ -8,4 +8,28 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 class Submission {
 
+  // ========================================================
+  // Contact Form 7 プラグインフック設定
+  // ========================================================
+
+   // ------------------------------------
+   // アクションフック
+   // ------------------------------------
+
+	/**
+	 * メール送信の成功時の処理を行う。
+	 * 
+	 * [Action Hook] wpcf7_mail_sent
+	 *
+	 * @param mixed[] $contact_form コンタクトフォーム情報
+	 * @return void
+	 */
+	public static function sent_mail_succee( $contact_form )
+	{
+		// メールカウント増加
+		Form_Option::increment_mail_count( strval( $contact_form->id ) );
+	}
+
+  // ========================================================
+
 }
