@@ -125,7 +125,7 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 
 // WordPress Library「Admin Menu」
 
-define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_0' );
+define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_1' );
 
 class_alias(
 	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Admin_Menu_Base',
