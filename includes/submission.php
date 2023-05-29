@@ -24,7 +24,7 @@ class Submission {
 	 * @param mixed[] $contact_form コンタクトフォーム情報
 	 * @return void
 	 */
-	public static function sent_mail_succee( $contact_form )
+	public static function sent_mail_success( $contact_form )
 	{
 		// メールカウント増加
 		Form_Option::increment_mail_count( strval( $contact_form->id ) );
@@ -44,29 +44,31 @@ class Submission {
 	 */
 	public static function edit_wpcf7_post_data( $posted_data )
 	{
-		if ( class_exists( 'WPCF7_Submission' ) ) {
-			// ------------------------------------
-			// コンタクトフォーム取得
-			// ------------------------------------
+		// ------------------------------------
+		// コンタクトフォーム取得
+		// ------------------------------------
 
-			// インスタンス取得
-			$submission = \WPCF7_Submission::get_instance();
-			if ( ! $submission ) { return $posted_data; }
-			
-			// コンタクトフォーム設定取得
-			$contact_form = $submission->get_contact_form();
-			$form_id = strval( $contact_form->id );
+		if ( !class_exists( 'WPCF7_Submission' ) ) { return $posted_data; }
 
-			// ------------------------------------
-			// シリアル番号設定
-			// ------------------------------------
+		// インスタンス取得
+		$submission = \WPCF7_Submission::get_instance();
+		if ( !$submission ) { return $posted_data; }
 
-			// シリアル番号を新規フィールドに追加
-			$posted_data[_POST_FIELD] = Serial_Number::get_serial_number(
-				$form_id,
-				intval( Form_Option::get_mail_count( $form_id ) ) + 1
-			);
-		}
+		// コンタクトフォーム設定取得
+		$contact_form = $submission->get_contact_form();
+		$form_id = strval( $contact_form->id );
+
+		// ------------------------------------
+		// シリアル番号設定
+		// ------------------------------------
+
+		// シリアル番号を新規フィールドに追加
+		$posted_data[_POST_FIELD] = Serial_Number::get_serial_number(
+			$form_id,
+			intval( Form_Option::get_mail_count( $form_id ) ) + 1
+		);
+
+		// ------------------------------------
 
 		return $posted_data;
 	}
