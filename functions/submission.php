@@ -62,6 +62,9 @@ class Submission {
 		// シリアル番号設定
 		// ------------------------------------
 
+		// デイリーリセット確認
+		do_action( 'nt_wpcf7sn_check_reset_count' );
+
 		// シリアル番号を新規フィールドに追加
 		$posted_data[_POST_FIELD] = Serial_Number::get_serial_number(
 			$form_id,
