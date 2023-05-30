@@ -16,10 +16,10 @@ require_once( __DIR__ . '/includes/load.php' );
 // アクションフック
 // ------------------------------------
 
-// オプション初期化
+// プラグイン初期化
 add_action(
 	'init',
-	__NAMESPACE__ . '\Form_Option::init_options',
+	__NAMESPACE__ . '\NT_WPCF7SN::init_plugin',
 	10, 0
 );
 
