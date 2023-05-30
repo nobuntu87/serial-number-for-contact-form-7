@@ -23,6 +23,13 @@ add_action(
 	10, 0
 );
 
+// オプション更新完了
+add_action(
+	'updated_option',
+	__NAMESPACE__ . '\NT_WPCF7SN::updated_option',
+	10, 3
+);
+
 // デイリーリセット実行確認
 add_action(
 	'init',

@@ -8,6 +8,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 class NT_WPCF7SN {
 
+  // ========================================================
+
 	/**
 	 * Contact Form 7 プラグインが有効化されているか確認する。
 	 *
@@ -212,6 +214,35 @@ class NT_WPCF7SN {
 			);
 
 		}
+	}
+
+  // ========================================================
+  // WordPressフック
+  // ========================================================
+
+   // ------------------------------------
+   // アクションフック
+   // ------------------------------------
+
+	/**
+	 * オプション更新の完了時の処理を行う。
+	 * 
+	 * [Action Hook] updated_option
+	 *
+	 * @param string $option_name オプション名
+	 * @param mixed[] $old_value オプション値 (更新前)
+	 * @param mixed[] $new_value オプション値 (更新後)
+	 * @return void
+	 */
+	public static function updated_option( $option_name, $old_value, $new_value )
+	{
+		// オプション名判別
+		if ( 1 !== preg_match( _ADMIN_MENU_REGEX['option_name'], $option_name, $matches ) ) {
+			return;
+		}
+
+		// コンタクトフォーム設定の初期化
+		Form_Option::init_option( strval( $matches['form_id'] ) );
 	}
 
   // ========================================================
