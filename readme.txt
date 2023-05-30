@@ -4,7 +4,7 @@ Donate link: https://nobuntu.jp/blog/serial-number-for-contact-form-7/donate/
 Tags: contact form 7, contact form 7 addon, serial number
 Requires at least: 6.0
 Tested up to: 6.2
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires PHP: 5.6
 License: GPL2+ (GNU General Public License v2 or later)
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -74,11 +74,20 @@ Please see the [Installing Plugins](https://wordpress.org/support/article/managi
 
 For more information, please see [Releases](https://nobuntu.jp/blog/serial-number-for-contact-form-7/releases/).
 
+= 2.0.2 =
+
+[https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-0-2/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-0-2/)
+
 = 2.0.1 =
 
 [https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-0-1/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-0-1/)
 
 = 2.0.0 =
+
+* Major update version.
+* Redesigned the plugin.
+
+NOTE : All settings will be reset, so you will need to reconfigure.
 
 [https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-0-0/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-0-0/)
 
