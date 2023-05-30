@@ -8,16 +8,19 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 class NT_WPCF7SN {
 
+  // ========================================================
+  // 初期化
+  // ========================================================
+
 	/**
-	 * Contact Form 7 プラグインが有効化されているか確認する。
+	 * プラグインの初期化を行う。
 	 *
-	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
+	 * @return void
 	 */
-	public static function is_active_wpcf7()
+	public static function init_plugin()
 	{
-		return Utility::is_active_plugin(
-			_EXTERNAL_PLUGIN['wpcf7']['basename']
-		);
+		// コンタクトフォーム設定の初期化
+		Form_Option::init_options();
 	}
 
   // ========================================================
@@ -25,7 +28,7 @@ class NT_WPCF7SN {
   // ========================================================
 
 	/**
-	* プラグインのオプション値を取得する。
+	* オプション値を取得する。
 	*
 	* @param string $key オプションキー
 	* @param mixed $default デフォルト値
@@ -46,7 +49,7 @@ class NT_WPCF7SN {
 	}
 
 	/**
-	* プラグインのオプション値を更新する。
+	* オプション値を更新する。
 	*
 	* @param string $key オプションキー
 	* @param mixed $value オプション値
@@ -213,5 +216,52 @@ class NT_WPCF7SN {
 
 		}
 	}
+
+  // ========================================================
+  // WordPressフック
+  // ========================================================
+
+   // ------------------------------------
+   // アクションフック
+   // ------------------------------------
+
+	/**
+	 * オプション更新の完了時の処理を行う。
+	 * 
+	 * [Action Hook] updated_option
+	 *
+	 * @param string $option_name オプション名
+	 * @param mixed[] $old_value オプション値 (更新前)
+	 * @param mixed[] $new_value オプション値 (更新後)
+	 * @return void
+	 */
+	public static function updated_option( $option_name, $old_value, $new_value )
+	{
+		// オプション名判別
+		if ( 1 !== preg_match( _ADMIN_MENU_REGEX['option_name'], $option_name, $matches ) ) {
+			return;
+		}
+
+		// コンタクトフォーム設定の初期化
+		Form_Option::init_option( strval( $matches['form_id'] ) );
+	}
+
+  // ========================================================
+  // ユーティリティ
+  // ========================================================
+
+	/**
+	 * Contact Form 7 プラグインが有効化されているか確認する。
+	 *
+	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
+	 */
+	public static function is_active_wpcf7()
+	{
+		return Utility::is_active_plugin(
+			_EXTERNAL_PLUGIN['wpcf7']['basename']
+		);
+	}
+
+  // ========================================================
 
 }

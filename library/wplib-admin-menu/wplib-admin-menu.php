@@ -1,15 +1,19 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_4_0;
+namespace _Nt\WpLib\AdminMenu\v2_4_1;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
 // 定数定義
 // ============================================================================
 
-const _LIBRARY_DOMAIN = 'nt-wplib-admin-menu';
+if ( !defined( __NAMESPACE__ . '\_LIBRARY_DOMAIN' ) ):
 
-const _OPTION_GROUP_SUFFIX = 'group';
-const _OPTION_NAME_SUFFIX  = 'conf';
+define( __NAMESPACE__ . '\_LIBRARY_DOMAIN', 'nt-wplib-admin-menu' );
+
+define( __NAMESPACE__ . '\_OPTION_GROUP_SUFFIX', 'group' );
+define( __NAMESPACE__ . '\_OPTION_NAME_SUFFIX', 'conf' );
+
+endif;
 
 // ============================================================================
 // 管理メニュー基底クラス：Admin_Menu_Base

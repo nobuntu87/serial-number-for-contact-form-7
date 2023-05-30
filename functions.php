@@ -16,11 +16,18 @@ require_once( __DIR__ . '/includes/load.php' );
 // アクションフック
 // ------------------------------------
 
-// オプション初期化
+// プラグイン初期化
 add_action(
 	'init',
-	__NAMESPACE__ . '\Form_Option::init_options',
+	__NAMESPACE__ . '\NT_WPCF7SN::init_plugin',
 	10, 0
+);
+
+// オプション更新完了
+add_action(
+	'updated_option',
+	__NAMESPACE__ . '\NT_WPCF7SN::updated_option',
+	10, 3
 );
 
 // デイリーリセット実行確認
@@ -29,6 +36,16 @@ add_action(
 	__NAMESPACE__ . '\NT_WPCF7SN::check_reset_count',
 	11, 0
 );
+
+// ========================================================
+// プラグインフック設定
+// ========================================================
+
+// ------------------------------------
+// アクションフック
+// ------------------------------------
+
+// デイリーリセット実行チェック
 add_action(
 	'nt_wpcf7sn_check_reset_count',
 	__NAMESPACE__ . '\NT_WPCF7SN::check_reset_count',
@@ -78,11 +95,11 @@ add_filter(
 // [ContactForm7] REST API
 add_filter(
 	'wpcf7_refill_response',
-	__NAMESPACE__ . '\DOM_Api::set_dom_api_response',
+	__NAMESPACE__ . '\REST_Controller::set_dom_api_response',
 	11, 1
 );
 add_filter(
 	'wpcf7_feedback_response',
-	__NAMESPACE__ . '\DOM_Api::set_dom_api_response',
+	__NAMESPACE__ . '\REST_Controller::set_dom_api_response',
 	11, 1
 );

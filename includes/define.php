@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // プラグイン設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_VERSION', '2.0.1' );
+define( __NAMESPACE__ . '\_VERSION', '2.0.2' );
 
 define( __NAMESPACE__ . '\_REQUIRED_WP_VERSION', '6.0' );
 
@@ -125,7 +125,7 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 
 // WordPress Library「Admin Menu」
 
-define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_0' );
+define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_1' );
 
 class_alias(
 	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Admin_Menu_Base',
@@ -140,17 +140,16 @@ class_alias(
 define( __NAMESPACE__ . '\_ADMIN_MENU_SLUG', _PREFIX['-'] );
 define( __NAMESPACE__ . '\_ADMIN_MENU_TAB_PREFIX', 'wpcf7-form-' );
 
-define(
-	__NAMESPACE__ . '\_ADMIN_MENU_REGEX', array(
-		'page_suffix' => sprintf( '/_page_%s$/'
-			, _ADMIN_MENU_SLUG
-		),
-		'option_name' => sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
-			, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
-		),
-		'tab_slug'    => sprintf( '/^%s(?P<form_id>\d+)$/'
-			, _ADMIN_MENU_TAB_PREFIX
-		),
+define( __NAMESPACE__ . '\_ADMIN_MENU_REGEX', array(
+	'page_suffix' => sprintf( '/_page_%s$/'
+		, _ADMIN_MENU_SLUG
+	),
+	'option_name' => sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
+		, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
+	),
+	'tab_slug'    => sprintf( '/^%s(?P<form_id>\d+)$/'
+		, _ADMIN_MENU_TAB_PREFIX
+	),
 ) );
 
 // ========================================================
