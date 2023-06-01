@@ -30,6 +30,20 @@ class Submission {
 		Form_Option::increment_mail_count( strval( $contact_form->id ) );
 	}
 
+	/**
+	 * メール送信の失敗時の処理を行う。
+	 * 
+	 * [Action Hook] wpcf7_mail_sent
+	 *
+	 * @param mixed[] $contact_form コンタクトフォーム情報
+	 * @return void
+	 */
+	public static function sent_mail_failed( $contact_form )
+	{
+		// メールカウント増加
+		Form_Option::increment_mail_count( strval( $contact_form->id ) );
+	}
+
    // ------------------------------------
    // フィルターフック
    // ------------------------------------
