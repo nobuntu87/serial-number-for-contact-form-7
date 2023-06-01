@@ -26,6 +26,8 @@ class Submission {
 	 */
 	public static function sent_mail_success( $contact_form )
 	{
+		$form_id = strval( $contact_form->id );
+
 		// ------------------------------------
 		// メールカウント条件判定
 		// ------------------------------------
@@ -36,7 +38,7 @@ class Submission {
 		// ------------------------------------
 
 		// メールカウント増加
-		Form_Option::increment_mail_count( strval( $contact_form->id ) );
+		Form_Option::increment_mail_count( $form_id );
 	}
 
 	/**

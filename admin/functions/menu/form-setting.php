@@ -137,7 +137,7 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
-<h3><i class="fa-solid fa-sliders fa-fw"></i><?php _e( 'Setting', _TEXT_DOMAIN ); ?></h3>
+<h3><i class="fa-solid fa-sliders fa-fw"></i><?php _e( 'Settings', _TEXT_DOMAIN ); ?></h3>
 
 <h4><?php _e( 'Type', _TEXT_DOMAIN ); ?></h4>
 

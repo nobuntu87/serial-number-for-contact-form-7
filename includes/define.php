@@ -107,27 +107,30 @@ define( __NAMESPACE__ . '\_MAIL_TAG_REGEX', '/^' . _MAIL_TAG_PREFIX . '(?P<form_
 define( __NAMESPACE__ . '\_POST_FIELD', 'serial-number' );
 
 define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
-	'id'        => array(
+	// コンタクトフォーム設定
+	'id' => array(
 		'key'     => 'form_id',
 		'default' => '',
 		'pattern' => '^\d+$'
 	),
-	'tag'       => array(
+	// メールタグ設定
+	'tag' => array(
 		'key'     => 'mail_tag',
 		'default' => '',
 		'pattern' => '^\[' . _MAIL_TAG_PREFIX . '\d+\]$'
 	),
-	'type'      => array(
+	// 表示フォーマット設定
+	'type' => array(
 		'key'     => 'type',
 		'default' => 0,
 		'pattern' => '^[0-4]$'
 	),
-	'prefix'    => array(
+	'prefix' => array(
 		'key'     => 'prefix',
 		'default' => '',
 		'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'
 	),
-	'digits'    => array(
+	'digits' => array(
 		'key'     => 'digits',
 		'default' => 1,
 		'pattern' => '^[1-9]$'
@@ -137,31 +140,33 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'year2dig'  => array(
+	'year2dig' => array(
 		'key'     => 'year2dig',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'nocount'   => array(
+	'nocount' => array(
 		'key'     => 'nocount',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'dayreset'  => array(
+	// メールカウント設定
+	'dayreset' => array(
 		'key'     => 'dayreset',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'count'     => array(
+	'count' => array(
 		'key'     => 'count',
 		'default' => 0,
 		'pattern' => '^[0-9]{1,5}$'
 	),
-	'daycount'  => array(
+	'daycount' => array(
 		'key'     => 'daycount',
 		'default' => 0,
 		'pattern' => '^[0-9]{1,5}$'
 	),
+	// メールカウント条件設定
 	'mail_failed' => array(
 		'key'     => 'nocount_mail_failed',
 		'default' => 'no',
