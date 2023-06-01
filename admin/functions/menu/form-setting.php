@@ -222,4 +222,22 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 	) ); ?>
 </p>
 
+<?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
+
+<h3><i class="fa-solid fa-gears fa-fw"></i><?php _e( 'Advanced Settings', _TEXT_DOMAIN ); ?></h3>
+
+<h4><?php _e( 'Disable Mail Count Increase', _TEXT_DOMAIN ); ?></h4>
+
+<p>
+	<?php $this->checkbox(
+		_FORM_OPTIONS['mail_failed']['key'],
+		__( 'Don\'t increment count when mail send fails.', _TEXT_DOMAIN ),
+		[], _FORM_OPTIONS['mail_failed']['default']
+	); ?>
+</p>
+
+<?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
+
+<p><?php $this->submit( __( 'Settings', _TEXT_DOMAIN ) ); ?></p>
+
 <?php // ======================================================================

@@ -162,4 +162,9 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 		'default' => 0,
 		'pattern' => '^[0-9]{1,5}$'
 	),
+	'mail_failed' => array(
+		'key'     => 'nocount_mail_failed',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
 ) );
