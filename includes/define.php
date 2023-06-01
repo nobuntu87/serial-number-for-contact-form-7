@@ -57,6 +57,49 @@ define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' 
 
 define( __NAMESPACE__ . '\_OPTION_NAME', sprintf( '%s_conf', _PREFIX['_'] ) );
 
+// ------------------------------------
+// ライブラリ設定
+// ------------------------------------
+
+// WordPress Library「Admin Menu」
+
+define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_1' );
+
+class_alias(
+	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Admin_Menu_Base',
+	__NAMESPACE__ . '\Admin_Menu_Base'
+);
+
+class_alias(
+	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Library_Utility',
+	__NAMESPACE__ . '\Admin_Menu_Util'
+);
+
+define( __NAMESPACE__ . '\_ADMIN_MENU_SLUG', _PREFIX['-'] );
+define( __NAMESPACE__ . '\_ADMIN_MENU_TAB_PREFIX', 'wpcf7-form-' );
+
+define( __NAMESPACE__ . '\_ADMIN_MENU_REGEX', array(
+	'page_suffix' => sprintf( '/_page_%s$/'
+		, _ADMIN_MENU_SLUG
+	),
+	'option_name' => sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
+		, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
+	),
+	'tab_slug'    => sprintf( '/^%s(?P<form_id>\d+)$/'
+		, _ADMIN_MENU_TAB_PREFIX
+	),
+) );
+
+// ========================================================
+// グローバルオプション定義
+// ========================================================
+
+$_NT_WPCF7SN = [];
+
+// ========================================================
+// オプション定義
+// ========================================================
+
 define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number_' );
 
 define( __NAMESPACE__ . '\_MAIL_TAG_REGEX', '/^' . _MAIL_TAG_PREFIX . '(?P<form_id>\d+)$/' );
@@ -120,42 +163,3 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 		'pattern' => '^[0-9]{1,5}$'
 	),
 ) );
-
-// ------------------------------------
-// ライブラリ設定
-// ------------------------------------
-
-// WordPress Library「Admin Menu」
-
-define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_1' );
-
-class_alias(
-	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Admin_Menu_Base',
-	__NAMESPACE__ . '\Admin_Menu_Base'
-);
-
-class_alias(
-	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Library_Utility',
-	__NAMESPACE__ . '\Admin_Menu_Util'
-);
-
-define( __NAMESPACE__ . '\_ADMIN_MENU_SLUG', _PREFIX['-'] );
-define( __NAMESPACE__ . '\_ADMIN_MENU_TAB_PREFIX', 'wpcf7-form-' );
-
-define( __NAMESPACE__ . '\_ADMIN_MENU_REGEX', array(
-	'page_suffix' => sprintf( '/_page_%s$/'
-		, _ADMIN_MENU_SLUG
-	),
-	'option_name' => sprintf( '/^%s_%s_%s(?P<form_id>\d+)_conf$/'
-		, _PREFIX['_'] , _ADMIN_MENU_SLUG , _ADMIN_MENU_TAB_PREFIX
-	),
-	'tab_slug'    => sprintf( '/^%s(?P<form_id>\d+)$/'
-		, _ADMIN_MENU_TAB_PREFIX
-	),
-) );
-
-// ========================================================
-// グローバルオプション定義
-// ========================================================
-
-$_NT_WPCF7SN = [];

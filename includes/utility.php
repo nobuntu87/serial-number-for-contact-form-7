@@ -153,6 +153,8 @@ class Utility {
 
 	/**
 	 * WordPress データベースのオプション情報を取得する。
+	 * 
+	 * [include] wp-load.php
 	 *
 	 * @param string $pattern オプション名の検索パターン
 	 * @return mixed[] WordPress データベースのオプション情報を返す。
@@ -172,6 +174,8 @@ class Utility {
 
 	/**
 	 * プラグインが有効化されているか確認する。
+	 * 
+	 * [include] wp-admin/includes/plugin.php
 	 *
 	 * @param string $basename プラグイン名 : {plugin-name}\{main-file.php}
 	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
@@ -207,6 +211,8 @@ class Utility {
 
 	/**
 	 * 管理画面にメッセージを通知する。
+	 * 
+	 * [include] wp-admin/includes/template.php
 	 *
 	 * @param string $slug スラッグ名
 	 * @param string $code 識別コード名 (HTMLのid属性)

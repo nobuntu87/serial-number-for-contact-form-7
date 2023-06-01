@@ -30,7 +30,7 @@ add_action(
 	10, 3
 );
 
-// デイリーリセット実行確認
+// デイリーリセット実行チェック
 add_action(
 	'init',
 	__NAMESPACE__ . '\NT_WPCF7SN::check_reset_count',
