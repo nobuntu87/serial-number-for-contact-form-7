@@ -49,6 +49,8 @@ class Submission {
 	 */
 	public static function sent_mail_failed( $contact_form )
 	{
+		$form_id = strval( $contact_form->id );
+
 		// ------------------------------------
 		// メールカウント条件判定
 		// ------------------------------------
@@ -56,10 +58,15 @@ class Submission {
 		// デモモード：カウント停止 [demo_mode: on]
 		if ( $contact_form->in_demo_mode() ) { return; }
 
+		// 送信失敗：カウント条件判定
+		if ( !Form_Option::is_increment_mail_failed( $form_id ) ) {
+			return;
+		}
+
 		// ------------------------------------
 
 		// メールカウント増加
-		Form_Option::increment_mail_count( strval( $contact_form->id ) );
+		Form_Option::increment_mail_count( $form_id );
 	}
 
    // ------------------------------------
