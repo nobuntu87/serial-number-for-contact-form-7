@@ -26,6 +26,15 @@ class Submission {
 	 */
 	public static function sent_mail_success( $contact_form )
 	{
+		// ------------------------------------
+		// メールカウント条件判定
+		// ------------------------------------
+
+		// デモモード：カウント停止 [demo_mode: on]
+		if ( $contact_form->in_demo_mode() ) { return; }
+
+		// ------------------------------------
+
 		// メールカウント増加
 		Form_Option::increment_mail_count( strval( $contact_form->id ) );
 	}
@@ -40,6 +49,15 @@ class Submission {
 	 */
 	public static function sent_mail_failed( $contact_form )
 	{
+		// ------------------------------------
+		// メールカウント条件判定
+		// ------------------------------------
+
+		// デモモード：カウント停止 [demo_mode: on]
+		if ( $contact_form->in_demo_mode() ) { return; }
+
+		// ------------------------------------
+
 		// メールカウント増加
 		Form_Option::increment_mail_count( strval( $contact_form->id ) );
 	}
