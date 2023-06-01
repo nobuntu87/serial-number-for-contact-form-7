@@ -67,6 +67,13 @@ add_action(
 	11, 1
 );
 
+// [ContactForm7] メール送信失敗
+add_action(
+	'wpcf7_mail_failed',
+	__NAMESPACE__ . '\Submission::sent_mail_failed',
+	11, 1
+);
+
 // ------------------------------------
 // フィルターフック
 // ------------------------------------
