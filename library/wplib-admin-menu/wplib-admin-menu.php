@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_4_1;
+namespace _Nt\WpLib\AdminMenu\v2_4_2;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -2431,3 +2431,20 @@ class Library_Utility {
 	}
 
 } endif;
+
+// ============================================================================
+// PHP バージョン互換性対応
+// ============================================================================
+
+// ------------------------------------
+// array_key_first : (PHP 7 >= 7.3.0, PHP 8)
+// ------------------------------------
+
+if ( !function_exists( 'array_key_first' ) ) {
+	function array_key_first( array $arr ) {
+		foreach ( $arr as $key => $unused ) {
+			return $key;
+		}
+		return NULL;
+	}
+}

@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // プラグイン設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_VERSION', '2.0.2' );
+define( __NAMESPACE__ . '\_VERSION', '2.1.0' );
 
 define( __NAMESPACE__ . '\_REQUIRED_WP_VERSION', '6.0' );
 
@@ -55,69 +55,7 @@ define( __NAMESPACE__ . '\_PLUGIN_NAME', trim( dirname( _PLUGIN_BASENAME ), '/' 
 // オプション設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number_' );
-
-define( __NAMESPACE__ . '\_MAIL_TAG_REGEX', '/^' . _MAIL_TAG_PREFIX . '(?P<form_id>\d+)$/' );
-
-define( __NAMESPACE__ . '\_POST_FIELD', 'serial-number' );
-
-define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
-	'id'        => array(
-		'key'     => 'form_id',
-		'default' => '',
-		'pattern' => '^\d+$'
-	),
-	'tag'       => array(
-		'key'     => 'mail_tag',
-		'default' => '',
-		'pattern' => '^\[' . _MAIL_TAG_PREFIX . '\d+\]$'
-	),
-	'type'      => array(
-		'key'     => 'type',
-		'default' => 0,
-		'pattern' => '^[0-4]$'
-	),
-	'prefix'    => array(
-		'key'     => 'prefix',
-		'default' => '',
-		'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'
-	),
-	'digits'    => array(
-		'key'     => 'digits',
-		'default' => 1,
-		'pattern' => '^[1-9]$'
-	),
-	'separator' => array(
-		'key'     => 'separator',
-		'default' => 'no',
-		'pattern' => '^(no|yes)$'
-	),
-	'year2dig'  => array(
-		'key'     => 'year2dig',
-		'default' => 'no',
-		'pattern' => '^(no|yes)$'
-	),
-	'nocount'   => array(
-		'key'     => 'nocount',
-		'default' => 'no',
-		'pattern' => '^(no|yes)$'
-	),
-	'dayreset'  => array(
-		'key'     => 'dayreset',
-		'default' => 'no',
-		'pattern' => '^(no|yes)$'
-	),
-	'count'     => array(
-		'key'     => 'count',
-		'default' => 0,
-		'pattern' => '^[0-9]{1,5}$'
-	),
-	'daycount'  => array(
-		'key'     => 'daycount',
-		'default' => 0,
-		'pattern' => '^[0-9]{1,5}$'
-	),
-) );
+define( __NAMESPACE__ . '\_OPTION_NAME', sprintf( '%s_conf', _PREFIX['_'] ) );
 
 // ------------------------------------
 // ライブラリ設定
@@ -125,7 +63,7 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 
 // WordPress Library「Admin Menu」
 
-define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_1' );
+define( __NAMESPACE__ . '\_LIB_ADMIN_MENU_VERSION', '2_4_2' );
 
 class_alias(
 	'_Nt\WpLib\AdminMenu\v' . _LIB_ADMIN_MENU_VERSION . '\Admin_Menu_Base',
@@ -157,3 +95,81 @@ define( __NAMESPACE__ . '\_ADMIN_MENU_REGEX', array(
 // ========================================================
 
 $_NT_WPCF7SN = [];
+
+// ========================================================
+// オプション定義
+// ========================================================
+
+define( __NAMESPACE__ . '\_MAIL_TAG_PREFIX', '_serial_number_' );
+
+define( __NAMESPACE__ . '\_MAIL_TAG_REGEX', '/^' . _MAIL_TAG_PREFIX . '(?P<form_id>\d+)$/' );
+
+define( __NAMESPACE__ . '\_POST_FIELD', 'serial-number' );
+
+define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
+	// コンタクトフォーム設定
+	'id' => array(
+		'key'     => 'form_id',
+		'default' => '',
+		'pattern' => '^\d+$'
+	),
+	// メールタグ設定
+	'tag' => array(
+		'key'     => 'mail_tag',
+		'default' => '',
+		'pattern' => '^\[' . _MAIL_TAG_PREFIX . '\d+\]$'
+	),
+	// 表示フォーマット設定
+	'type' => array(
+		'key'     => 'type',
+		'default' => 0,
+		'pattern' => '^[0-4]$'
+	),
+	'prefix' => array(
+		'key'     => 'prefix',
+		'default' => '',
+		'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'
+	),
+	'digits' => array(
+		'key'     => 'digits',
+		'default' => 1,
+		'pattern' => '^[1-9]$'
+	),
+	'separator' => array(
+		'key'     => 'separator',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	'year2dig' => array(
+		'key'     => 'year2dig',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	'nocount' => array(
+		'key'     => 'nocount',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	// メールカウント設定
+	'dayreset' => array(
+		'key'     => 'dayreset',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	'count' => array(
+		'key'     => 'count',
+		'default' => 0,
+		'pattern' => '^[0-9]{1,5}$'
+	),
+	'daycount' => array(
+		'key'     => 'daycount',
+		'default' => 0,
+		'pattern' => '^[0-9]{1,5}$'
+	),
+	// メールカウント条件設定
+	'mail_failed' => array(
+		'key'     => 'nocount_mail_failed',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+) );

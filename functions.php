@@ -30,7 +30,7 @@ add_action(
 	10, 3
 );
 
-// デイリーリセット実行確認
+// デイリーリセット実行チェック
 add_action(
 	'init',
 	__NAMESPACE__ . '\NT_WPCF7SN::check_reset_count',
@@ -64,6 +64,13 @@ add_action(
 add_action(
 	'wpcf7_mail_sent',
 	__NAMESPACE__ . '\Submission::sent_mail_success',
+	11, 1
+);
+
+// [ContactForm7] メール送信失敗
+add_action(
+	'wpcf7_mail_failed',
+	__NAMESPACE__ . '\Submission::sent_mail_failed',
 	11, 1
 );
 

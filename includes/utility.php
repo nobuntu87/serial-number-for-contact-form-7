@@ -17,111 +17,80 @@ include_once( ABSPATH . 'wp-admin/includes/template.php' );
 class Utility {
 
   // ========================================================
+  // オプション
+  // ========================================================
 
 	/**
-	 * Contact Form 7 プラグインの投稿情報を取得する。
-	 *
-	 * @return WP_Post[] Contact Form 7 の投稿オブジェクトを返す。
-	 */
-	public static function get_wpcf7_posts()
+	* オプション値を取得する。
+	*
+	* @param string $option_name オプション名
+	* @return mixed[] オプション値を返す。
+	*/
+	public static function get_wpdb_option( $option_name )
 	{
-		return get_posts( array(
-			'post_type'      => _EXTERNAL_PLUGIN['wpcf7']['post_type'],
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-			'offset'         => 0,
-		) );
-	}
+		// ------------------------------------
+		// オプション取得
+		// ------------------------------------
 
-	/**
-	 * WordPress データベースのオプション情報を取得する。
-	 *
-	 * @param string $pattern オプション名の検索パターン
-	 * @return mixed[] WordPress データベースのオプション情報を返す。
-	 */
-	public static function get_wpdb_options( $pattern )
-	{
-		global $wpdb;
+		// WordPressデータベース取得
+		$option_value = get_option( $option_name );
+		if ( false === $option_value ) { return []; }
 
-		return $wpdb->get_results( sprintf( ''
-			. 'SELECT * FROM %s'
-			. '  WHERE 1 = 1 AND option_name like \'%s\''
-			. '  ORDER BY option_name'
-			, $wpdb->options
-			, $pattern
-		), ARRAY_A );
-	}
+		// ------------------------------------
+		// デコード処理
+		// ------------------------------------
 
-	/**
-	 * プラグインが有効化されているか確認する。
-	 *
-	 * @param string $basename プラグイン名 : {plugin-name}\{main-file.php}
-	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
-	 */
-	public static function is_active_plugin( $basename )
-	{
-		if ( function_exists( 'is_plugin_active' ) ) {
-			return is_plugin_active( $basename );
-		} else {
-			return false;
+		// JSON形式の文字列をデコード
+		$option_value = @json_decode( $option_value, true );
+
+		// アンエスケープ・デコード
+		if ( is_array( $option_value ) ) {
+			$option_value = array_map(
+				array( __NAMESPACE__ . '\Utility', 'unesc_decode' ),
+				$option_value
+			);
 		}
+
+		// ------------------------------------
+
+		return $option_value;
 	}
 
 	/**
-	 * プラグインページの埋め込みURLを取得する。
-	 *
-	 * @param string $plugin_slug プラグインスラッグ名
-	 * @return void
-	 */
-	public static function get_plugin_iframe_url( $plugin_slug )
-	{
-		return esc_url( add_query_arg(
-			array(
-				'tab'       => 'plugin-information',
-				'plugin'    => $plugin_slug,
-				'TB_iframe' => 'true',
-				'width'     => '600',
-				'height'    => '550',
-			),
-			admin_url( 'plugin-install.php' )
-		) );
-	}
-
-	/**
-	 * 管理画面にメッセージを通知する。
-	 *
-	 * @param string $slug スラッグ名
-	 * @param string $code 識別コード名 (HTMLのid属性)
-	 * @param string $message メッセージ
-	 * @param string $type メッセージ種別 (error/success/warning/info) [error]
-	 * @return void
-	 */
-	public static function notice_admin_message( $slug, $code, $message, $type = 'error' )
-	{
-		if ( !in_array( $type, [ 'error', 'success', 'warning', 'info' ] ) ) { return; }
-
-		// メッセージ設定
-		add_settings_error( $slug, $code, $message, $type );
-
-		// メッセージ表示
-		settings_errors( $slug );
-	}
-
-	/**
-	 * オプションを削除する。
+	 * オプション値を更新する。
 	 *
 	 * @param string $option_name オプション名
-	 * @return boolean 削除結果を返す。(true:成功or該当なし/false:失敗)
+	 * @param mixed[] $option_value オプション値
+	 * @return void
 	 */
-	public static function delete_option( $option_name )
+	public static function update_wpdb_option( $option_name, $option_value )
 	{
-		if ( false !== get_option( $option_name ) ) {
-			return delete_option( $option_name );
+		// ------------------------------------
+		// エンコード処理
+		// ------------------------------------
+
+		// エスケープ・エンコード
+		if ( is_array( $option_value ) ) {
+			$option_value = array_map(
+				array( __NAMESPACE__ . '\Utility', 'esc_encode' ),
+				$option_value
+			);
 		}
-		return true;
+
+		// JSON形式の文字列にエンコード
+		$option_value = @json_encode( $option_value );
+
+		// ------------------------------------
+		// オプション更新
+		// ------------------------------------
+
+		// WordPressデータベース更新
+		update_option( $option_name, $option_value );
 	}
+
+   // ------------------------------------
+   // エンコード/デコード
+   // ------------------------------------
 
 	/**
 	 * 文字列のエスケープ/エンコード処理を行う。
@@ -159,6 +128,121 @@ class Utility {
 		$string = htmlspecialchars_decode( $string, ENT_QUOTES );
 
 		return $string;
+	}
+
+  // ========================================================
+  // ユーティリティ
+  // ========================================================
+
+	/**
+	 * Contact Form 7 プラグインの投稿情報を取得する。
+	 *
+	 * @return WP_Post[] Contact Form 7 の投稿オブジェクトを返す。
+	 */
+	public static function get_wpcf7_posts()
+	{
+		return get_posts( array(
+			'post_type'      => _EXTERNAL_PLUGIN['wpcf7']['post_type'],
+			'post_status'    => 'publish',
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+			'offset'         => 0,
+		) );
+	}
+
+	/**
+	 * WordPress データベースのオプション情報を取得する。
+	 * 
+	 * [include] wp-load.php
+	 *
+	 * @param string $pattern オプション名の検索パターン
+	 * @return mixed[] WordPress データベースのオプション情報を返す。
+	 */
+	public static function get_wpdb_options( $pattern )
+	{
+		global $wpdb;
+
+		return $wpdb->get_results( sprintf( ''
+			. 'SELECT * FROM %s'
+			. '  WHERE 1 = 1 AND option_name like \'%s\''
+			. '  ORDER BY option_name'
+			, $wpdb->options
+			, $pattern
+		), ARRAY_A );
+	}
+
+	/**
+	 * プラグインが有効化されているか確認する。
+	 * 
+	 * [include] wp-admin/includes/plugin.php
+	 *
+	 * @param string $basename プラグイン名 : {plugin-name}\{main-file.php}
+	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
+	 */
+	public static function is_active_plugin( $basename )
+	{
+		if ( function_exists( 'is_plugin_active' ) ) {
+			return is_plugin_active( $basename );
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * プラグインページの埋め込みURLを取得する。
+	 *
+	 * @param string $plugin_slug プラグインスラッグ名
+	 * @return void
+	 */
+	public static function get_plugin_iframe_url( $plugin_slug )
+	{
+		return esc_url( add_query_arg(
+			array(
+				'tab'       => 'plugin-information',
+				'plugin'    => $plugin_slug,
+				'TB_iframe' => 'true',
+				'width'     => '600',
+				'height'    => '550',
+			),
+			admin_url( 'plugin-install.php' )
+		) );
+	}
+
+	/**
+	 * 管理画面にメッセージを通知する。
+	 * 
+	 * [include] wp-admin/includes/template.php
+	 *
+	 * @param string $slug スラッグ名
+	 * @param string $code 識別コード名 (HTMLのid属性)
+	 * @param string $message メッセージ
+	 * @param string $type メッセージ種別 (error/success/warning/info) [error]
+	 * @return void
+	 */
+	public static function notice_admin_message( $slug, $code, $message, $type = 'error' )
+	{
+		if ( !in_array( $type, [ 'error', 'success', 'warning', 'info' ] ) ) { return; }
+
+		// メッセージ設定
+		add_settings_error( $slug, $code, $message, $type );
+
+		// メッセージ表示
+		settings_errors( $slug );
+	}
+
+	/**
+	 * オプションを削除する。
+	 *
+	 * @param string $option_name オプション名
+	 * @return boolean 削除結果を返す。(true:成功or該当なし/false:失敗)
+	 */
+	public static function delete_option( $option_name )
+	{
+		if ( false !== get_option( $option_name ) ) {
+			return delete_option( $option_name );
+		}
+		return true;
 	}
 
 	/**

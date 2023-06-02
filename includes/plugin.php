@@ -24,20 +24,23 @@ class NT_WPCF7SN {
 	}
 
   // ========================================================
-  // プラグインオプション
+  // オプション
   // ========================================================
 
 	/**
 	* オプション値を取得する。
 	*
 	* @param string $key オプションキー
-	* @param mixed $default デフォルト値
-	* @return mixed オプション値を返す。
+	* @param string $default デフォルト値
+	* @return string オプション値を返す。
 	*/
 	public static function get_option( $key, $default )
 	{
+		$key = strval( $key );
+		$default = strval( $default );
+
 		// オプション値を取得
-		$option_value = SELF::get_plugin_option();
+		$option_value = Utility::get_wpdb_option( _OPTION_NAME );
 
 		// 存在しない場合はデフォルト値で初期化 (NG：未定義/NULL)
 		if ( !array_key_exists( $key, $option_value ) || !isset( $option_value[$key] ) ) {
@@ -45,90 +48,29 @@ class NT_WPCF7SN {
 			return $default;
 		}
 
-		return $option_value[$key];
+		return strval( $option_value[$key] );
 	}
 
 	/**
 	* オプション値を更新する。
 	*
 	* @param string $key オプションキー
-	* @param mixed $value オプション値
+	* @param string $key_value オプション値
 	* @return void
 	*/
-	public static function update_option( $key, $value )
+	public static function update_option( $key, $key_value )
 	{
+		$key = strval( $key );
+		$key_value = strval( $key_value );
+
 		// オプション値を取得
-		$option_value = SELF::get_plugin_option();
+		$option_value = Utility::get_wpdb_option( _OPTION_NAME );
 
 		// オプション値をマージ
-		$option_value = array_merge( $option_value, array( $key => $value ) );
+		$option_value = array_merge( $option_value, array( $key => $key_value ) );
 
 		// オプション値を更新
-		SELF::update_plugin_option( $option_value );
-	}
-
-	/**
-	* プラグインのオプション値を取得する。
-	*
-	* @return mixed[] オプション値を返す。
-	*/
-	public static function get_plugin_option()
-	{
-		$option_name = sprintf( "%s_conf" , _PREFIX['_'] );
-
-		// WordPressデータベース取得
-		$option_value = get_option( $option_name );
-		if ( false === $option_value ) { return []; }
-
-		// ------------------------------------
-		// デコード処理
-		// ------------------------------------
-
-		// JSON形式の文字列をデコード
-		$option_value = @json_decode( $option_value, true );
-
-		// アンエスケープ・デコード
-		if ( is_array( $option_value ) ) {
-			$option_value = array_map(
-				array( __NAMESPACE__ . '\Utility', 'unesc_decode' ),
-				$option_value
-			);
-		}
-
-		// ------------------------------------
-
-		return $option_value;
-	}
-
-	/**
-	* プラグインのオプション値を更新する。
-	*
-	* @param mixed[] $option_value オプション値
-	* @return void
-	*/
-	public static function update_plugin_option( $option_value )
-	{
-		$option_name = sprintf( "%s_conf" , _PREFIX['_'] );
-
-		// ------------------------------------
-		// エンコード処理
-		// ------------------------------------
-
-		// エスケープ・エンコード
-		if ( is_array( $option_value ) ) {
-			$option_value = array_map(
-				array( __NAMESPACE__ . '\Utility', 'esc_encode' ),
-				$option_value
-			);
-		}
-
-		// JSON形式の文字列にエンコード
-		$option_value = @json_encode( $option_value );
-
-		// ------------------------------------
-
-		// WordPressデータベース更新
-		update_option( $option_name, $option_value );
+		Utility::update_wpdb_option( _OPTION_NAME, $option_value );
 	}
 
   // ========================================================

@@ -19,14 +19,14 @@ class Form_Option {
   // ========================================================
 
 	/**
-	 * コンタクトフォーム設定の初期化を行う。(全数)
+	 * オプションを初期化する。(全数)
 	 *
 	 * @return void
 	 */
 	public static function init_options()
 	{
 		// ------------------------------------
-		// コンタクトフォーム設定の整合性チェック
+		// 整合性チェック
 		// ------------------------------------
 
 		// 全体の設定チェック
@@ -46,7 +46,7 @@ class Form_Option {
 		}
 
 		// ------------------------------------
-		// コンタクトフォーム設定のバリテーション
+		// バリテーション
 		// ------------------------------------
 
 		foreach ( SELF::get_options() as $form_id => $form_option ) {
@@ -69,7 +69,7 @@ class Form_Option {
 	}
 
 	/**
-	 * コンタクトフォーム設定の初期化を行う。
+	 * オプションを初期化する。(個別)
 	 *
 	 * @param int|string $form_id コンタクトフォームID
 	 * @return void
@@ -157,7 +157,7 @@ class Form_Option {
 	}
 
 	/**
-	 * コンタクトフォーム設定値の整合性チェックを行う。
+	 * コンタクトフォーム設定値の整合性チェックを行う。(個別)
 	 *
 	 * @param mixed[] $option_value オプション値
 	 * @return void mixed[] コンタクトフォーム設定値を返す。
@@ -284,7 +284,7 @@ class Form_Option {
 	}
 
 	/**
-	 * グローバルオプションの初期化を行う。
+	 * グローバルオプションの初期化を行う。(個別)
 	 *
 	 * @param int|string $form_id コンタクトフォームID
 	 * @return void
@@ -414,8 +414,6 @@ class Form_Option {
 		);
 	}
 
-   // ------------------------------------
-
 	/**
 	 * コンタクトフォーム設定の既定値を取得する。
 	 *
@@ -512,6 +510,33 @@ class Form_Option {
 	}
 
   // ========================================================
+  // メールカウント条件設定
+  // ========================================================
+
+	/**
+	 * メール送信失敗時にメールカウントを増加するか確認する。
+	 * 
+	 * [ContactForm7標準動作] カウント増加する
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return boolean カウント増加結果を返す。(true:増加する/false:増加しない)
+	 */
+	public static function is_increment_mail_failed( $form_id )
+	{
+		$form_id = strval( $form_id );
+
+		// コンタクトフォーム設定取得
+		$form_option = SELF::get_option( $form_id );
+
+		// メールカウント条件判定
+		if ( 'yes' === $form_option['nocount_mail_failed'] ) {
+			return false;
+		}
+
+		return true;
+	}
+
+  // ========================================================
 
 }
 
@@ -556,7 +581,7 @@ class Form_Validate {
 		}
 
 		// ------------------------------------
-		// 個別オプション値検証
+		// (追加)オプション値検証
 		// ------------------------------------
 
 		$valid_func = sprintf( '%s\Form_Validate::validate_%s'
@@ -574,9 +599,9 @@ class Form_Validate {
 		return $validity;
 	}
 
-   // ------------------------------------
-   // 個別オプション検証
-   // ------------------------------------
+  // ========================================================
+  // (追加)オプション値検証
+  // ========================================================
 
 	/**
 	 * オプション値の検証を行う。(プレフィックス)
@@ -588,20 +613,17 @@ class Form_Validate {
 	 */
 	public static function validate_prefix( $value, &$message = null )
 	{
+		// false:事前検証(入力パターン検証)で無効時
 		$validity = empty( $message ) ? true : false ;
 
 		// ------------------------------------
-		// 入力パターン検証
+		// オプション値検証
 		// ------------------------------------
 
-		if ( $validity ) {
-			if ( !SELF::is_match_pattern( 'prefix', $value ) ) {
-				$validity = false;
-			}
-		}
+		// 追加の検証なし
 
 		// ------------------------------------
-		// エラーメッセージ登録
+		// エラーメッセージ登録 (追加/上書き)
 		// ------------------------------------
 
 		if ( !$validity ) {
@@ -625,20 +647,17 @@ class Form_Validate {
 	 */
 	public static function validate_digits( $value, &$message = null )
 	{
+		// false:事前検証(入力パターン検証)で無効時
 		$validity = empty( $message ) ? true : false ;
 
 		// ------------------------------------
-		// 入力パターン検証
+		// オプション値検証
 		// ------------------------------------
 
-		if ( $validity ) {
-			if ( !SELF::is_match_pattern( 'digits', $value ) ) {
-				$validity = false;
-			}
-		}
+		// 追加の検証なし
 
 		// ------------------------------------
-		// エラーメッセージ登録
+		// エラーメッセージ登録 (追加/上書き)
 		// ------------------------------------
 
 		if ( !$validity ) {
@@ -663,20 +682,17 @@ class Form_Validate {
 	 */
 	public static function validate_count( $value, &$message = null )
 	{
+		// false:事前検証(入力パターン検証)で無効時
 		$validity = empty( $message ) ? true : false ;
 
 		// ------------------------------------
-		// 入力パターン検証
+		// オプション値検証
 		// ------------------------------------
 
-		if ( $validity ) {
-			if ( !SELF::is_match_pattern( 'count', $value ) ) {
-				$validity = false;
-			}
-		}
+		// 追加の検証なし
 
 		// ------------------------------------
-		// エラーメッセージ登録
+		// エラーメッセージ登録 (追加/上書き)
 		// ------------------------------------
 
 		if ( !$validity ) {
@@ -701,20 +717,17 @@ class Form_Validate {
 	 */
 	public static function validate_daycount( $value, &$message = null )
 	{
+		// false:事前検証(入力パターン検証)で無効時
 		$validity = empty( $message ) ? true : false ;
 
 		// ------------------------------------
-		// 入力パターン検証
+		// オプション値検証
 		// ------------------------------------
 
-		if ( $validity ) {
-			if ( !SELF::is_match_pattern( 'daycount', $value ) ) {
-				$validity = false;
-			}
-		}
+		// 追加の検証なし
 
 		// ------------------------------------
-		// エラーメッセージ登録
+		// エラーメッセージ登録 (追加/上書き)
 		// ------------------------------------
 
 		if ( !$validity ) {

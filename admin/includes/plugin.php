@@ -20,25 +20,25 @@ class NT_WPCF7SN_Admin {
 	public static function init_plugin()
 	{
 		// バージョン比較
-		SELF::compare_plugin_version();
+		SELF::compare_version();
 
 		// 動作環境チェック
 		SELF::check_system_requirements();
 
 		// 依存関係チェック
-		SELF::check_dependent_plugin();
+		SELF::check_dependent();
 	}
 
-   // ------------------------------------
-   // バージョン比較
-   // ------------------------------------
+  // ========================================================
+  // バージョン比較
+  // ========================================================
 
 	/**
-	* プラグインのバージョン比較処理を行う。
+	* バージョン比較を行う。
 	*
 	* @return void
 	*/
-	private static function compare_plugin_version()
+	private static function compare_version()
 	{
 		$new_version = _VERSION;
 		$old_version = NT_WPCF7SN::get_option( 'version', '0.0.0' );
@@ -47,11 +47,11 @@ class NT_WPCF7SN_Admin {
 		switch ( version_compare( $new_version, $old_version ) ) {
 			// ダウングレード [ new < old ]
 			case -1:
-				SELF::downgrade_plugin();
+				SELF::downgrade_version();
 				break;
 			// アップグレード [ new > old ]
 			case 1:
-				SELF::upgrade_plugin();
+				SELF::upgrade_version();
 				break;
 			// 同一バージョン [ new = old ]
 			default:
@@ -63,12 +63,32 @@ class NT_WPCF7SN_Admin {
 		NT_WPCF7SN::update_option( 'version', $new_version );
 	}
 
-   // ------------------------------------
-   // 環境チェック
-   // ------------------------------------
+	/**
+	 * アップグレード処理を行う。
+	 *
+	 * @return void
+	 */
+	private static function upgrade_version()
+	{
+		// 処理なし
+	}
 
 	/**
-	 * プラグインの動作環境チェックを行う。
+	 * ダウングレード処理を行う。
+	 *
+	 * @return void
+	 */
+	private static function downgrade_version()
+	{
+		// 処理なし
+	}
+
+  // ========================================================
+  // 環境チェック
+  // ========================================================
+
+	/**
+	 * 動作環境のチェックを行う。
 	 *
 	 * @return void
 	 */
@@ -102,11 +122,11 @@ class NT_WPCF7SN_Admin {
 	}
 
 	/**
-	 * プラグインの依存関係チェックを行う。
+	 * 依存関係のチェックを行う。
 	 *
 	 * @return void
 	 */
-	private static function check_dependent_plugin()
+	private static function check_dependent()
 	{
 		// ------------------------------------
 		// 依存関係チェック：Contact Form 7 プラグイン
@@ -138,26 +158,6 @@ class NT_WPCF7SN_Admin {
 				$notice_slug, '', $message, 'error'
 			);
 		}
-	}
-
-	/**
-	 * プラグインのアップグレード処理を行う。
-	 *
-	 * @return void
-	 */
-	private static function upgrade_plugin()
-	{
-		// 処理なし
-	}
-
-	/**
-	 * プラグインのダウングレード処理を行う。
-	 *
-	 * @return void
-	 */
-	private static function downgrade_plugin()
-	{
-		// 処理なし
 	}
 
   // ========================================================
@@ -192,7 +192,7 @@ class NT_WPCF7SN_Admin {
 	public static function enqueue_admin_scripts( $hook_suffix )
 	{
 		// ------------------------------------
-		// プラグイン設定画面
+		// 管理メニュー
 		// ------------------------------------
 
 		if ( 1 === preg_match( _ADMIN_MENU_REGEX['page_suffix'], $hook_suffix ) ) {
