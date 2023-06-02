@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // プラグイン設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_VERSION', '2.0.2' );
+define( __NAMESPACE__ . '\_VERSION', '2.1.0' );
 
 define( __NAMESPACE__ . '\_REQUIRED_WP_VERSION', '6.0' );
 
