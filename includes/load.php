@@ -44,5 +44,5 @@ require_once( _FUNCTION_DIR . '/rest-api.php' );
 // ------------------------------------
 
 if ( is_admin() ) {
-	require_once( _ADMIN_DIR . '/admin.php' );
+	require_once( _ADMIN_DIR . '/functions.php' );
 }
