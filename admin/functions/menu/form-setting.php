@@ -4,6 +4,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 $form_id = strval( $this->get_form_id() );
 
+$serial_number = Serial_Number::get_serial_number( $form_id );
+
 // ========================================================
 // メールタグ表示設定
 // ========================================================
@@ -141,7 +143,7 @@ $list_unix_format = array(
 
 <p class="example">
 	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
-		, Serial_Number::get_serial_number( $form_id )
+		, $serial_number
 	) ); ?>
 </p>
 
@@ -228,7 +230,7 @@ $list_unix_format = array(
 
 <p class="example">
 	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
-		, Serial_Number::get_serial_number( $form_id )
+		, $serial_number
 	) ); ?>
 </p>
 
@@ -259,5 +261,11 @@ $list_unix_format = array(
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
 <p><?php $this->submit( __( 'Settings', _TEXT_DOMAIN ) ); ?></p>
+
+<p class="example">
+	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
+		, $serial_number
+	) ); ?>
+</p>
 
 <?php // ======================================================================
