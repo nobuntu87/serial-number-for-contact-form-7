@@ -89,12 +89,54 @@ class Serial_Number {
 	{
 		$separator = $option_value['separator'] === 'yes' ? '-' : '';
 		$digits = $option_value['digits'];
+		$nocount = $option_value['nocount'] === 'yes' ? true : false;
 
-		return sprintf( '%s%s%s'
-			, SELF::get_timestamp( 'U' )
-			, $separator
-			, SELF::convert_num_digits( $count, $digits )
+		// ------------------------------------
+		// UNIX時間設定
+		// ------------------------------------
+
+		$unixtime = '';
+		$microtime = '';
+
+		SELF::get_unixtime( $unixtime, $microtime );
+
+		switch( strval( $option_value['unixtime_type'] ) ) {
+			case '1': // ミリ秒 (ms)
+				$microtime = substr( $microtime, 0, 3 );
+				break;
+			case '2': // マイクロ秒 (μs)
+				$microtime = substr( $microtime, 0, 6 );
+				break;
+			default: // 秒 (s)
+				$microtime = '';
+				break;
+		}
+
+		// ------------------------------------
+		// シリアル番号生成
+		// ------------------------------------
+
+		$serial_number = sprintf( '%s'
+			, strval( $unixtime )
 		);
+
+		if ( !empty( $microtime ) ) {
+			$serial_number .= sprintf( '%s%s'
+				, $separator
+				, strval( $microtime )
+			);
+		}
+
+		if ( !$nocount ) {
+			$serial_number .= sprintf( '%s%s'
+				, $separator
+				, SELF::convert_num_digits( $count, $digits )
+			);
+		}
+
+		// ------------------------------------
+
+		return strval( $serial_number );
 	}
 
 	/**

@@ -204,7 +204,7 @@ $list_unix_format = array(
 <p>
 	<?php $this->checkbox(
 		_FORM_OPTIONS['nocount']['key'],
-		__( 'Don\'t display count with unique ID.', _TEXT_DOMAIN ),
+		__( 'Don\'t display mail count. ( UNIX Timestamp & Unique ID )', _TEXT_DOMAIN ),
 		[], _FORM_OPTIONS['nocount']['default']
 	); ?>
 </p>
