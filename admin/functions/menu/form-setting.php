@@ -55,9 +55,9 @@ if ( NT_WPCF7SN::is_working_dayreset() ) {
 
 $list_type = array(
 	0 => __( 'Serial Number', _TEXT_DOMAIN ),
-	1 => __( 'Timestamp (UnixTime)', _TEXT_DOMAIN ),
-	2 => __( 'Timestamp (Date)', _TEXT_DOMAIN ),
-	3 => __( 'Timestamp (Date + Time)', _TEXT_DOMAIN ),
+	1 => __( 'Timestamp ( UNIX time )', _TEXT_DOMAIN ),
+	2 => __( 'Timestamp ( Date )', _TEXT_DOMAIN ),
+	3 => __( 'Timestamp ( Date + Time )', _TEXT_DOMAIN ),
 	4 => __( 'Unique ID', _TEXT_DOMAIN ),
 );
 
@@ -110,7 +110,7 @@ $list_unix_format = array(
 
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
-<h3><i class="fa-solid fa-stopwatch-20 fa-fw"></i><?php _e( 'Count', _TEXT_DOMAIN ); ?></h3>
+<h3><i class="fa-solid fa-stopwatch-20 fa-fw"></i><?php _e( 'Mail Counter', _TEXT_DOMAIN ); ?></h3>
 
 <p class="<?php if ( $is_daycount ) { ?> hidden <?php } ?>">
 	<?php _e( 'Current Count', _TEXT_DOMAIN ); ?>
@@ -149,9 +149,9 @@ $list_unix_format = array(
 
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
-<h3><i class="fa-solid fa-sliders fa-fw"></i><?php _e( 'Settings', _TEXT_DOMAIN ); ?></h3>
+<h3><i class="fa-solid fa-sliders fa-fw"></i><?php _e( 'Display Settings', _TEXT_DOMAIN ); ?></h3>
 
-<h4><?php _e( 'Type', _TEXT_DOMAIN ); ?></h4>
+<h4><?php _e( 'Number Type', _TEXT_DOMAIN ); ?></h4>
 
 <p>
 	<?php $this->radio(
@@ -161,7 +161,7 @@ $list_unix_format = array(
 	); ?>
 </p>
 
-<h4><?php _e( 'Options', _TEXT_DOMAIN ); ?></h4>
+<h4><?php _e( 'Display Options', _TEXT_DOMAIN ); ?></h4>
 
 <p>
 	<?php _e( 'Prefix', _TEXT_DOMAIN ); ?>
@@ -176,7 +176,7 @@ $list_unix_format = array(
 </p>
 
 <p>
-	<?php _e( 'Digits', _TEXT_DOMAIN ); ?>
+	<?php _e( 'Counter digits', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
 		_FORM_OPTIONS['digits']['key'],
@@ -206,7 +206,8 @@ $list_unix_format = array(
 <p>
 	<?php $this->checkbox(
 		_FORM_OPTIONS['nocount']['key'],
-		__( 'Don\'t display mail count. ( UNIX Timestamp & Unique ID )', _TEXT_DOMAIN ),
+		__( 'Don\'t display mail count.', _TEXT_DOMAIN )
+		. ' ( ' . __( 'UNIX time & Unique ID', _TEXT_DOMAIN ) . ' )',
 		[], _FORM_OPTIONS['nocount']['default']
 	); ?>
 </p>
@@ -214,7 +215,7 @@ $list_unix_format = array(
 <p>
 	<?php $this->checkbox(
 		_FORM_OPTIONS['dayreset']['key'],
-		__( 'Use the daily reset counter.', _TEXT_DOMAIN ),
+		__( 'Use the daily reset mail counter.', _TEXT_DOMAIN ),
 		$attr_dayreset, _FORM_OPTIONS['dayreset']['default']
 	); ?>
 	<?php if ( !NT_WPCF7SN::is_working_dayreset() ) { ?><br/>
@@ -238,7 +239,7 @@ $list_unix_format = array(
 
 <h3><i class="fa-solid fa-gears fa-fw"></i><?php _e( 'Advanced Settings', _TEXT_DOMAIN ); ?></h3>
 
-<h4><?php _e( 'UNIX time format setting', _TEXT_DOMAIN ); ?></h4>
+<h4><?php _e( 'UNIX Time Display Format', _TEXT_DOMAIN ); ?></h4>
 
 <p>
 	<?php $this->radio(
