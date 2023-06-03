@@ -42,18 +42,29 @@ class Serial_Number {
 		// シリアル番号生成
 		// ------------------------------------
 
+		$serial_number = '';
+
 		switch( strval( $form_option['type'] ) ) {
 			case '1': // タイムスタンプ (UNIX時間)
-				return SELF::create_snum_unixtime( $count, $form_option );
+				$serial_number = SELF::create_snum_unixtime( $count, $form_option );
+				break;
 			case '2': // タイムスタンプ (年月日)
-				return SELF::create_snum_date( $count, $form_option );
+				$serial_number = SELF::create_snum_date( $count, $form_option );
+				break;
 			case '3': // タイムスタンプ (年月日+時分秒)
-				return SELF::create_snum_datetime( $count, $form_option );
+				$serial_number = SELF::create_snum_datetime( $count, $form_option );
+				break;
 			case '4': // ユニークID (英数字)
-				return SELF::create_snum_unique( $count, $form_option );
+				$serial_number = SELF::create_snum_unique( $count, $form_option );
+				break;
 			default: // 通し番号
-				return SELF::create_snum_number( $count, $form_option );
+				$serial_number = SELF::create_snum_number( $count, $form_option );
+				break;
 		}
+
+		// ------------------------------------
+
+		return strval( $form_option['prefix'] . $serial_number );
 	}
 
    // ------------------------------------
