@@ -4,6 +4,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 $form_id = strval( $this->get_form_id() );
 
+$serial_number = Serial_Number::get_serial_number( $form_id );
+
 // ========================================================
 // メールタグ表示設定
 // ========================================================
@@ -80,6 +82,16 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 	);
 }
 
+// ========================================================
+// 高度な設定
+// ========================================================
+
+$list_unix_format = array(
+	0 => __( 'seconds (s)', _TEXT_DOMAIN ),
+	1 => __( 'milliseconds (ms)', _TEXT_DOMAIN ),
+	2 => __( 'microseconds (μs)', _TEXT_DOMAIN ),
+);
+
 // HTML表示 ================================================================ ?>
 
 <p><?php $this->hidden( 'form_id', $form_id ); ?></p>
@@ -131,7 +143,7 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 
 <p class="example">
 	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
-		, Serial_Number::get_serial_number( $form_id )
+		, $serial_number
 	) ); ?>
 </p>
 
@@ -194,7 +206,7 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 <p>
 	<?php $this->checkbox(
 		_FORM_OPTIONS['nocount']['key'],
-		__( 'Don\'t display count with unique ID.', _TEXT_DOMAIN ),
+		__( 'Don\'t display mail count. ( UNIX Timestamp & Unique ID )', _TEXT_DOMAIN ),
 		[], _FORM_OPTIONS['nocount']['default']
 	); ?>
 </p>
@@ -218,13 +230,23 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 
 <p class="example">
 	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
-		, Serial_Number::get_serial_number( $form_id )
+		, $serial_number
 	) ); ?>
 </p>
 
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
 <h3><i class="fa-solid fa-gears fa-fw"></i><?php _e( 'Advanced Settings', _TEXT_DOMAIN ); ?></h3>
+
+<h4><?php _e( 'UNIX time format setting', _TEXT_DOMAIN ); ?></h4>
+
+<p>
+	<?php $this->radio(
+		_FORM_OPTIONS['unixtime_type']['key'],
+		$list_unix_format, false,
+		_FORM_OPTIONS['unixtime_type']['default']
+	); ?>
+</p>
 
 <h4><?php _e( 'Disable Mail Count Increase', _TEXT_DOMAIN ); ?></h4>
 
@@ -239,5 +261,11 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
 <p><?php $this->submit( __( 'Settings', _TEXT_DOMAIN ) ); ?></p>
+
+<p class="example">
+	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
+		, $serial_number
+	) ); ?>
+</p>
 
 <?php // ======================================================================

@@ -43,8 +43,6 @@ class Serial_Number {
 		// ------------------------------------
 
 		switch( strval( $form_option['type'] ) ) {
-			case '0': // 通し番号
-				return SELF::create_snum_number( $count, $form_option );
 			case '1': // タイムスタンプ (UNIX時間)
 				return SELF::create_snum_unixtime( $count, $form_option );
 			case '2': // タイムスタンプ (年月日)
@@ -53,8 +51,8 @@ class Serial_Number {
 				return SELF::create_snum_datetime( $count, $form_option );
 			case '4': // ユニークID (英数字)
 				return SELF::create_snum_unique( $count, $form_option );
-			default:
-				return '';
+			default: // 通し番号
+				return SELF::create_snum_number( $count, $form_option );
 		}
 	}
 
@@ -73,9 +71,18 @@ class Serial_Number {
 	{
 		$digits = $option_value['digits'];
 
-		return sprintf( '%s'
+		// ------------------------------------
+		// シリアル番号生成
+		// ------------------------------------
+
+		// 連番
+		$serial_number = sprintf( '%s'
 			, SELF::convert_num_digits( $count, $digits )
 		);
+
+		// ------------------------------------
+
+		return strval( $serial_number );
 	}
 
 	/**
@@ -89,12 +96,54 @@ class Serial_Number {
 	{
 		$separator = $option_value['separator'] === 'yes' ? '-' : '';
 		$digits = $option_value['digits'];
+		$nocount = $option_value['nocount'] === 'yes' ? true : false;
 
-		return sprintf( '%s%s%s'
-			, SELF::get_timestamp( 'U' )
-			, $separator
-			, SELF::convert_num_digits( $count, $digits )
+		// ------------------------------------
+		// UNIX時間設定
+		// ------------------------------------
+
+		$unixtime = '';
+		$microtime = '';
+
+		SELF::get_unixtime( $unixtime, $microtime );
+
+		switch( strval( $option_value['unixtime_type'] ) ) {
+			case '1': // ミリ秒 (ms)
+				$microtime = substr( $microtime, 0, 3 );
+				break;
+			case '2': // マイクロ秒 (μs)
+				$microtime = substr( $microtime, 0, 6 );
+				break;
+			default: // 秒 (s)
+				$microtime = '';
+				break;
+		}
+
+		// ------------------------------------
+		// シリアル番号生成
+		// ------------------------------------
+
+		$serial_number = sprintf( '%s'
+			, strval( $unixtime )
 		);
+
+		if ( !empty( $microtime ) ) {
+			$serial_number .= sprintf( '%s%s'
+				, $separator
+				, strval( $microtime )
+			);
+		}
+
+		if ( !$nocount ) {
+			$serial_number .= sprintf( '%s%s'
+				, $separator
+				, SELF::convert_num_digits( $count, $digits )
+			);
+		}
+
+		// ------------------------------------
+
+		return strval( $serial_number );
 	}
 
 	/**
@@ -110,11 +159,19 @@ class Serial_Number {
 		$digits = $option_value['digits'];
 		$format = $option_value['year2dig'] === 'yes' ? 'ymd' : 'Ymd';
 
-		return sprintf( '%s%s%s'
+		// ------------------------------------
+		// シリアル番号生成
+		// ------------------------------------
+
+		$serial_number = sprintf( '%s%s%s'
 			, SELF::get_timestamp( $format )
 			, $separator
 			, SELF::convert_num_digits( $count, $digits )
 		);
+
+		// ------------------------------------
+
+		return strval( $serial_number );
 	}
 
 	/**
@@ -130,13 +187,21 @@ class Serial_Number {
 		$digits = $option_value['digits'];
 		$format = $option_value['year2dig'] === 'yes' ? 'ymd' : 'Ymd';
 
-		return sprintf( '%s%s%s%s%s'
+		// ------------------------------------
+		// シリアル番号生成
+		// ------------------------------------
+
+		$serial_number = sprintf( '%s%s%s%s%s'
 			, SELF::get_timestamp( $format )
 			, $separator
 			, SELF::get_timestamp( 'His' )
 			, $separator
 			, SELF::convert_num_digits( $count, $digits )
 		);
+
+		// ------------------------------------
+
+		return strval( $serial_number );
 	}
 
 	/**
@@ -150,19 +215,26 @@ class Serial_Number {
 	{
 		$separator = $option_value['separator'] === 'yes' ? '-' : '';
 		$digits = $option_value['digits'];
+		$nocount = $option_value['nocount'] === 'yes' ? true : false;
 
-		if ( $option_value['nocount'] === 'yes' ) {
-			return sprintf( '%s'
-				, SELF::create_unique_id( $count )
-			);
-		}
-		else {
-			return sprintf( '%s%s%s'
-				, SELF::create_unique_id( $count )
+		// ------------------------------------
+		// シリアル番号生成
+		// ------------------------------------
+
+		$serial_number = sprintf( '%s'
+			, SELF::create_unique_id( $count )
+		);
+
+		if ( !$nocount ) {
+			$serial_number .= sprintf( '%s%s'
 				, $separator
 				, SELF::convert_num_digits( $count, $digits )
 			);
 		}
+
+		// ------------------------------------
+
+		return strval( $serial_number );
 	}
 
   // ========================================================
@@ -221,6 +293,20 @@ class Serial_Number {
 	private static function get_timestamp( $format )
 	{
 		return date_i18n( $format );
+	}
+
+	/**
+	 * UNIX時間を取得する。
+	 *
+	 * @param string $unixtime UNIX時間
+	 * @param string $microtime マイクロ秒
+	 * @return void
+	 */
+	private static function get_unixtime( &$unixtime, &$microtime )
+	{
+		list( $usec, $sec ) = explode( ' ', microtime() );
+		$unixtime = strval( $sec );
+		$microtime = strval( explode( '.', $usec )[1] );
 	}
 
   // ========================================================
