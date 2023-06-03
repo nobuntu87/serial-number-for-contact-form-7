@@ -80,6 +80,16 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 	);
 }
 
+// ========================================================
+// 高度な設定
+// ========================================================
+
+$list_unix_format = array(
+	0 => __( 'seconds (s)', _TEXT_DOMAIN ),
+	1 => __( 'milliseconds (ms)', _TEXT_DOMAIN ),
+	2 => __( 'microseconds (μs)', _TEXT_DOMAIN ),
+);
+
 // HTML表示 ================================================================ ?>
 
 <p><?php $this->hidden( 'form_id', $form_id ); ?></p>
@@ -225,6 +235,16 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
 
 <h3><i class="fa-solid fa-gears fa-fw"></i><?php _e( 'Advanced Settings', _TEXT_DOMAIN ); ?></h3>
+
+<h4><?php _e( 'UNIX time format setting', _TEXT_DOMAIN ); ?></h4>
+
+<p>
+	<?php $this->radio(
+		_FORM_OPTIONS['unixtime_type']['key'],
+		$list_unix_format, false,
+		_FORM_OPTIONS['unixtime_type']['default']
+	); ?>
+</p>
 
 <h4><?php _e( 'Disable Mail Count Increase', _TEXT_DOMAIN ); ?></h4>
 

@@ -150,6 +150,11 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
+	'unixtime_type' => array(
+		'key'     => 'unixtime_type',
+		'default' => 0,
+		'pattern' => '^[0-2]$'
+	),
 	// メールカウント設定
 	'dayreset' => array(
 		'key'     => 'dayreset',
