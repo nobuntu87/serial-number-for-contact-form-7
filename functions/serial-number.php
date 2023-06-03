@@ -223,6 +223,20 @@ class Serial_Number {
 		return date_i18n( $format );
 	}
 
+	/**
+	 * UNIX時間を取得する。
+	 *
+	 * @param string $unixtime UNIX時間
+	 * @param string $microtime マイクロ秒
+	 * @return void
+	 */
+	private static function get_unixtime( &$unixtime, &$microtime )
+	{
+		list( $usec, $sec ) = explode( ' ', microtime() );
+		$unixtime = strval( $sec );
+		$microtime = strval( explode( '.', $usec )[1] );
+	}
+
   // ========================================================
 
 }
