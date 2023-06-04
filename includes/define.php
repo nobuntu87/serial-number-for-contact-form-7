@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // プラグイン設定
 // ------------------------------------
 
-define( __NAMESPACE__ . '\_VERSION', '2.1.0' );
+define( __NAMESPACE__ . '\_VERSION', '2.2.0' );
 
 define( __NAMESPACE__ . '\_REQUIRED_WP_VERSION', '6.0' );
 
@@ -149,6 +149,11 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 		'key'     => 'nocount',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
+	),
+	'unixtime_type' => array(
+		'key'     => 'unixtime_type',
+		'default' => 0,
+		'pattern' => '^[0-2]$'
 	),
 	// メールカウント設定
 	'dayreset' => array(
