@@ -565,3 +565,56 @@ ul.menu-tab-list li.menu-tab-item.now a {
 .nt-wplib-admin-menu-form-option-wrap.hidden {
 	display: none;
 }
+
+/* ------------------------------------
+ * コピーボタン
+ * --------------------------------- */
+
+/* ===== レイアウト ===== */
+
+.nt-wplib-admin-menu-form-option-wrap.copy
+.input-group .nt-copy-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.5em;
+}
+
+.nt-wplib-admin-menu-form-option-wrap.copy
+.input-group .nt-copy-button > i {
+	margin: 0;
+}
+.nt-wplib-admin-menu-form-option-wrap.copy
+.input-group .nt-copy-button > i.hidden {
+	display: none;
+}
+
+/* ------------------------------------
+ * コピーテキスト
+ * --------------------------------- */
+
+/* ===== レイアウト ===== */
+
+.nt-wplib-admin-menu-form-option-wrap.copy
+.input-group {
+	position: relative;
+}
+.nt-wplib-admin-menu-form-option-wrap.copy
+.input-group .nt-copy-button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 35px;				/* [A] */
+}
+
+.nt-wplib-admin-menu-form-option-wrap.copy
+.input-group .nt-copy-target {
+	padding-left: 8px;			/* [B] */
+	padding-right: 43px;		/* [-] = A + B */
+	text-align: center;
+}
+.nt-wplib-admin-menu-form-option-wrap.copy
+.input-group .nt-copy-target::-webkit-scrollbar {
+	display: none;
+}

@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_4_2;
+namespace _Nt\WpLib\AdminMenu\v2_5_0;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -97,7 +97,6 @@ abstract class Admin_Menu_Base {
 		'minlength', 'maxlength',
 		'placeholder', 'pattern',
 		'size', 'min', 'max',
-		'onfocus',
 	);
 
   // ========================================================
@@ -864,6 +863,14 @@ abstract class Admin_Menu_Base {
 	 */
 	public final function register_wp_script_callback( $hook_suffix )
 	{
+		// メニューページ用JavaScript
+		wp_enqueue_script(
+			$this->m_class['lib']['slug'],
+			$this->get_uri( __DIR__ ) . '/js/admin.js',
+			array(),
+			$this->m_class['lib']['version'], 'all'
+		);
+
 		// メニューページ用CSS
 		wp_enqueue_style(
 			$this->m_class['lib']['slug'],
@@ -2098,6 +2105,228 @@ abstract class Admin_Menu_Base {
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
 			, esc_html( $option_value )
+
+			, esc_html( $option['error'] )
+		) );
+	}
+
+	/**
+	 * コピーテキストフィールドを表示する。
+	 *
+	 * @param string $key キー
+	 * @param mixed[] $attributes 属性設定
+	 * @param integer $size フィールドサイズ [0~100(%)]
+	 * @param string $default デフォルト値
+	 * @return void
+	 */
+	protected function copy_text( $key, $attributes = [], $size = '', $default = '' )
+	{
+		// ------------------------------------
+		// オプション設定 取得
+		// ------------------------------------
+
+		$option = SELF::_OPTION_FORMAT;
+
+		// 保存値チェック
+		if ( array_key_exists( $key, $this->m_option ) ) {
+			$option = $this->m_option[$key];
+		}
+
+		// ------------------------------------
+		// オプション値 取得
+		// ------------------------------------
+
+		$option_key = $this->get_option_key( $key );
+		$option_id = $key;
+		$option_value = strval( $default );
+
+		// 保存値チェック
+		if ( array_key_exists( $key, $this->m_option ) ) {
+			$option_value = strval( $option['value'] );
+		}
+
+		// ------------------------------------
+		// 属性設定
+		// ------------------------------------
+
+		$attr = '';
+
+		// 読み取り専用
+		$attributes = array_merge(
+			$attributes, array( 'readonly' => 'readonly' )
+		);
+
+		// 引数チェック (NG：未定義/空/NULL)
+		if ( !empty( $attributes ) && is_array( $attributes ) ) {
+			foreach( $attributes as $attr_name => $attr_val ) {
+				$attr .= sprintf( '%s=%s '
+					, esc_attr( $attr_name )
+					, esc_attr( $attr_val )
+				);
+			}
+		}
+
+		// ------------------------------------
+		// スタイル設定
+		// ------------------------------------
+
+		$style = '';
+
+		// 引数チェック (NG：未定義/空/NULL)
+		if ( !empty( $size ) && is_numeric( $size ) ) {
+			// 範囲補正 [0~100(%)]
+			if ( 0 > $size ) { $size = 0; }
+			if ( 100 < $size ) { $size = 100; }
+
+			$style .= sprintf( 'width:%s%%;'
+				, esc_attr( intval( $size ) )
+			);
+		}
+
+		// ------------------------------------
+		// エラー判定
+		// ------------------------------------
+
+		$error = ( !empty( $option['error'] ) ) ? 'invalid' : '';
+
+		// ------------------------------------
+		// HTML表示
+		// ------------------------------------
+
+		$this->view_html( sprintf( ''
+			. '<span class="%s-form-option-wrap text copy" style="%s">'
+			. '  <span class="%s-form-option-input %s">'
+			. '    <span class="input-group">'
+			. '      <input type="text" class="nt-copy-target" id="%s" name="%s" value="%s" %s>'
+			. '      <button type="button" class="nt-copy-button button-primary">'
+			. '        <i class="fa-regular fa-clipboard"></i>'
+			. '        <i class="fa-solid fa-clipboard-check hidden"></i>'
+			. '      </button>'
+			. '    </span>'
+			. '    <span class="input-error">%s</span>'
+			. '  </span>'
+			. '</span>'
+
+			, esc_attr( $this->m_class['lib']['slug'] )
+			, esc_attr( $style )
+
+			, esc_attr( $this->m_class['lib']['slug'] )
+			, esc_attr( $error )
+
+			, esc_attr( $option_id ), esc_attr( $option_key )
+			, esc_html( $option_value )
+			, esc_attr( $attr )
+
+			, esc_html( $option['error'] )
+		) );
+	}
+
+	/**
+	 * コピーテキストエリアを表示する。
+	 *
+	 * @param string $key キー
+	 * @param mixed[] $attributes 属性設定
+	 * @param integer $size フィールドサイズ [0~100(%)]
+	 * @param string $default デフォルト値
+	 * @return void
+	 */
+	protected function copy_textarea( $key, $attributes = [], $size = '', $default = '' )
+	{
+		// ------------------------------------
+		// オプション設定 取得
+		// ------------------------------------
+
+		$option = SELF::_OPTION_FORMAT;
+
+		// 保存値チェック
+		if ( array_key_exists( $key, $this->m_option ) ) {
+			$option = $this->m_option[$key];
+		}
+
+		// ------------------------------------
+		// オプション値 取得
+		// ------------------------------------
+
+		$option_key = $this->get_option_key( $key );
+		$option_id = $key;
+		$option_value = strval( $default );
+
+		// 保存値チェック
+		if ( array_key_exists( $key, $this->m_option ) ) {
+			$option_value = strval( $option['value'] );
+		}
+
+		// ------------------------------------
+		// 属性設定
+		// ------------------------------------
+
+		$attr = '';
+
+		// 読み取り専用
+		$attributes = array_merge(
+			$attributes, array( 'readonly' => 'readonly' )
+		);
+
+		// 引数チェック (NG：未定義/空/NULL)
+		if ( !empty( $attributes ) && is_array( $attributes ) ) {
+			foreach( $attributes as $attr_name => $attr_val ) {
+				$attr .= sprintf( '%s=%s '
+					, esc_attr( $attr_name )
+					, esc_attr( $attr_val )
+				);
+			}
+		}
+
+		// ------------------------------------
+		// スタイル設定
+		// ------------------------------------
+
+		$style = '';
+
+		// 引数チェック (NG：未定義/空/NULL)
+		if ( !empty( $size ) && is_numeric( $size ) ) {
+			// 範囲補正 [0~100(%)]
+			if ( 0 > $size ) { $size = 0; }
+			if ( 100 < $size ) { $size = 100; }
+
+			$style .= sprintf( 'width:%s%%;'
+				, esc_attr( intval( $size ) )
+			);
+		}
+
+		// ------------------------------------
+		// エラー判定
+		// ------------------------------------
+
+		$error = ( !empty( $option['error'] ) ) ? 'invalid' : '';
+
+		// ------------------------------------
+		// HTML表示
+		// ------------------------------------
+
+		$this->view_html( sprintf( ''
+			. '<span class="%s-form-option-wrap textarea copy" style="%s">'
+			. '  <span class="%s-form-option-input %s">'
+			. '    <span class="input-group">'
+			. '      <textarea class="nt-copy-target" id="%s" name="%s" %s>%s</textarea>'
+			. '      <button type="button" class="nt-copy-button button-primary">'
+			. '        <i class="fa-regular fa-clipboard"></i>'
+			. '        <i class="fa-solid fa-clipboard-check hidden"></i>'
+			. '      </button>'
+			. '    </span>'
+			. '    <span class="input-error">%s</span>'
+			. '  </span>'
+			. '</span>'
+
+			, esc_attr( $this->m_class['lib']['slug'] )
+			, esc_attr( $style )
+
+			, esc_attr( $this->m_class['lib']['slug'] )
+			, esc_attr( $error )
+
+			, esc_attr( $option_id ), esc_attr( $option_key )
+			, esc_attr( $attr )
+			, esc_textarea( $option_value )
 
 			, esc_html( $option['error'] )
 		) );
