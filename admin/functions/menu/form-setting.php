@@ -7,17 +7,6 @@ $form_id = strval( $this->get_form_id() );
 $serial_number = Serial_Number::get_serial_number( $form_id );
 
 // ========================================================
-// メールタグ表示設定
-// ========================================================
-
-$attr_mail_tag = array(
-	'readonly' => 'readonly',
-	'onfocus' => 'this.select();',
-);
-
-$mail_tag = Mail_Tag::get_sn_mail_tag( $form_id );
-
-// ========================================================
 // カウント表示設定
 // ========================================================
 
@@ -101,10 +90,10 @@ $list_unix_format = array(
 <h3><i class="fa-solid fa-code fa-fw"></i><?php _e( 'Mail-Tag', _TEXT_DOMAIN ); ?></h3>
 
 <p>
-	<?php $this->text(
+	<?php $this->copy_text(
 		'mail_tag',
-		$attr_mail_tag, '',
-		$mail_tag
+		[], '',
+		Mail_Tag::get_sn_mail_tag( $form_id )
 	); ?>
 </p>
 
