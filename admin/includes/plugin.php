@@ -178,7 +178,7 @@ class NT_WPCF7SN_Admin {
 	public static function installed_plugin()
 	{
 		// オプション初期化
-		NT_WPCF7SN::update_plugin_option( [] );
+		Utility::update_wpdb_option( _OPTION_NAME, [] );
 	}
 
 	/**
