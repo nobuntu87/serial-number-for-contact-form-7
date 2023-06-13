@@ -10,8 +10,8 @@
 	box-sizing: border-box;
 }
 
-.fa, .fab, .far, .fas,
-.fa-solid, .fa-brands, .fa-regular, .fa-sharp, .fa-classic {
+/* FontAwsome */
+.nt-wplib-admin-menu-wrap i[class^='fa-'] {
 	margin-right: 5px;
 }
 
