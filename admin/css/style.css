@@ -38,14 +38,16 @@ h4 {
 
 /* ===== レイアウト ===== */
 
-.nt-wplib-admin-menu-form-option-input input[type="text"]#mail_tag {
-	padding: 8px;
+.nt-wplib-admin-menu-form-option-input
+input[type="text"]#mail_tag {
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 
 /* ===== デザイン ===== */
 
-.nt-wplib-admin-menu-form-option-input input[type="text"]#mail_tag {
-	text-align: center;
+.nt-wplib-admin-menu-form-option-input
+input[type="text"]#mail_tag {
 	background: transparent;
 	border: solid 1px #dddddd;
 }

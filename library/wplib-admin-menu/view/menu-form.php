@@ -89,6 +89,42 @@ if ( !defined( 'ABSPATH' ) ) exit;
 	<?php $list = [ 1 => 'セレクト1', 2 => 'セレクト2', 3 => 'セレクト3' ]; ?>
 	<p><?php $this->select( 'select_1', $list ); ?></p>
 
+	<?php // ===== 非表示フィールド ===== ?>
+
+	<h3><i class="fa-regular fa-keyboard fa-fw"></i>非表示フィールド</h3>
+
+	<p>
+		非表示フィールド : 
+		<?php $this->hidden( 'hidden_1', '非表示テキスト' ); ?>
+	</p>
+
+	<?php // ===== コピーテキストフィールド ===== ?>
+
+	<h3><i class="fa-regular fa-keyboard fa-fw"></i>コピーテキストフィールド</h3>
+
+	<?php $attr = array( 'placeholder' => 'コピーテキスト' ); ?>
+
+	<p>
+		コピーテキストフィールド : 
+		<?php $this->copy_text( 'copy_text_1', $attr ); ?>
+		※コピーテキストフィールド
+	</p>
+
+	<p>size '    ' :<br/><?php $this->copy_text( 'copy_text_2', [], '' ); ?></p>
+	<p>size ' 15%' :<br/><?php $this->copy_text( 'copy_text_3', [], 15 ); ?></p>
+	<p>size ' 30%' :<br/><?php $this->copy_text( 'copy_text_4', [], 30 ); ?></p>
+	<p>size ' 50%' :<br/><?php $this->copy_text( 'copy_text_5', [], 50 ); ?></p>
+	<p>size '100%' :<br/><?php $this->copy_text( 'copy_text_6', [], 100 ); ?></p>
+
+	<?php // ===== コピーテキストエリア ===== ?>
+
+	<h3><i class="fa-regular fa-keyboard fa-fw"></i>コピーテキストエリア</h3>
+
+	<?php $attr = array( 'placeholder' => 'コピーテキスト', 'rows' => '4' ); ?>
+
+	<p><?php $this->copy_textarea( 'copy_textarea_1', $attr ); ?></p>
+	<p><?php $this->copy_textarea( 'copy_textarea_2', [ 'required' => 'required' ], 100 ); ?></p>
+
 	<?php // ===== 送信ボタン ===== ?>
 
 	<p><?php $this->submit( '保存' ); ?></p>
