@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_5_0;
+namespace _Nt\WpLib\AdminMenu\v2_7_0;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -79,8 +79,8 @@ abstract class Admin_Menu_Base {
 
 	// スクリプト定義 (FontAwesome)
 	protected const _SCRIPT_FONTAWESOME = array(
-		'url'     => 'https://use.fontawesome.com/releases/v6.2.0/css/all.css',
-		'version' => '6.2.0',
+		'url'     => '//use.fontawesome.com/releases/v6.4.0/css/all.css',
+		'version' => '6.4.0',
 		'slug'    => 'fontawesome-all',
 	);
 
