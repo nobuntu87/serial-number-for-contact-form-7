@@ -74,6 +74,10 @@ Please see the [Installing Plugins](https://wordpress.org/support/article/managi
 
 For more information, please see [Releases](https://nobuntu.jp/blog/serial-number-for-contact-form-7/releases/).
 
+= 2.3.0 =
+
+[https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-3-0/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-3-0/)
+
 = 2.2.1 =
 
 [https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-2-1/](https://nobuntu.jp/blog/serial-number-for-contact-form-7-v2-2-1/)
