@@ -293,11 +293,17 @@ class Form_Option {
 	{
 		$form_id = strval( $form_id );
 
-		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = [];
-		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = Utility::array_update(
+		$option_value = Utility::array_update(
 			SELF::get_default_value( $form_id ),
 			SELF::get_option( $form_id )
 		);
+
+		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = [];
+		foreach ( _FORM_OPTIONS as $global_key => $option ) {
+			$global_key = strval( $global_key );
+			$key = strval( $option['key'] );
+			$GLOBALS['_NT_WPCF7SN']['form'][$form_id][$global_key] = $option_value[$key];
+		}
 	}
 
   // ========================================================
