@@ -135,23 +135,6 @@ class Utility {
   // ========================================================
 
 	/**
-	 * Contact Form 7 プラグインの投稿情報を取得する。
-	 *
-	 * @return WP_Post[] Contact Form 7 の投稿オブジェクトを返す。
-	 */
-	public static function get_wpcf7_posts()
-	{
-		return get_posts( array(
-			'post_type'      => _EXTERNAL_PLUGIN['wpcf7']['post_type'],
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-			'offset'         => 0,
-		) );
-	}
-
-	/**
 	 * WordPress データベースのオプション情報を取得する。
 	 * 
 	 * [include] wp-load.php
@@ -327,6 +310,23 @@ class Utility {
 		return Utility::is_active_plugin(
 			_EXTERNAL_PLUGIN['wpcf7']['basename']
 		);
+	}
+
+	/**
+	 * Contact Form 7 プラグインの投稿情報を取得する。
+	 *
+	 * @return WP_Post[] Contact Form 7 の投稿オブジェクトを返す。
+	 */
+	public static function get_wpcf7_posts()
+	{
+		return get_posts( array(
+			'post_type'      => _EXTERNAL_PLUGIN['wpcf7']['post_type'],
+			'post_status'    => 'publish',
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+			'offset'         => 0,
+		) );
 	}
 
   // ========================================================
