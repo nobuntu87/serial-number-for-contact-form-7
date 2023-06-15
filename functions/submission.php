@@ -61,9 +61,7 @@ class Submission {
 		if ( $contact_form->in_demo_mode() ) { return; }
 
 		// 送信失敗：カウント条件判定
-		if ( !Form_Option::is_increment_mail_failed( $form_id ) ) {
-			return;
-		}
+		if ( !Form_Option::is_increment_mail_failed( $form_id ) ) { return; }
 
 		// ------------------------------------
 

@@ -307,7 +307,7 @@ class Utility {
 	 */
 	public static function is_active_wpcf7()
 	{
-		return Utility::is_active_plugin(
+		return SELF::is_active_plugin(
 			_EXTERNAL_PLUGIN['wpcf7']['basename']
 		);
 	}
