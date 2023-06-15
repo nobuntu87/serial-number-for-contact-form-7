@@ -106,73 +106,82 @@ define( __NAMESPACE__ . '\_MAIL_TAG_REGEX', '/^' . _MAIL_TAG_PREFIX . '(?P<form_
 
 define( __NAMESPACE__ . '\_POST_FIELD', 'serial-number' );
 
+// {global_key} > {option_info}
 define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
-	// コンタクトフォーム設定
-	'id' => array(
+	// コンタクトフォームID
+	'01' => array(
 		'key'     => 'form_id',
 		'default' => '',
 		'pattern' => '^\d+$'
 	),
-	// メールタグ設定
-	'tag' => array(
+	// メールタグ
+	'02' => array(
 		'key'     => 'mail_tag',
 		'default' => '',
 		'pattern' => '^\[' . _MAIL_TAG_PREFIX . '\d+\]$'
 	),
-	// 表示フォーマット設定
-	'type' => array(
+	// シリアル番号 表示形式
+	'03' => array(
 		'key'     => 'type',
 		'default' => 0,
 		'pattern' => '^[0-4]$'
 	),
-	'prefix' => array(
+	// プレフィックス
+	'04' => array(
 		'key'     => 'prefix',
 		'default' => '',
 		'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'
 	),
-	'digits' => array(
+	// カウンター桁数
+	'05' => array(
 		'key'     => 'digits',
 		'default' => 1,
 		'pattern' => '^[1-9]$'
 	),
-	'separator' => array(
+	// 区切り文字表示
+	'06' => array(
 		'key'     => 'separator',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'year2dig' => array(
+	// 西暦2桁表示
+	'07' => array(
 		'key'     => 'year2dig',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'nocount' => array(
+	// カウンター非表示
+	'08' => array(
 		'key'     => 'nocount',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'unixtime_type' => array(
+	// UNIX時間 表示形式
+	'09' => array(
 		'key'     => 'unixtime_type',
 		'default' => 0,
 		'pattern' => '^[0-2]$'
 	),
-	// メールカウント設定
-	'dayreset' => array(
+	// デイリーカウンター使用
+	'10' => array(
 		'key'     => 'dayreset',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
-	'count' => array(
+	// メールカウント
+	'11' => array(
 		'key'     => 'count',
 		'default' => 0,
 		'pattern' => '^[0-9]{1,5}$'
 	),
-	'daycount' => array(
+	// デイリーカウント
+	'12' => array(
 		'key'     => 'daycount',
 		'default' => 0,
 		'pattern' => '^[0-9]{1,5}$'
 	),
-	// メールカウント条件設定
-	'mail_failed' => array(
+	// カウント増加無効(送信失敗)
+	'13' => array(
 		'key'     => 'nocount_mail_failed',
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
