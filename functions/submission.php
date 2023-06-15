@@ -89,14 +89,10 @@ class Submission {
 		// コンタクトフォーム取得
 		// ------------------------------------
 
-		if ( !class_exists( 'WPCF7_Submission' ) ) { return $posted_data; }
-
-		// インスタンス取得
-		$submission = \WPCF7_Submission::get_instance();
-		if ( !$submission ) { return $posted_data; }
-
 		// コンタクトフォーム設定取得
-		$contact_form = $submission->get_contact_form();
+		$contact_form = Utility::get_wpcf7_submission_contact_form();
+		if ( !$contact_form ) { return $posted_data; }
+
 		$form_id = strval( $contact_form->id );
 
 		// ------------------------------------
@@ -135,18 +131,12 @@ class Submission {
 		if ( 'mail_sent_ok' === strval( $status ) ) {
 
 			// ------------------------------------
-			// コンタクトフォーム取得
+			// シリアル番号取得
 			// ------------------------------------
 
-			if ( !class_exists( 'WPCF7_Submission' ) ) { return $message; }
-
-			// インスタンス取得
-			$submission = \WPCF7_Submission::get_instance();
-			if ( !$submission ) { return $message; }
-
 			// コンタクトフォーム設定取得 (シリアル番号)
-			$serial_num = strval( $submission->get_posted_data( _POST_FIELD ) );
-			if ( empty( $serial_num ) ) { return $output; }
+			$serial_num = Utility::get_wpcf7_submission_posted_data( _POST_FIELD );
+			if ( empty( $serial_num ) ) { return $message; }
 
 			// ------------------------------------
 			// 表示メッセージ設定
