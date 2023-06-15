@@ -365,6 +365,22 @@ class Utility {
 		return $submission->get_posted_data( strval( $name ) );
 	}
 
+   // ------------------------------------
+   // WPCF7_ContactForm クラス
+   // ------------------------------------
+
+	/**
+	 * Contact Form 7 プラグインの WPCF7_ContactForm オブジェクトを取得する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return WPCF7_ContactForm|null WPCF7_ContactForm オブジェクトを返す。
+	 */
+	public static function get_wpcf7_contact_form( $form_id )
+	{
+		if ( !class_exists( '\WPCF7_ContactForm' ) ) { return null; }
+		return \WPCF7_ContactForm::get_instance( intval( $form_id ) );
+	}
+
   // ========================================================
 
 }
