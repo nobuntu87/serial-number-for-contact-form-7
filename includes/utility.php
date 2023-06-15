@@ -329,6 +329,42 @@ class Utility {
 		) );
 	}
 
+	/**
+	 * Contact Form 7 プラグインの WPCF7_Submission クラスオブジェクトを取得する。
+	 *
+	 * @return WPCF7_Submission|null WPCF7_Submission クラスオブジェクトを返す。
+	 */
+	public static function get_wpcf7_submission()
+	{
+		if ( !class_exists( '\WPCF7_Submission' ) ) { return null; }
+		return \WPCF7_Submission::get_instance();
+	}
+
+	/**
+	 * Contact Form 7 プラグインの WPCF7_ContactForm クラスオブジェクトを取得する。
+	 *
+	 * @return WPCF7_ContactForm|null WPCF7_ContactForm クラスオブジェクトを返す。
+	 */
+	public static function get_wpcf7_submission_contact_form()
+	{
+		$submission = SELF::get_wpcf7_submission();
+		if ( !$submission ) { return null; }
+		return $submission->get_contact_form();
+	}
+
+	/**
+	 * Contact Form 7 プラグインの送信データを取得する。
+	 *
+	 * @param string $name 送信データのフィールド名。
+	 * @return mixed[]|string|null 送信データを返す。
+	 */
+	public static function get_wpcf7_submission_posted_data( $name = '' )
+	{
+		$submission = SELF::get_wpcf7_submission();
+		if ( !$submission ) { return null; }
+		return $submission->get_posted_data( strval( $name ) );
+	}
+
   // ========================================================
 
 }
