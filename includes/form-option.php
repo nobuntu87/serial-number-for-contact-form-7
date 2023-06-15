@@ -172,7 +172,7 @@ class Form_Option {
 		
 		// オプション定義のキー取得
 		$define_keys = [];
-		foreach ( _FORM_OPTIONS as $item => $option ) {
+		foreach ( _FORM_OPTIONS as $global_key => $option ) {
 			$define_keys[] = strval( $option['key'] );
 		}
 
@@ -197,7 +197,7 @@ class Form_Option {
 		//   [定義:有] / [設定値:無]
 		// ------------------------------------
 
-		foreach ( _FORM_OPTIONS as $item => $option ) {
+		foreach ( _FORM_OPTIONS as $global_key => $option ) {
 			if ( !array_key_exists( $option['key'], $option_value ) ) {
 
 				// 不足オプション値追加 (既定値で初期化)
@@ -427,7 +427,7 @@ class Form_Option {
 		$default_value = [];
 
 		// 定義から既定値を生成
-		foreach ( _FORM_OPTIONS as $item => $option ) {
+		foreach ( _FORM_OPTIONS as $global_key => $option ) {
 			$default_value += array(
 				strval( $option['key'] ) => strval( $option['default'] )
 			);
@@ -759,7 +759,7 @@ class Form_Validate {
 		// 正規表現パターン取得
 		// ------------------------------------
 
-		foreach ( _FORM_OPTIONS as $item => $option ) {
+		foreach ( _FORM_OPTIONS as $global_key => $option ) {
 			if ( $option['key'] === strval( $key ) ) {
 				$pattern = '/' . $option['pattern'] . '/';
 			}
