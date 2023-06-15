@@ -13,7 +13,7 @@ $serial_number = Serial_Number::get_serial_number( $form_id );
 $attr_count = array(
 	'size' => 5,
 	'maxlength' => 5,
-	'pattern' => _FORM_OPTIONS['count']['pattern'],
+	'pattern' => _FORM_OPTIONS['11']['pattern'],
 	'min' => 0,
 	'max' => 99999,
 );
@@ -21,7 +21,7 @@ $attr_count = array(
 $attr_daycount = array(
 	'size' => 5,
 	'maxlength' => 5,
-	'pattern' => _FORM_OPTIONS['daycount']['pattern'],
+	'pattern' => _FORM_OPTIONS['12']['pattern'],
 	'min' => 0,
 	'max' => 99999,
 );
@@ -33,7 +33,7 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 
 $is_daycount = false;
 if ( NT_WPCF7SN::is_working_dayreset() ) {
-	if ( 'yes' === $GLOBALS['_NT_WPCF7SN']['form'][$form_id]['dayreset'] ) {
+	if ( 'yes' === $GLOBALS['_NT_WPCF7SN']['form'][$form_id]['10'] ) {
 		$is_daycount = true;
 	}
 }
@@ -53,13 +53,13 @@ $list_type = array(
 $attr_prefix = array(
 	'size' => 15,
 	'maxlength' => 10,
-	'pattern' => _FORM_OPTIONS['prefix']['pattern'],
+	'pattern' => _FORM_OPTIONS['04']['pattern'],
 );
 
 $attr_digits = array(
 	'size' => 1,
 	'maxlength' => 1,
-	'pattern' => _FORM_OPTIONS['digits']['pattern'],
+	'pattern' => _FORM_OPTIONS['05']['pattern'],
 	'min' => 1,
 	'max' => 9,
 );
@@ -105,9 +105,9 @@ $list_unix_format = array(
 	<?php _e( 'Current Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
-		_FORM_OPTIONS['count']['key'],
+		_FORM_OPTIONS['11']['key'],
 		$attr_count, '',
-		_FORM_OPTIONS['count']['default']
+		_FORM_OPTIONS['11']['default']
 	); ?>
 
 	( <?php _e( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ); ?> )
@@ -117,9 +117,9 @@ $list_unix_format = array(
 	<?php _e( 'Daily Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
-		_FORM_OPTIONS['daycount']['key'],
+		_FORM_OPTIONS['12']['key'],
 		$attr_daycount, '',
-		_FORM_OPTIONS['daycount']['default']
+		_FORM_OPTIONS['12']['default']
 	); ?>
 
 	( <?php _e( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ); ?> )<br/>
@@ -144,9 +144,9 @@ $list_unix_format = array(
 
 <p>
 	<?php $this->radio(
-		_FORM_OPTIONS['type']['key'],
+		_FORM_OPTIONS['03']['key'],
 		$list_type, true,
-		_FORM_OPTIONS['type']['default']
+		_FORM_OPTIONS['03']['default']
 	); ?>
 </p>
 
@@ -156,9 +156,9 @@ $list_unix_format = array(
 	<?php _e( 'Prefix', _TEXT_DOMAIN ); ?>
 
 	<?php $this->text(
-		_FORM_OPTIONS['prefix']['key'],
+		_FORM_OPTIONS['04']['key'],
 		$attr_prefix, '',
-		_FORM_OPTIONS['prefix']['default']
+		_FORM_OPTIONS['04']['default']
 	); ?>
 
 	( <?php _e( 'Within 10 characters. Unusable \\"&\'<>', _TEXT_DOMAIN ); ?> )
@@ -168,9 +168,9 @@ $list_unix_format = array(
 	<?php _e( 'Counter digits', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
-		_FORM_OPTIONS['digits']['key'],
+		_FORM_OPTIONS['05']['key'],
 		$attr_digits, '',
-		_FORM_OPTIONS['digits']['default']
+		_FORM_OPTIONS['05']['default']
 	); ?>
 
 	( <?php _e( '1 digit integer. 1~9', _TEXT_DOMAIN ); ?> )
@@ -178,34 +178,38 @@ $list_unix_format = array(
 
 <p>
 	<?php $this->checkbox(
-		_FORM_OPTIONS['separator']['key'],
+		_FORM_OPTIONS['06']['key'],
 		__( 'Display the delimiter "-".', _TEXT_DOMAIN ),
-		[], _FORM_OPTIONS['separator']['default']
+		[],
+		_FORM_OPTIONS['06']['default']
 	); ?>
 </p>
 
 <p>
 	<?php $this->checkbox(
-		_FORM_OPTIONS['year2dig']['key'],
+		_FORM_OPTIONS['07']['key'],
 		__( 'Omit the number of years to 2 digits.', _TEXT_DOMAIN ),
-		[], _FORM_OPTIONS['year2dig']['default']
+		[],
+		_FORM_OPTIONS['07']['default']
 	); ?>
 </p>
 
 <p>
 	<?php $this->checkbox(
-		_FORM_OPTIONS['nocount']['key'],
+		_FORM_OPTIONS['08']['key'],
 		__( 'Don\'t display mail count.', _TEXT_DOMAIN )
 		. ' ( ' . __( 'UNIX time & Unique ID', _TEXT_DOMAIN ) . ' )',
-		[], _FORM_OPTIONS['nocount']['default']
+		[],
+		_FORM_OPTIONS['08']['default']
 	); ?>
 </p>
 
 <p>
 	<?php $this->checkbox(
-		_FORM_OPTIONS['dayreset']['key'],
+		_FORM_OPTIONS['10']['key'],
 		__( 'Use the daily reset mail counter.', _TEXT_DOMAIN ),
-		$attr_dayreset, _FORM_OPTIONS['dayreset']['default']
+		$attr_dayreset,
+		_FORM_OPTIONS['10']['default']
 	); ?>
 	<?php if ( !NT_WPCF7SN::is_working_dayreset() ) { ?><br/>
 	<span style="color:#fa514b;">
@@ -232,9 +236,9 @@ $list_unix_format = array(
 
 <p>
 	<?php $this->radio(
-		_FORM_OPTIONS['unixtime_type']['key'],
+		_FORM_OPTIONS['09']['key'],
 		$list_unix_format, false,
-		_FORM_OPTIONS['unixtime_type']['default']
+		_FORM_OPTIONS['09']['default']
 	); ?>
 </p>
 
@@ -242,9 +246,10 @@ $list_unix_format = array(
 
 <p>
 	<?php $this->checkbox(
-		_FORM_OPTIONS['mail_failed']['key'],
+		_FORM_OPTIONS['13']['key'],
 		__( 'Don\'t increment count when mail send fails.', _TEXT_DOMAIN ),
-		[], _FORM_OPTIONS['mail_failed']['default']
+		[],
+		_FORM_OPTIONS['13']['default']
 	); ?>
 </p>
 

@@ -215,8 +215,8 @@ class Form_Option {
 		// リセット機能が未対応の場合
 		if ( !NT_WPCF7SN::is_working_dayreset() ) {
 
-			$option_value['daycount'] = strval( _FORM_OPTIONS['daycount']['default'] );
-			$option_value['dayreset'] = strval( _FORM_OPTIONS['dayreset']['default'] );
+			$option_value['daycount'] = strval( _FORM_OPTIONS['12']['default'] );
+			$option_value['dayreset'] = strval( _FORM_OPTIONS['10']['default'] );
 
 		}
 
@@ -501,7 +501,7 @@ class Form_Option {
 			$form_id = strval( $form_id );
 
 			// カウント初期化
-			$form_option['daycount'] = strval( _FORM_OPTIONS['daycount']['default'] );
+			$form_option['daycount'] = strval( _FORM_OPTIONS['12']['default'] );
 
 			// コンタクトフォーム設定更新
 			SELF::update_option( $form_id, $form_option );
