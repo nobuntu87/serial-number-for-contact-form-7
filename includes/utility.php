@@ -135,23 +135,6 @@ class Utility {
   // ========================================================
 
 	/**
-	 * Contact Form 7 プラグインの投稿情報を取得する。
-	 *
-	 * @return WP_Post[] Contact Form 7 の投稿オブジェクトを返す。
-	 */
-	public static function get_wpcf7_posts()
-	{
-		return get_posts( array(
-			'post_type'      => _EXTERNAL_PLUGIN['wpcf7']['post_type'],
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-			'offset'         => 0,
-		) );
-	}
-
-	/**
 	 * WordPress データベースのオプション情報を取得する。
 	 * 
 	 * [include] wp-load.php
@@ -311,6 +294,95 @@ class Utility {
 		// ------------------------------------
 
 		return false;
+	}
+
+  // ========================================================
+  // ユーティリティ：Contact Form 7 プラグイン
+  // ========================================================
+
+	/**
+	 * Contact Form 7 プラグインが有効化されているか確認する。
+	 *
+	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
+	 */
+	public static function is_active_wpcf7()
+	{
+		return SELF::is_active_plugin(
+			_EXTERNAL_PLUGIN['wpcf7']['basename']
+		);
+	}
+
+	/**
+	 * Contact Form 7 プラグインの投稿情報を取得する。
+	 *
+	 * @return WP_Post[] Contact Form 7 の投稿オブジェクトを返す。
+	 */
+	public static function get_wpcf7_posts()
+	{
+		return get_posts( array(
+			'post_type'      => _EXTERNAL_PLUGIN['wpcf7']['post_type'],
+			'post_status'    => 'publish',
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+			'offset'         => 0,
+		) );
+	}
+
+   // ------------------------------------
+   // WPCF7_Submission クラス
+   // ------------------------------------
+
+	/**
+	 * Contact Form 7 プラグインの WPCF7_Submission クラスオブジェクトを取得する。
+	 *
+	 * @return WPCF7_Submission|null WPCF7_Submission クラスオブジェクトを返す。
+	 */
+	public static function get_wpcf7_submission()
+	{
+		if ( !class_exists( '\WPCF7_Submission' ) ) { return null; }
+		return \WPCF7_Submission::get_instance();
+	}
+
+	/**
+	 * Contact Form 7 プラグインの WPCF7_ContactForm クラスオブジェクトを取得する。
+	 *
+	 * @return WPCF7_ContactForm|null WPCF7_ContactForm クラスオブジェクトを返す。
+	 */
+	public static function get_wpcf7_submission_contact_form()
+	{
+		$submission = SELF::get_wpcf7_submission();
+		if ( !$submission ) { return null; }
+		return $submission->get_contact_form();
+	}
+
+	/**
+	 * Contact Form 7 プラグインの送信データを取得する。
+	 *
+	 * @param string $name 送信データのフィールド名。
+	 * @return mixed[]|string|null 送信データを返す。
+	 */
+	public static function get_wpcf7_submission_posted_data( $name = '' )
+	{
+		$submission = SELF::get_wpcf7_submission();
+		if ( !$submission ) { return null; }
+		return $submission->get_posted_data( strval( $name ) );
+	}
+
+   // ------------------------------------
+   // WPCF7_ContactForm クラス
+   // ------------------------------------
+
+	/**
+	 * Contact Form 7 プラグインの WPCF7_ContactForm オブジェクトを取得する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @return WPCF7_ContactForm|null WPCF7_ContactForm オブジェクトを返す。
+	 */
+	public static function get_wpcf7_contact_form( $form_id )
+	{
+		if ( !class_exists( '\WPCF7_ContactForm' ) ) { return null; }
+		return \WPCF7_ContactForm::get_instance( intval( $form_id ) );
 	}
 
   // ========================================================

@@ -133,7 +133,7 @@ class NT_WPCF7SN_Admin {
 		// ------------------------------------
 
 		// [ContactForm7] 無効化の場合
-		if ( !NT_WPCF7SN::is_active_wpcf7() ) {
+		if ( !Utility::is_active_wpcf7() ) {
 
 			$iframe_url = Utility::get_plugin_iframe_url( _EXTERNAL_PLUGIN['wpcf7']['slug'] );
 
@@ -231,7 +231,7 @@ class NT_WPCF7SN_Admin {
 		// ------------------------------------
 
 		// [ContactForm7] 有効化の場合
-		if ( NT_WPCF7SN::is_active_wpcf7() ) {
+		if ( Utility::is_active_wpcf7() ) {
 
 			$action_link = sprintf( ''
 				. '<a href="%s">%s</a>'
@@ -267,7 +267,7 @@ class NT_WPCF7SN_Admin {
 		// ------------------------------------
 
 		// [ContactForm7] 無効化の場合
-		if ( !NT_WPCF7SN::is_active_wpcf7() ) {
+		if ( !Utility::is_active_wpcf7() ) {
 
 			$iframe_url = Utility::get_plugin_iframe_url( _EXTERNAL_PLUGIN['wpcf7']['slug'] );
 
