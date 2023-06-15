@@ -314,5 +314,21 @@ class Utility {
 	}
 
   // ========================================================
+  // ユーティリティ：Contact Form 7 プラグイン
+  // ========================================================
+
+	/**
+	 * Contact Form 7 プラグインが有効化されているか確認する。
+	 *
+	 * @return boolean 有効化状態を返す。(true:有効/false:無効)
+	 */
+	public static function is_active_wpcf7()
+	{
+		return Utility::is_active_plugin(
+			_EXTERNAL_PLUGIN['wpcf7']['basename']
+		);
+	}
+
+  // ========================================================
 
 }
