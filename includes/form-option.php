@@ -371,17 +371,39 @@ class Form_Option {
 	 * コンタクトフォーム設定の設定値を取得する。
 	 *
 	 * @param int|string $form_id コンタクトフォームID
-	 * @return mixed[] オプション値を返す。
+	 * @param string $key オプションキー (グローバルキー可)
+	 * @return mixed[]|mixed|null オプション値を返す。
 	 */
-	public static function get_option( $form_id )
+	public static function get_option( $form_id, $key = '' )
 	{
-		return Admin_Menu_Util::get_option(
+		// ------------------------------------
+		// コンタクトフォーム設定取得
+		// ------------------------------------
+
+		$form_option = Admin_Menu_Util::get_option(
 			Admin_Menu_Util::get_option_name(
 				_PREFIX['_'],
 				_ADMIN_MENU_SLUG,
 				_ADMIN_MENU_TAB_PREFIX . strval( $form_id )
 			)
 		);
+
+		if ( empty( $key ) ) { return $form_option; }
+
+		// ------------------------------------
+		// オプションキー判定
+		// ------------------------------------
+
+		// グローバルキー変換
+		if ( array_key_exists( $key, _FORM_OPTIONS ) ) {
+			$key = strval( _FORM_OPTIONS[$key]['key'] );
+		}
+
+		if ( !array_key_exists( $key, $form_option ) ) { return null; }
+
+		// ------------------------------------
+
+		return $form_option[$key];
 	}
 
 	/**
