@@ -95,7 +95,7 @@ class Admin_Menu extends Admin_Menu_Base {
 		$define_keys = [];
 
 		// オプション定義のキー取得
-		foreach ( _FORM_OPTIONS as $item => $option ) {
+		foreach ( _FORM_OPTIONS as $global_key => $option ) {
 			$define_keys[] = strval( $option['key'] );
 		}
 

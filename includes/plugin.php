@@ -89,10 +89,10 @@ class NT_WPCF7SN {
 		// ------------------------------------
 
 		// DateTime (PHP >= 5.2.0)
-		if ( !class_exists( 'DateTime' ) ) { return false; }
+		if ( !class_exists( '\DateTime' ) ) { return false; }
 
 		// DateTimeZone (PHP >= 5.2.0)
-		if ( !class_exists( 'DateTimeZone' ) ) { return false; }
+		if ( !class_exists( '\DateTimeZone' ) ) { return false; }
 
 		// ------------------------------------
 
