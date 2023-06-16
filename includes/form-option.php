@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // グローバルオプション定義
 // ============================================================================
 
-$_NT_WPCF7SN['form'] = [];
+$_NT_WPCF7SN = [];
 
 // ============================================================================
 // コンタクトフォーム設定操作クラス：Form_Option
@@ -277,7 +277,7 @@ class Form_Option {
 	 */
 	private static function init_global_options()
 	{
-		$GLOBALS['_NT_WPCF7SN']['form'] = [];
+		$GLOBALS['_NT_WPCF7SN'] = [];
 		foreach ( Utility::get_wpcf7_posts() as $wpcf7_post ) {
 			SELF::init_global_option( strval( $wpcf7_post->ID ) );
 		}
@@ -298,11 +298,11 @@ class Form_Option {
 			SELF::get_option( $form_id )
 		);
 
-		$GLOBALS['_NT_WPCF7SN']['form'][$form_id] = [];
+		$GLOBALS['_NT_WPCF7SN'][$form_id] = [];
 		foreach ( _FORM_OPTIONS as $global_key => $option ) {
 			$global_key = strval( $global_key );
 			$key = strval( $option['key'] );
-			$GLOBALS['_NT_WPCF7SN']['form'][$form_id][$global_key] = $option_value[$key];
+			$GLOBALS['_NT_WPCF7SN'][$form_id][$global_key] = $option_value[$key];
 		}
 	}
 
