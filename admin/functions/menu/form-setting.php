@@ -4,6 +4,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 $form_id = strval( $this->get_form_id() );
 
+$mail_tag = Mail_Tag::get_sn_mail_tag( $form_id );
 $serial_number = Serial_Number::get_serial_number( $form_id );
 
 // ========================================================
@@ -29,13 +30,6 @@ if ( !NT_WPCF7SN::is_working_dayreset() ) {
 	$attr_daycount += array(
 		'readonly' => 'readonly',
 	);
-}
-
-$is_daycount = false;
-if ( NT_WPCF7SN::is_working_dayreset() ) {
-	if ( 'yes' === $GLOBALS['_NT_WPCF7SN'][$form_id]['10'] ) {
-		$is_daycount = true;
-	}
 }
 
 // ========================================================
@@ -93,7 +87,7 @@ $list_unix_format = array(
 	<?php $this->copy_text(
 		'mail_tag',
 		[], '',
-		Mail_Tag::get_sn_mail_tag( $form_id )
+		$mail_tag
 	); ?>
 </p>
 
@@ -101,7 +95,7 @@ $list_unix_format = array(
 
 <h3><i class="fa-solid fa-stopwatch-20 fa-fw"></i><?php _e( 'Mail Counter', _TEXT_DOMAIN ); ?></h3>
 
-<p class="<?php if ( $is_daycount ) { ?> hidden <?php } ?>">
+<p class="<?php if ( 'yes' === $GLOBALS['_NT_WPCF7SN'][$form_id]['10'] ) { ?> hidden <?php } ?>">
 	<?php _e( 'Current Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
@@ -113,7 +107,7 @@ $list_unix_format = array(
 	( <?php _e( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ); ?> )
 </p>
 
-<p class="<?php if ( !$is_daycount ) { ?> hidden <?php } ?>">
+<p class="<?php if ( 'yes' !== $GLOBALS['_NT_WPCF7SN'][$form_id]['10'] ) { ?> hidden <?php } ?>">
 	<?php _e( 'Daily Count', _TEXT_DOMAIN ); ?>
 
 	<?php $this->number(
@@ -131,7 +125,9 @@ $list_unix_format = array(
 <p><?php $this->submit( __( 'Change', _TEXT_DOMAIN ) ); ?></p>
 
 <p class="example">
-	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
+	<?php $this->view_html( sprintf( ''
+		. __( 'Display Example', _TEXT_DOMAIN )
+		. ' [ %s ]'
 		, $serial_number
 	) ); ?>
 </p>
@@ -223,7 +219,9 @@ $list_unix_format = array(
 <p><?php $this->submit( __( 'Settings', _TEXT_DOMAIN ) ); ?></p>
 
 <p class="example">
-	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
+	<?php $this->view_html( sprintf( ''
+		. __( 'Display Example', _TEXT_DOMAIN )
+		. ' [ %s ]'
 		, $serial_number
 	) ); ?>
 </p>
@@ -258,7 +256,9 @@ $list_unix_format = array(
 <p><?php $this->submit( __( 'Settings', _TEXT_DOMAIN ) ); ?></p>
 
 <p class="example">
-	<?php $this->view_html( sprintf( __( 'Example [ %1$s ]', _TEXT_DOMAIN )
+	<?php $this->view_html( sprintf( ''
+		. __( 'Display Example', _TEXT_DOMAIN )
+		. ' [ %s ]'
 		, $serial_number
 	) ); ?>
 </p>
