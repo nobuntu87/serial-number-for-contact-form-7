@@ -538,33 +538,6 @@ class Form_Option {
 	}
 
   // ========================================================
-  // メールカウント条件設定
-  // ========================================================
-
-	/**
-	 * メール送信失敗時にメールカウントを増加するか確認する。
-	 * 
-	 * [ContactForm7標準動作] カウント増加する
-	 *
-	 * @param int|string $form_id コンタクトフォームID
-	 * @return boolean カウント増加結果を返す。(true:増加する/false:増加しない)
-	 */
-	public static function is_increment_mail_failed( $form_id )
-	{
-		$form_id = strval( $form_id );
-
-		// コンタクトフォーム設定取得
-		$form_option = SELF::get_option( $form_id );
-
-		// メールカウント条件判定
-		if ( 'yes' === $form_option['nocount_mail_failed'] ) {
-			return false;
-		}
-
-		return true;
-	}
-
-  // ========================================================
 
 }
 
