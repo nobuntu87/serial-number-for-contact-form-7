@@ -68,7 +68,6 @@ class Form_Validate {
 	/**
 	 * オプション値の検証を行う。(プレフィックス)
 	 *
-	 * @param string $key オプションキー
 	 * @param mixed $value オプション値
 	 * @param string|null $message エラーメッセージ
 	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
@@ -102,7 +101,6 @@ class Form_Validate {
 	/**
 	 * オプション値の検証を行う。(表示桁数)
 	 *
-	 * @param string $key オプションキー
 	 * @param mixed $value オプション値
 	 * @param string|null $message エラーメッセージ
 	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
@@ -137,7 +135,6 @@ class Form_Validate {
 	/**
 	 * オプション値の検証を行う。(メールカウント)
 	 *
-	 * @param string $key オプションキー
 	 * @param mixed $value オプション値
 	 * @param string|null $message エラーメッセージ
 	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
@@ -172,7 +169,6 @@ class Form_Validate {
 	/**
 	 * オプション値の検証を行う。(デイリーカウント)
 	 *
-	 * @param string $key オプションキー
 	 * @param mixed $value オプション値
 	 * @param string|null $message エラーメッセージ
 	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
