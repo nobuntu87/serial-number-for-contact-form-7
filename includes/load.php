@@ -33,6 +33,7 @@ require_once( _INCLUDE_DIR . '/define.php' );
 require_once( _INCLUDE_DIR . '/utility.php' );
 require_once( _INCLUDE_DIR . '/plugin.php' );
 require_once( _INCLUDE_DIR . '/form-option.php' );
+require_once( _INCLUDE_DIR . '/form-validate.php' );
 
 require_once( _FUNCTION_DIR . '/serial-number.php' );
 require_once( _FUNCTION_DIR . '/submission.php' );
