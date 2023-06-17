@@ -199,6 +199,18 @@ class Form_Validate {
 		return false;
 	}
 
+	/**
+	 * HTMLタグが含まれるか検出を行う。
+	 *
+	 * @param string $value オプション値
+	 * @return boolean 検出結果を返す。(true:検出/false:未検出)
+	 */
+	private static function detect_html_tags( $value )
+	{
+		if ( $value != wp_strip_all_tags( $value ) ) { return true; }
+		return false;
+	}
+
   // ========================================================
 
 }
