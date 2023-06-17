@@ -29,31 +29,23 @@ class Form_Validate {
 		// ------------------------------------
 
 		if ( !SELF::is_match_pattern( strval( $key ), $value ) ) {
-			$validity = false;
-		}
-
-		// ------------------------------------
-		// エラーメッセージ登録
-		// ------------------------------------
-
-		if ( !$validity ) {
+			// エラーメッセージ登録
 			$message = sprintf( ''
 				. __( 'Input value is invalid.', _TEXT_DOMAIN )
 			);
+			$validity = false;
 		}
 
 		// ------------------------------------
 		// (追加)オプション値検証
 		// ------------------------------------
 
-		$valid_func = sprintf( '%s\Form_Validate::validate_%s'
-			, __NAMESPACE__ , strval( $key )
+		$valid_func = sprintf( '%s::validate_%s'
+			, __CLASS__ , strval( $key )
 		);
 
 		if ( Utility::function_exists( $valid_func ) ) {
-			if ( !$valid_func( $value, $message ) ) {
-				$validity = false;
-			}
+			$validity = $valid_func( $value, $message );
 		}
 
 		// ------------------------------------
@@ -74,28 +66,21 @@ class Form_Validate {
 	 */
 	public static function validate_prefix( $value, &$message = null )
 	{
-		// false:事前検証(入力パターン検証)で無効時
-		$validity = empty( $message ) ? true : false ;
-
 		// ------------------------------------
-		// オプション値検証
+		// 入力パターン検証 (追加)
 		// ------------------------------------
 
-		// 追加の検証なし
-
-		// ------------------------------------
-		// エラーメッセージ登録 (追加/上書き)
-		// ------------------------------------
-
-		if ( !$validity ) {
-			$message = sprintf( ''
+		if ( !empty( $message ) ) {
+			// エラーメッセージ登録
+			$message .= sprintf( ''
 				. __( 'Contains invalid characters or Too many characters.', _TEXT_DOMAIN )
 			);
+			return false;
 		}
 
 		// ------------------------------------
 
-		return $validity;
+		return true;
 	}
 
 	/**
@@ -107,29 +92,21 @@ class Form_Validate {
 	 */
 	public static function validate_digits( $value, &$message = null )
 	{
-		// false:事前検証(入力パターン検証)で無効時
-		$validity = empty( $message ) ? true : false ;
-
 		// ------------------------------------
-		// オプション値検証
+		// 入力パターン検証 (追加)
 		// ------------------------------------
 
-		// 追加の検証なし
-
-		// ------------------------------------
-		// エラーメッセージ登録 (追加/上書き)
-		// ------------------------------------
-
-		if ( !$validity ) {
-			$message = sprintf( ''
-				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+		if ( !empty( $message ) ) {
+			// エラーメッセージ登録
+			$message .= sprintf( ''
 				. ' ( ' . __( '1 digit integer. 1~9', _TEXT_DOMAIN ) . ' )'
 			);
+			return false;
 		}
 
 		// ------------------------------------
 
-		return $validity;
+		return true;
 	}
 
 	/**
@@ -141,29 +118,21 @@ class Form_Validate {
 	 */
 	public static function validate_count( $value, &$message = null )
 	{
-		// false:事前検証(入力パターン検証)で無効時
-		$validity = empty( $message ) ? true : false ;
-
 		// ------------------------------------
-		// オプション値検証
+		// 入力パターン検証 (追加)
 		// ------------------------------------
 
-		// 追加の検証なし
-
-		// ------------------------------------
-		// エラーメッセージ登録 (追加/上書き)
-		// ------------------------------------
-
-		if ( !$validity ) {
-			$message = sprintf( ''
-				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+		if ( !empty( $message ) ) {
+			// エラーメッセージ登録
+			$message .= sprintf( ''
 				. ' ( ' . __( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ) . ' )'
 			);
+			return false;
 		}
 
 		// ------------------------------------
 
-		return $validity;
+		return true;
 	}
 
 	/**
@@ -175,29 +144,21 @@ class Form_Validate {
 	 */
 	public static function validate_daycount( $value, &$message = null )
 	{
-		// false:事前検証(入力パターン検証)で無効時
-		$validity = empty( $message ) ? true : false ;
-
 		// ------------------------------------
-		// オプション値検証
+		// 入力パターン検証 (追加)
 		// ------------------------------------
 
-		// 追加の検証なし
-
-		// ------------------------------------
-		// エラーメッセージ登録 (追加/上書き)
-		// ------------------------------------
-
-		if ( !$validity ) {
-			$message = sprintf( ''
-				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+		if ( !empty( $message ) ) {
+			// エラーメッセージ登録
+			$message .= sprintf( ''
 				. ' ( ' . __( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ) . ' )'
 			);
+			return false;
 		}
 
 		// ------------------------------------
 
-		return $validity;
+		return true;
 	}
 
   // ========================================================
