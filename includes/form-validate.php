@@ -200,6 +200,20 @@ class Form_Validate {
 	}
 
 	/**
+	 * 制御文字が含まれるか検出を行う。
+	 *
+	 * @param string $value オプション値
+	 * @param boolean $newline 改行コード(true:対象/false:対象外)
+	 * @return boolean 検出結果を返す。(true:検出/false:未検出)
+	 */
+	private static function detect_control_characters( $value, $newline = true )
+	{
+		$pattern = $newline ? '/[\x00-\x1F\x7F]/' : '/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/';
+		if ( 1 === preg_match( $pattern, $value ) ) { return true; }
+		return false;
+	}
+
+	/**
 	 * HTMLタグが含まれるか検出を行う。
 	 *
 	 * @param string $value オプション値
