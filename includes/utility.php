@@ -385,6 +385,20 @@ class Utility {
 		return \WPCF7_ContactForm::get_instance( intval( $form_id ) );
 	}
 
+	/**
+	 * Contact Form 7 プラグインのプロパティ設定を取得する。
+	 *
+	 * @param int|string $form_id コンタクトフォームID
+	 * @param string $name プロパティのフィールド名。
+	 * @return mixed[]|string|null プロパティ設定を返す。
+	 */
+	public static function get_wpcf7_contact_form_property( $form_id, $name )
+	{
+		$contact_form = SELF::get_wpcf7_contact_form( $form_id );
+		if ( !$contact_form ) { return null; }
+		return $contact_form->prop( strval( $name ) );
+	}
+
   // ========================================================
 
 }
