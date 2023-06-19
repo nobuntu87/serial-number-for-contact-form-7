@@ -130,7 +130,7 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 	'04' => array(
 		'key'     => 'prefix',
 		'default' => '',
-		'pattern' => '^(?!.*[\\\"&\'<>])\S{0,10}$'
+		'pattern' => '^\S*$'
 	),
 	// カウンター桁数
 	'05' => array(

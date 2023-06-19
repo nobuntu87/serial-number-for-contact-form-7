@@ -45,8 +45,7 @@ $list_type = array(
 );
 
 $attr_prefix = array(
-	'size' => 15,
-	'maxlength' => 10,
+	'size' => 30,
 	'pattern' => _FORM_OPTIONS['04']['pattern'],
 );
 
@@ -157,7 +156,7 @@ $list_unix_format = array(
 		_FORM_OPTIONS['04']['default']
 	); ?>
 
-	( <?php _e( 'Within 10 characters. Unusable \\"&\'<>', _TEXT_DOMAIN ); ?> )
+	( <?php _e( 'Non-whitespace characters', _TEXT_DOMAIN ); ?> )
 </p>
 
 <p>
