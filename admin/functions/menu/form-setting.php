@@ -103,7 +103,7 @@ $list_unix_format = array(
 		_FORM_OPTIONS['11']['default']
 	); ?>
 
-	( <?php _e( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ); ?> )
+	( <?php _e( 'Up to 5 digits integer : 0~99999', _TEXT_DOMAIN ); ?> )
 </p>
 
 <p class="<?php if ( 'yes' !== $GLOBALS['_NT_WPCF7SN'][$form_id]['10'] ) { ?> hidden <?php } ?>">
@@ -115,7 +115,7 @@ $list_unix_format = array(
 		_FORM_OPTIONS['12']['default']
 	); ?>
 
-	( <?php _e( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ); ?> )<br/>
+	( <?php _e( 'Up to 5 digits integer : 0~99999', _TEXT_DOMAIN ); ?> )<br/>
 	<?php _e( '* Reset on date change', _TEXT_DOMAIN ); ?>
 </p>
 
@@ -168,7 +168,7 @@ $list_unix_format = array(
 		_FORM_OPTIONS['05']['default']
 	); ?>
 
-	( <?php _e( '1 digit integer. 1~9', _TEXT_DOMAIN ); ?> )
+	( <?php _e( '1 digit integer : 1~9', _TEXT_DOMAIN ); ?> )
 </p>
 
 <p>

@@ -113,20 +113,21 @@ class Form_Validate {
 	/**
 	 * オプション値の検証を行う。(表示桁数)
 	 *
-	 * @param mixed $value オプション値
+	 * @param int $value オプション値
 	 * @param string|null $message エラーメッセージ
 	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
 	 */
 	public static function validate_digits( $value, &$message = null )
 	{
 		// ------------------------------------
-		// 入力パターン検証 (追加)
+		// 入力パターン検証 (メッセージ変更)
 		// ------------------------------------
 
 		if ( !empty( $message ) ) {
 			// エラーメッセージ登録
-			$message .= sprintf( ''
-				. ' ( ' . __( '1 digit integer. 1~9', _TEXT_DOMAIN ) . ' )'
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ' . '( ' . __( '1 digit integer : 1~9', _TEXT_DOMAIN ) . ' )'
 			);
 			return false;
 		}
@@ -139,20 +140,21 @@ class Form_Validate {
 	/**
 	 * オプション値の検証を行う。(メールカウント)
 	 *
-	 * @param mixed $value オプション値
+	 * @param int $value オプション値
 	 * @param string|null $message エラーメッセージ
 	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
 	 */
 	public static function validate_count( $value, &$message = null )
 	{
 		// ------------------------------------
-		// 入力パターン検証 (追加)
+		// 入力パターン検証 (メッセージ変更)
 		// ------------------------------------
 
 		if ( !empty( $message ) ) {
 			// エラーメッセージ登録
-			$message .= sprintf( ''
-				. ' ( ' . __( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ) . ' )'
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ' . '( ' . __( 'Up to 5 digits integer : 0~99999', _TEXT_DOMAIN ) . ' )'
 			);
 			return false;
 		}
@@ -165,20 +167,21 @@ class Form_Validate {
 	/**
 	 * オプション値の検証を行う。(デイリーカウント)
 	 *
-	 * @param mixed $value オプション値
+	 * @param int $value オプション値
 	 * @param string|null $message エラーメッセージ
 	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
 	 */
 	public static function validate_daycount( $value, &$message = null )
 	{
 		// ------------------------------------
-		// 入力パターン検証 (追加)
+		// 入力パターン検証 (メッセージ変更)
 		// ------------------------------------
 
 		if ( !empty( $message ) ) {
 			// エラーメッセージ登録
-			$message .= sprintf( ''
-				. ' ( ' . __( 'Up to 5 digits integer. 0~99999', _TEXT_DOMAIN ) . ' )'
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ' . '( ' . __( 'Up to 5 digits integer : 0~99999', _TEXT_DOMAIN ) . ' )'
 			);
 			return false;
 		}
