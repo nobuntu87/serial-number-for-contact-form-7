@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_7_0;
+namespace _Nt\WpLib\AdminMenu\v2_8_0;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -184,6 +184,26 @@ abstract class Admin_Menu_Base {
 	 * @return void
 	 */
 	abstract protected function add_menu();
+
+	/**
+	 * オプション値のサニタイズ処理を行う。
+	 *
+	 * @param mixed[] $options オプション値
+	 * @param string $page_slug ページスラッグ : {menu-slug}_{tab-slug}
+	 * @return mixed[] オプション値を返す。
+	 */
+	protected function sanitize_options( $options, $page_slug )
+	{
+		if ( !is_array( $options ) ) { return []; }
+
+		// 空白文字を除去
+		$options = array_map(
+			array( __NAMESPACE__ . '\Library_Utility', 'strip_whitespace' ),
+			$options
+		);
+
+		return $options;
+	}
 
 	/**
 	 * オプション値のバリテーション処理を行う。
@@ -1043,16 +1063,28 @@ abstract class Admin_Menu_Base {
 			);
 		}
 
+		// ------------------------------------
+		// サニタイズ処理
+		// ------------------------------------
+
+		// サニタイズ処理 (ユーザー定義)
+		$sanitized_option = $this->sanitize_options(
+			$post_option, $this->m_page['slug']
+		);
+
+		// ------------------------------------
+
 		// POSTデータからページオプションを設定
-		$this->set_page_option( $post_option );
+		$this->set_page_option( $sanitized_option );
 
 		// ------------------------------------
 		// バリテーション処理
 		// ------------------------------------
 
 		// バリテーション処理 (ユーザー定義)
-		$page_slug = $this->m_page['slug'];
-		$validate_option = $this->validate_options( $post_option, $page_slug );
+		$validated_option = $this->validate_options(
+			$sanitized_option, $this->m_page['slug']
+		);
 
 		// ------------------------------------
 		// オプション更新：更新実行
@@ -1061,7 +1093,7 @@ abstract class Admin_Menu_Base {
 		if ( !$this->option_error_exists() ) {
 
 			// オプション更新
-			$this->update_page_option( $validate_option );
+			$this->update_page_option( $validated_option );
 			
 			// 管理画面に通知
 			$notice_slug = $this->m_class['app']['slug'] . '-update-success';
@@ -2635,6 +2667,34 @@ class Library_Utility {
 
 		// デコード
 		$string = htmlspecialchars_decode( $string, ENT_QUOTES );
+
+		return $string;
+	}
+
+	/**
+	 * 文字列の空白文字を除去する。
+	 *
+	 * @param string $string 文字列
+	 * @param boolean $remove_all 完全削除フラグ
+	 * @return string 除去処理した文字列を返す。
+	 */
+	public static function strip_whitespace( $string, $remove_all = false )
+	{
+		if ( !is_string( $string ) ) { return $string; }
+
+		// 先頭&末尾の空白文字を除去
+		$string = preg_replace( '/\A\s+|\s+\z/u', '', $string );
+
+		// 空白文字を完全削除
+		if ( $remove_all ) {
+			$string = preg_replace( '/\s/u', '', $string );
+		}
+
+		// 連続する空白文字を削除 (全角文字を事前に半角変換)
+		else {
+			$string = preg_replace( '/\s/u', ' ', $string );
+			$string = preg_replace( '/\s+/u', ' ', $string );
+		}
 
 		return $string;
 	}
