@@ -186,4 +186,16 @@ define( __NAMESPACE__ . '\_FORM_OPTIONS', array(
 		'default' => 'no',
 		'pattern' => '^(no|yes)$'
 	),
+	// 送信結果メッセージ非表示
+	'14' => array(
+		'key'     => 'hide_sent_msg',
+		'default' => 'no',
+		'pattern' => '^(no|yes)$'
+	),
+	// 送信結果メッセージ
+	'15' => array(
+		'key'     => 'sent_msg',
+		'default' => __( 'Receipt No :', _TEXT_DOMAIN ),
+		'pattern' => '^.*$'
+	),
 ) );
