@@ -1,5 +1,5 @@
 <?php
-namespace _Nt\WpLib\AdminMenu\v2_8_0;
+namespace _Nt\WpLib\AdminMenu\v2_8_1;
 if( !defined( 'ABSPATH' ) ) exit;
 
 // ============================================================================
@@ -1415,7 +1415,7 @@ abstract class Admin_Menu_Base {
 		// 引数チェック (NG：未定義/空/NULL)
 		if ( !empty( $attributes ) && is_array( $attributes ) ) {
 			foreach( $attributes as $attr_name => $attr_val ) {
-				$attr .= sprintf( '%s=%s '
+				$attr .= sprintf( '%s="%s" '
 					, esc_attr( $attr_name )
 					, esc_attr( $attr_val )
 				);
@@ -1461,7 +1461,7 @@ abstract class Admin_Menu_Base {
 			, esc_attr( $option_key )
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
-			, esc_attr( $attr ), esc_attr( $check )
+			, $attr, esc_attr( $check )
 
 			, esc_attr( $option_id ), esc_html( $label )
 
@@ -1513,7 +1513,7 @@ abstract class Admin_Menu_Base {
 		// 引数チェック (NG：未定義/空/NULL)
 		if ( !empty( $attributes ) && is_array( $attributes ) ) {
 			foreach( $attributes as $attr_name => $attr_val ) {
-				$attr .= sprintf( '%s=%s '
+				$attr .= sprintf( '%s="%s" '
 					, esc_attr( $attr_name )
 					, esc_attr( $attr_val )
 				);
@@ -1563,7 +1563,7 @@ abstract class Admin_Menu_Base {
 			, esc_attr( $option_key )
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
-			, esc_attr( $attr ), esc_attr( $check )
+			, $attr, esc_attr( $check )
 
 			, esc_attr( $option_id )
 
@@ -1617,7 +1617,7 @@ abstract class Admin_Menu_Base {
 		// 引数チェック (NG：未定義/空/NULL)
 		if ( !empty( $attributes ) && is_array( $attributes ) ) {
 			foreach( $attributes as $attr_name => $attr_val ) {
-				$attr .= sprintf( '%s=%s '
+				$attr .= sprintf( '%s="%s" '
 					, esc_attr( $attr_name )
 					, esc_attr( $attr_val )
 				);
@@ -1669,7 +1669,7 @@ abstract class Admin_Menu_Base {
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
 			, esc_attr( intval( $option_value ) )
-			, esc_attr( $attr )
+			, $attr
 
 			, esc_html( $option['error'] )
 		) );
@@ -1719,7 +1719,7 @@ abstract class Admin_Menu_Base {
 		// 引数チェック (NG：未定義/空/NULL)
 		if ( !empty( $attributes ) && is_array( $attributes ) ) {
 			foreach( $attributes as $attr_name => $attr_val ) {
-				$attr .= sprintf( '%s=%s '
+				$attr .= sprintf( '%s="%s" '
 					, esc_attr( $attr_name )
 					, esc_attr( $attr_val )
 				);
@@ -1771,7 +1771,7 @@ abstract class Admin_Menu_Base {
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
 			, esc_html( $option_value )
-			, esc_attr( $attr )
+			, $attr
 
 			, esc_html( $option['error'] )
 		) );
@@ -1821,7 +1821,7 @@ abstract class Admin_Menu_Base {
 		// 引数チェック (NG：未定義/空/NULL)
 		if ( !empty( $attributes ) && is_array( $attributes ) ) {
 			foreach( $attributes as $attr_name => $attr_val ) {
-				$attr .= sprintf( '%s=%s '
+				$attr .= sprintf( '%s="%s" '
 					, esc_attr( $attr_name )
 					, esc_attr( $attr_val )
 				);
@@ -1872,7 +1872,7 @@ abstract class Admin_Menu_Base {
 			, esc_attr( $error )
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
-			, esc_attr( $attr )
+			, $attr
 			, esc_textarea( $option_value )
 
 			, esc_html( $option['error'] )
@@ -2191,7 +2191,7 @@ abstract class Admin_Menu_Base {
 		// 引数チェック (NG：未定義/空/NULL)
 		if ( !empty( $attributes ) && is_array( $attributes ) ) {
 			foreach( $attributes as $attr_name => $attr_val ) {
-				$attr .= sprintf( '%s=%s '
+				$attr .= sprintf( '%s="%s" '
 					, esc_attr( $attr_name )
 					, esc_attr( $attr_val )
 				);
@@ -2247,7 +2247,7 @@ abstract class Admin_Menu_Base {
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
 			, esc_html( $option_value )
-			, esc_attr( $attr )
+			, $attr
 
 			, esc_html( $option['error'] )
 		) );
@@ -2302,7 +2302,7 @@ abstract class Admin_Menu_Base {
 		// 引数チェック (NG：未定義/空/NULL)
 		if ( !empty( $attributes ) && is_array( $attributes ) ) {
 			foreach( $attributes as $attr_name => $attr_val ) {
-				$attr .= sprintf( '%s=%s '
+				$attr .= sprintf( '%s="%s" '
 					, esc_attr( $attr_name )
 					, esc_attr( $attr_val )
 				);
@@ -2357,7 +2357,7 @@ abstract class Admin_Menu_Base {
 			, esc_attr( $error )
 
 			, esc_attr( $option_id ), esc_attr( $option_key )
-			, esc_attr( $attr )
+			, $attr
 			, esc_textarea( $option_value )
 
 			, esc_html( $option['error'] )
