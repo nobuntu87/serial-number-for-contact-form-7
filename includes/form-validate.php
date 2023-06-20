@@ -191,6 +191,59 @@ class Form_Validate {
 		return true;
 	}
 
+	/**
+	 * オプション値の検証を行う。(送信結果メッセージ)
+	 *
+	 * @param string $value オプション値
+	 * @param string|null $message エラーメッセージ
+	 * @return boolean 有効性の検証結果を返す。(true:有効/false:無効)
+	 */
+	public static function validate_sent_msg( $value, &$message = null )
+	{
+		// ------------------------------------
+		// 入力パターン検証 (メッセージ変更)
+		// ------------------------------------
+
+		if ( !empty( $message ) ) {
+			// エラーメッセージ登録
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ' . __( 'Contains invalid characters.', _TEXT_DOMAIN )
+			);
+			return false;
+		}
+
+		// ------------------------------------
+		// 制御文字 検出
+		// ------------------------------------
+
+		if ( SELF::detect_control_characters( $value ) ) {
+			// エラーメッセージ登録
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ' . __( 'Control characters are not allowed.', _TEXT_DOMAIN )
+			);
+			return false;
+		}
+
+		// ------------------------------------
+		// HTMLタグ 検出
+		// ------------------------------------
+
+		if ( SELF::detect_html_tags( $value ) ) {
+			// エラーメッセージ登録
+			$message = sprintf( ''
+				. __( 'Input value is invalid.', _TEXT_DOMAIN )
+				. ' ' . __( 'HTML tags are not allowed.', _TEXT_DOMAIN )
+			);
+			return false;
+		}
+
+		// ------------------------------------
+
+		return true;
+	}
+
   // ========================================================
 
 	/**

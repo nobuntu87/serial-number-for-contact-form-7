@@ -123,10 +123,27 @@ class Submission {
 	public static function edit_wpcf7_display_message( $message, $status )
 	{
 		// ------------------------------------
+		// コンタクトフォーム取得
+		// ------------------------------------
+
+		// コンタクトフォーム設定取得
+		$contact_form = Utility::get_wpcf7_submission_contact_form();
+		if ( !$contact_form ) { return $message; }
+
+		$form_id = strval( $contact_form->id );
+
+		// ------------------------------------
 		// メール送信 成功
 		// ------------------------------------
 
 		if ( 'mail_sent_ok' === strval( $status ) ) {
+
+			// ------------------------------------
+			// メッセージ追加判定
+			// ------------------------------------
+
+			// 送信結果メッセージ非表示
+			if ( 'yes' === $GLOBALS['_NT_WPCF7SN'][$form_id]['14'] ) { return $message; }
 
 			// ------------------------------------
 			// シリアル番号取得
@@ -140,8 +157,10 @@ class Submission {
 			// 表示メッセージ設定
 			// ------------------------------------
 
-			$message .= sprintf( '' 
-				. '( ' . __( 'Receipt No', _TEXT_DOMAIN ) . ' : %s )'
+			$message .= sprintf( ''
+				. ' ( %s%s%s )'
+				, $GLOBALS['_NT_WPCF7SN'][$form_id]['15']
+				, empty( $GLOBALS['_NT_WPCF7SN'][$form_id]['15'] ) ? '' : ' '
 				, $serial_num
 			);
 

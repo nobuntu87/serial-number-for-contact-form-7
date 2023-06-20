@@ -7,6 +7,10 @@ $form_id = strval( $this->get_form_id() );
 $mail_tag = Mail_Tag::get_sn_mail_tag( $form_id );
 $serial_number = Serial_Number::get_serial_number( $form_id );
 
+$wpcf7_messages = Utility::get_wpcf7_contact_form_property(
+	$form_id, 'messages'
+);
+
 // ========================================================
 // カウント表示設定
 // ========================================================
@@ -72,6 +76,11 @@ $list_unix_format = array(
 	0 => __( 'seconds (s)', _TEXT_DOMAIN ),
 	1 => __( 'milliseconds (ms)', _TEXT_DOMAIN ),
 	2 => __( 'microseconds (μs)', _TEXT_DOMAIN ),
+);
+
+$attr_sent_msg = array(
+	'pattern' => _FORM_OPTIONS['15']['pattern'],
+	'placeholder' => _FORM_OPTIONS['15']['default'],
 );
 
 // HTML表示 ================================================================ ?>
@@ -248,6 +257,45 @@ $list_unix_format = array(
 		[],
 		_FORM_OPTIONS['13']['default']
 	); ?>
+</p>
+
+<h4><?php _e( 'Edit Send Result Messages', _TEXT_DOMAIN ); ?></h4>
+
+<p>
+	<?php $this->checkbox(
+		_FORM_OPTIONS['14']['key'],
+		__( 'Don\'t add the serial number display to the send result message.', _TEXT_DOMAIN ),
+		[],
+		_FORM_OPTIONS['14']['default']
+	); ?>
+</p>
+
+<p>
+	<?php _e( 'Message was sent successfully :', _TEXT_DOMAIN ); ?><br/>
+
+	<?php $this->text(
+		_FORM_OPTIONS['15']['key'],
+		$attr_sent_msg, '100',
+		_FORM_OPTIONS['15']['default']
+	); ?>
+</p>
+
+<p>
+	<?php _e( '* Appended to the end of messages displayed by the Contact Form 7.', _TEXT_DOMAIN ); ?>
+</p>
+
+<p class="example">
+	<?php _e( 'Display Example', _TEXT_DOMAIN ); ?> :<br>
+
+	<?php if ( !is_null( $wpcf7_messages ) ) {
+		$this->view_html( $wpcf7_messages['mail_sent_ok'] );
+	} ?>
+
+	<?php $this->view_html( sprintf( '( %s%s%s )'
+		, $GLOBALS['_NT_WPCF7SN'][$form_id]['15']
+		, empty( $GLOBALS['_NT_WPCF7SN'][$form_id]['15'] ) ? '' : ' '
+		, $serial_number
+	) ); ?>
 </p>
 
 <?php // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
