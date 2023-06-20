@@ -32,19 +32,14 @@ class REST_Controller {
 		// コンタクトフォーム取得
 		// ------------------------------------
 
-		if ( !class_exists( 'WPCF7_Submission' ) ) { return $items; }
-
-		// インスタンス取得
-		$submission = \WPCF7_Submission::get_instance();
-		if ( !$submission ) { return $items; }
-
 		// コンタクトフォーム設定取得
-		$contact_form = $submission->get_contact_form();
-		$form_id = strval( $contact_form->id );
-		if ( $form_id !== strval( $items['contact_form_id'] ) ) { return $items; }
+		$contact_form = Utility::get_wpcf7_submission_contact_form();
+		if ( !$contact_form ) { return $items; }
+
+		if ( strval( $contact_form->id ) !== strval( $items['contact_form_id'] ) ) { return $items; }
 
 		// コンタクトフォーム設定取得 (シリアル番号)
-		$serial_num = strval( $submission->get_posted_data( _POST_FIELD ) );
+		$serial_num = Utility::get_wpcf7_submission_posted_data( _POST_FIELD );
 		if ( empty( $serial_num ) ) { return $items; }
 
 		// ------------------------------------

@@ -56,19 +56,14 @@ class Mail_Tag {
 		// コンタクトフォーム取得
 		// ------------------------------------
 
-		if ( !class_exists( 'WPCF7_Submission' ) ) { return $output; }
-
-		// インスタンス取得
-		$submission = \WPCF7_Submission::get_instance();
-		if ( !$submission ) { return $output; }
-
 		// コンタクトフォーム設定取得
-		$contact_form = $submission->get_contact_form();
-		$form_id = strval( $contact_form->id );
-		if ( $form_id !== strval( $matches['form_id'] ) ) { return $output; }
+		$contact_form = Utility::get_wpcf7_submission_contact_form();
+		if ( !$contact_form ) { return $output; }
+
+		if ( strval( $contact_form->id ) !== strval( $matches['form_id'] ) ) { return $output; }
 
 		// コンタクトフォーム設定取得 (シリアル番号)
-		$serial_num = strval( $submission->get_posted_data( _POST_FIELD ) );
+		$serial_num = Utility::get_wpcf7_submission_posted_data( _POST_FIELD );
 		if ( empty( $serial_num ) ) { return $output; }
 
 		// ------------------------------------
